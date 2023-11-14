@@ -1,0 +1,81 @@
+CREATE TABLE ALUMNOS(
+	matricula INT PRIMARY KEY,
+	alumno varchar(70),
+	plantel varchar(50),
+	oferta_edu varchar(50),
+	grado INT,
+	grupo varchar(15),
+	periodo varchar(50),
+	turno varchar(15),
+	fecha_ins date,
+	estatus varchar(15),
+	fecha_est date
+);
+
+CREATE TABLE CONCEPTOS(
+	codigo INT PRIMARY KEY,
+	concepto varchar(50),
+	cuenta_cont INT,
+	costo float,
+	clasif varchar(50)
+);
+
+insert into CONCEPTOS values(0001, 'PAQUETE BASICO 1/2', 0000, 1500.00, 'Paquete');
+
+insert into CONCEPTOS values(0002, 'PAQUETE BASICO 2/2', 0000, 1000.00, 'Paquete');
+insert into CONCEPTOS values(0003, 'BOLETO CENA NIÑO', 0000, 400.00, 'Articulo' );
+insert into CONCEPTOS values(0004, 'BOLETO CENA ADULTO', 0000, 800.00, 'Articulo');
+insert into CONCEPTOS values(0005, 'BOLETO CEREMONIA', 0000, 110.00, 'Articulo' );
+insert into CONCEPTOS values(0006, 'FOTO PANORAMICA', 0000, 1320.00, 'Articulo' );
+insert into CONCEPTOS values(0007, 'FOTOGRAFIA DE RELAJO', 0000, 220.00, 'Articulo' );
+insert into CONCEPTOS values(0008, 'DIPLOMA', 0000, 790.00, 'Paquete');
+insert into CONCEPTOS values(0009, 'AGRADECIMIENTO', 0000, 790.00, 'Articulo' );
+insert into CONCEPTOS values(00010, 'FOTO INDIVIDUAL CON BASE', 0000, 645.00, 'Articulo' );
+insert into CONCEPTOS values(00011, 'FOTO INDIVIDUAL SIMPLE', 0000, 110.00, 'Articulo' );
+insert into CONCEPTOS values(00012, 'PERSONALIZADOR', 0000, 450.00, 'Articulo');
+insert into CONCEPTOS values(00013, 'BOOK', 0000, 800.00, 'Articulo' );
+
+
+CREATE TABLE VENTAS(
+	folio INT NOT NULL PRIMARY KEY,
+	plantel varchar(50),
+	matri INT,
+	nombre varchar(70),
+	grupo varchar(15),
+	licenciatura varchar(50),
+	fecha date,
+	cant_recibe float,
+	forma_p varchar(15),
+	aprov varchar(15),
+	cuenta_rec varchar(30),
+	concep INT,
+	observaciones varchar(250),
+	subtotal float
+);
+
+//LLAVES FORANEAS
+//TABLA VENTAS///
+ALTER TABLE VENTAS ADD CONSTRAINT llave_for FOREIGN KEY (matri) REFERENCES ALUMNOS (matricula);
+
+
+//USUARIO user1
+CREATE USER user1 PASSWORD '1234';
+//DANDO PRIVILEGIOS/////
+GRANT ALL PRIVILEGES ON DATABASE sistema TO user1;
+	
+
+
+///BD PRUEBA:
+CREATE TABLE prueba(
+	matricula INT PRIMARY KEY,
+	alumno varchar(70),
+	plantel varchar(50),
+	oferta_edu varchar(50),
+	grado INT,
+	grupo varchar(15),
+	periodo varchar(50),
+	turno varchar(15),
+	fecha_ins date,
+	estatus varchar(15),
+	fecha_est date
+);
