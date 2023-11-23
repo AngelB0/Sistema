@@ -6,6 +6,8 @@ from tkinter import PhotoImage
 from tkinter import filedialog
 from PIL import Image, ImageTk
 from PIL import *
+import pathlib
+import sys
 from tkinter import messagebox #libreria para los mensajes de alerta
 import psycopg2 #importacion del modulo
 
@@ -153,101 +155,196 @@ def INDEX():
         # Cierra la ventana principal
         ventana.withdraw()
 
-    #VENTANA SECUNDARIA DE CONSULTAR ALUMNOS
-    def Consu_Alu():
-        def obtener_datosBD():
-            #conexion a la BD
-            conexion=psycopg2.connect(user='user1',
-                                    password='1234',
-                                    host='localhost',
-                                    port='5432',
-                                    database='sistema')
-
-            # Crear un cursor para ejecutar consultas SQL
-            cursor = conexion.cursor()
-
-            # Ejecutar una consulta para obtener datos (reemplaza con tu propia consulta)
-            cursor.execute("SELECT * FROM conceptos")
-            datos = cursor.fetchall()
-
-            # Cerrar la conexión y el cursor
-            cursor.close()
-            conexion.close()
-
-            return datos
-
-        def mostrar_datos():
-            # Obtener datos de la base de datos
-            datos = obtener_datosBD()
-
-            # Limpiar las filas existentes en el Treeview
-            for fila in tree.get_children():
-                tree.delete(fila)
-
-            # Insertar datos en el Treeview
-            for dato in datos:
-                tree.insert("", "end", values=dato)
-
-        # Crear una ventana secundaria.
-        ventana_consul1 = tk.Toplevel()
-        #color de fondo BG
-        ventana_consul1.config(bg="#89BBFF")
-        #se le añade un titulo a la app
-        ventana_consul1.title("CONSULTA DE REGISTROS")
-        ventana_consul1.config(width=700, height=600)
-
-        # Crear el Treeview para mostrar los datos
-        tree = ttk.Treeview(ventana_consul1, columns=("codigo", "concepto", "cuenta_cont","costo", "clasif"),show="headings")  # Reemplaza con tus nombres de columna
-        tree.heading("codigo", text="codigo")  # Reemplaza con el nombre de tu identificador único
-        tree.heading("concepto", text="Concepto")
-        tree.heading("cuenta_cont", text="Cuenta Contable")
-        tree.heading("costo", text="Costo")
-        tree.heading("clasif", text="Clasificacion")
-        tree.pack(padx=10, pady=10)
-
-        # Crear un botón para actualizar los datos
-        boton_actualizar = tk.Button(ventana_consul1, text="Actualizar Datos", command=mostrar_datos)
-        boton_actualizar.pack(pady=10)
-
-        boton_cerrar = ttk.Button(
-        ventana_consul1,
-        text="Cerrar ventana", 
-        command=ventana_consul1.destroy
-        )
-        boton_cerrar.place(x=50, y=300, width=90, height=40)
-        # Cierra la ventana principal
-        ventana.withdraw()
-
-
-    #VENTANA SECUNDARIA DE CONSULTAR
+    #VENTANA PARA CONSULTAR
     def Consultar():
-        # Crear una ventana secundaria.
-        
+        def Consu_Alum():
+            class TreeviewFrame(ttk.Frame):
+                def __init__(self, *args, **kwargs):
+                    super().__init__(*args, **kwargs)
+                    
+                    # Crear barras de desplazamiento horizontal y vertical
+                    self.hscrollbar = ttk.Scrollbar(self, orient=tk.HORIZONTAL)
+                    self.vscrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL)
+                    
+                    # Crear un Treeview con barras de desplazamiento asociadas
+                    self.treeview = ttk.Treeview(
+                        self,
+                        xscrollcommand=self.hscrollbar.set,
+                        yscrollcommand=self.vscrollbar.set
+                    )
+                    
+                    # Configurar las barras de desplazamiento para controlar el Treeview
+                    self.hscrollbar.config(command=self.treeview.xview)
+                    self.hscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+                    self.vscrollbar.config(command=self.treeview.yview)
+                    self.vscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+                    
+                    # Empaquetar el Treeview
+                    self.treeview.pack()
+
+                def mostrar_info_archivos(self):
+                    # Iterar sobre los archivos en el directorio del ejecutable de Python
+                    for file in pathlib.Path(sys.executable).parent.iterdir():
+                        # Insertar información sobre cada archivo en el Treeview
+                        self.treeview.insert(
+                            "", tk.END, values=(file.name, file.stat().st_size))
+
+                def mostrar_info_alumnos(self):
+                    def obtener_datosBD():
+                        # conexión a la BD
+                        conexion = psycopg2.connect(user='user1',
+                                                    password='1234',
+                                                    host='localhost',
+                                                    port='5432',
+                                                    database='sistema')
+
+                        # Crear un cursor para ejecutar consultas SQL
+                        cursor = conexion.cursor()
+
+                        # Ejecutar una consulta para obtener datos (reemplaza con tu propia consulta)
+                        cursor.execute("SELECT * FROM alumnos")
+                        datos = cursor.fetchall()
+
+                        # Cerrar la conexión y el cursor
+                        cursor.close()
+                        conexion.close()
+
+                        return datos
+
+                    # Limpiar las filas existentes en el Treeview
+                    for fila in self.treeview.get_children():
+                        self.treeview.delete(fila)
+
+                    # Configurar el Treeview con columnas y encabezados
+                    self.treeview.config(columns=("matricula", "alumno", "plantel", "oferta_edu", "grado", "grupo", "periodo", "turno", "fecha_ins", "estatus", "fecha_est"), show="headings")
+                    self.treeview.heading("matricula", text="Matricula")
+                    self.treeview.heading("alumno", text="Alumno")
+                    self.treeview.heading("plantel", text="Plantel")
+                    self.treeview.heading("oferta_edu", text="Oferta Educativa")
+                    self.treeview.heading("grado", text="Grado")
+                    self.treeview.heading("grupo", text="Grupo")
+                    self.treeview.heading("periodo", text="Periodo")
+                    self.treeview.heading("turno", text="Turno")
+                    self.treeview.heading("fecha_ins", text="Fecha de Inscripcion")
+                    self.treeview.heading("estatus", text="Estatus")
+                    self.treeview.heading("fecha_est", text="Fecha del Estatus")
+                    
+
+                    # Obtener datos de la base de datos y mostrarlos en el Treeview
+                    datos = obtener_datosBD()
+                    for dato in datos:
+                        self.treeview.insert("", "end", values=dato)    
+            # Crear una instancia de la clase TreeviewFrame
+            treeview_frame = TreeviewFrame(ventana_consul)
+
+            # Empaquetar el TreeviewFrame en la ventana principal
+            treeview_frame.pack()
+
+            # Mostrar información de archivos
+            treeview_frame.mostrar_info_archivos()
+
+            # Mostrar información de alumnos
+            treeview_frame.mostrar_info_alumnos()      
+
+        def Consu_Concep():
+            class TreeviewFrame(ttk.Frame):
+                def __init__(self, *args, **kwargs):
+                    super().__init__(*args, **kwargs)
+
+                    # Crear barras de desplazamiento horizontal y vertical
+                    self.hscrollbar = ttk.Scrollbar(self, orient=tk.HORIZONTAL)
+                    self.vscrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL)
+
+                    # Crear un Treeview con barras de desplazamiento asociadas
+                    self.treeview = ttk.Treeview(
+                        self,
+                        xscrollcommand=self.hscrollbar.set,
+                        yscrollcommand=self.vscrollbar.set
+                    )
+
+                    # Configurar las barras de desplazamiento para controlar el Treeview
+                    self.hscrollbar.config(command=self.treeview.xview)
+                    self.hscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+                    self.vscrollbar.config(command=self.treeview.yview)
+                    self.vscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+                    # Empaquetar el Treeview
+                    self.treeview.pack()
+
+                def mostrar_info_conceptos(self):
+                    def obtener_datos_conceptos():
+                        # conexión a la BD
+                        conexion = psycopg2.connect(
+                            user='user1',
+                            password='1234',
+                            host='localhost',
+                            port='5432',
+                            database='sistema'
+                        )
+
+                        # Crear un cursor para ejecutar consultas SQL
+                        cursor = conexion.cursor()
+
+                        # Ejecutar una consulta para obtener datos de conceptos
+                        cursor.execute("SELECT * FROM conceptos")
+                        datos = cursor.fetchall()
+
+                        # Cerrar la conexión y el cursor
+                        cursor.close()
+                        conexion.close()
+
+                        return datos
+
+                    # Limpiar las filas existentes en el Treeview para conceptos
+                    for fila in self.treeview.get_children():
+                        self.treeview.delete(fila)
+
+                    # Configurar el Treeview con columnas y encabezados para conceptos
+                    self.treeview.config(columns=("codigo", "concepto", "cuenta_cont", "costo", "clasif"), show="headings")
+                    self.treeview.heading("codigo", text="Código")
+                    self.treeview.heading("concepto", text="Concepto")
+                    self.treeview.heading("cuenta_cont", text="Cuenta Contable")
+                    self.treeview.heading("costo", text="Costo")
+                    self.treeview.heading("clasif", text="Clasificación")
+
+                    # Obtener datos de la base de datos y mostrarlos en el Treeview para conceptos
+                    datos = obtener_datos_conceptos()
+                    for dato in datos:
+                        self.treeview.insert("", "end", values=dato)
+
+            # Crear una instancia de la clase TreeviewFrame
+            treeview_frame = TreeviewFrame(ventana_consul)
+
+            # Empaquetar el TreeviewFrame en la ventana principal
+            treeview_frame.pack()
+
+            # Mostrar información de conceptos
+            treeview_frame.mostrar_info_conceptos()
+
         ventana_consul=tk.Tk()
-        
+    
         #color de fondo BG
         ventana_consul.config(bg="#89BBFF")
         #se le añade un titulo a la app
         ventana_consul.title("CONSULTA DE REGISTROS")
-        ventana_consul.geometry("1366x768")        
+        ventana_consul.geometry("1366x700")        
+
         # Crear un botón dentro de la ventana secundaria
-        # para cerrar la misma.
+        # para cerrar la misma.            
         btn_Alumnos = ttk.Button(
             ventana_consul,
             text="Consultar Alumnos", 
-            command=Consu_Alu
+            command=Consu_Alum
         )
         btn_Conceptos = ttk.Button(
             ventana_consul,
             text="Consultar Conceptos", 
-            command=Consu_Alu
+            command=Consu_Concep
         )
         boton_regresar = ttk.Button(ventana_consul,text="REGRESAR", command=lambda:close_window(ventana_consul))
-        boton_regresar.place(x=50, y=100, width=90, height=40)
-        btn_Alumnos.place(x=150, y=100, width=120, height=40)
-        btn_Conceptos.place(x=280, y=100, width=125, height=40)
-        
-        WIND.withdraw()
+        boton_regresar.place(x=50, y=600, width=90, height=40)
+        btn_Alumnos.place(x=150, y=600, width=120, height=40)
+        btn_Conceptos.place(x=280, y=600, width=125, height=40)
 
         def close_window(window):
             # Cierra la ventana principal
@@ -639,13 +736,20 @@ def Evalue():
 
     aux1 = e1.get()
     aux2 = e2.get()
-    if(aux1=="user1" and aux2=="1234"):
+    if(aux1=="" and aux2==""):
         
         messagebox.showinfo("INICIO DE SESION", "DATOS CORRECTOS")
         INDEX()
     else:
         messagebox.askretrycancel("ERROR", "Inicio de Sesion fallido, Intentelo de nuevo.")
-
+    
+def toggle_visibility():
+    if e2.cget("show") == "*":
+        eye_button.config(image=open_eye)
+        e2.config(show="")
+    else:
+        eye_button.config(image=close_eye)
+        e2.config(show="*")
 
 ventana = tk.Tk()
 #tamaño de la ventana
@@ -654,27 +758,80 @@ ventana.geometry("700x400")
 ventana.config(bg="#89BBFF")
 #se le añade un titulo a la app
 ventana.title("SISTEMA DE COBROS")
-# creating main tkinter window/toplevel
+# Centrar la ventana en la pantalla
+ventana.update_idletasks()
+width = ventana.winfo_width()
+height = ventana.winfo_height()
+x = (ventana.winfo_screenwidth() // 2) - (width // 2)
+y = (ventana.winfo_screenheight() // 2) - (height // 2)
+ventana.geometry(f'{width}x{height}+{x}+{y}')
+#LOGO
+ventana.iconbitmap("img/LG.ico")
 
-# this will create a label widget
-l1 = Label(ventana, text = "USER", font=30, bg='green').grid(row = 2, column = 0, sticky = EW, pady = 2, padx=2)
-l2 = Label(ventana, text = "PASSWORD", font=30, bg='pink').grid(row = 3, column = 0, sticky = EW, pady = 2, padx=2)
+# Configurar columnas y filas para el sistema grid
+for i in range(6):
+    ventana.grid_columnconfigure(i, weight=1)
+    ventana.grid_rowconfigure(i, weight=1)
 
-# entry widgets, used to take entry from user
-e1 = Entry(ventana, font=30)
-e1.grid(row = 2, column = 1, pady = 2, sticky=W)
-e2 = Entry(ventana, font=30)
-e2.grid(row = 3, column = 1, pady = 2, sticky=W)
+# USUARIO ENTRADA 
+l1=Label(ventana, text="USER",font=("Candara", 20, "bold"), bg='#89BBFF').grid(row=2, column=1, pady=5,columnspan=4)
+e1 = Entry(ventana, font=30, relief=SOLID)
+e1.grid(row=3, column=1, pady=5, columnspan=4)
+ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
 
-# adding image (remember image should be PNG and not JPG)
-img = PhotoImage(file='LOGO_TRANSPARENTE.png')
+#CONTRASEÑA ENTRADA 
+l2 = Label(ventana, text="PASSWORD", font=("Candara", 20, "bold"), bg='#89BBFF').grid(row=4, column=1, pady=5, columnspan=4)
+e2 = Entry(ventana, font=30, show='*', relief=SOLID)
+e2.grid(row=5, column=1, pady=5, columnspan=4)
+ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
+
+# IMAGEN adding image (remember image should be PNG and not JPG)
+img = PhotoImage(file='img/LOGO_TRANSPARENTE.png')
 img1 = img.subsample(2, 2)
+Label(ventana,image=img1, bg="#89BBFF").grid(row=1, column=1, pady=10, columnspan=4)
+ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
 
-# setting image with the help of label
-Label(ventana, image = img1).grid(row = 0, column = 0, columnspan = 2, rowspan = 2, padx = 5, pady = 5)
 
-# button widget
-b1 = Button(ventana, text = "LOGIN", font=30, command=Evalue)
-b1.grid(row = 4, column = 3, sticky = W)
+# BOTON LOGIN
+b1 = Button(ventana, text = "LOGIN",
+    font=("Sitka", 12, "bold"), 
+    command=Evalue, relief=RAISED, 
+    state="normal",bg="#4169e1", 
+    fg="white", cursor="hand2", 
+    activebackground="white", 
+    activeforeground="black")
+b1.grid(row=6, column=1, pady=10, columnspan=4)
+ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
+
+# Ojo para mostrar/ocultar contraseña
+eye_button = Button(ventana, command=toggle_visibility)
+open_eye = PhotoImage(file='img/visible.png')  # Ajusta la ruta y el nombre de la imagen
+close_eye = PhotoImage(file='img/ojo.png')  # Ajusta la ruta y el nombre de la imagen
+eye_button.config(image=close_eye, bd=0, bg="#89BBFF")
+eye_button.grid(row=5, column=2, padx=(100, 10),columnspan=2) # Ajusta las coordenadas según sea necesario
+ventana.grid_columnconfigure(2, weight=1)  # Ajusta el peso de la columna para centrar
+
+#moverse con las flechas para el label y boton 
+def abajo(event):
+    event.widget.tk_focusNext().focus()
+    limite = event.widget.tk_focusNext()
+    if isinstance(limite, tk.Entry):
+        limite.focus()
+    return "break"  # Evita que el evento se propague
+
+def arriba(event):
+    limite2 = event.widget.tk_focusPrev()
+    if isinstance(limite2, tk.Entry):
+        limite2.focus()
+    return "break"
+
+# Asocia el evento <Down> a la función para cada Entry
+e1.bind("<Down>", abajo)
+e1.bind("<Up>", arriba)
+e2.bind("<Down>", abajo)
+e2.bind("<Up>", arriba)
+# Boton a label
+b1.bind("<Up>", lambda event: e2.focus())
+
 
 ventana.mainloop()
