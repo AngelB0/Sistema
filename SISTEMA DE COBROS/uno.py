@@ -4,8 +4,6 @@ from tkinter import ttk
 from datetime import date
 from tkinter import PhotoImage
 from tkinter import filedialog
-from PIL import Image, ImageTk
-from PIL import *
 import pathlib
 import sys
 from tkinter import messagebox #libreria para los mensajes de alerta
@@ -459,113 +457,117 @@ def INDEX():
     WIND.config(bg="#89BBFF")
     #se le añade un titulo a la app
     WIND.title("SISTEMA DE COBROS")
+
+    #LOGO
+    WIND.iconbitmap("img/LG.ico")
     #la metemos dentro de un label para poder mostrarla
-    eti= Label(WIND, image = img1)
+    eti= Label(WIND, image = img1, bg='#89BBFF')
     #eti = tk.Label(WIND, image=imagen_sub)
     eti.place(x=20, y=10)
 
     #Formulario Crear los widgets del formulario
 
     #espacio en blanco de la tabla
-    tk.Label(WIND, bg='#89BBFF', width=0, height=10).grid(row=0, column=3, pady=5)
+    tk.Label(WIND, text="SISTEMA DE COBROS", font="Candara 30 bold", bg='#89BBFF', fg="#4169e1", width=0, height=3).grid(row=0, column=6, pady=5)
         
     #FOLIO
-    tk.Label(WIND, text="FOLIO:", bg="white").grid(row=3, column=2, padx=5, pady=5, sticky = E)
-    folio = tk.Entry(WIND, width=10)
+    tk.Label(WIND, text="FOLIO:", bg="#89BBFF").grid(row=3, column=2, padx=5, pady=5, sticky = E)
+    folio = tk.Entry(WIND, relief=tk.SUNKEN, bd=3, width=10)
     folio.grid(row=3, column=3, sticky=W)
 
     #PLANTEL
-    tk.Label(WIND, text="PLANTEL", bg="white").grid(row=3, column=4, padx=5, pady=5)
-    plan = tk.Entry(WIND)
+    tk.Label(WIND, text="PLANTEL", bg="#89BBFF").grid(row=3, column=4, padx=5, pady=5)
+    plan = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
     plan.grid(row=3, column=5, sticky=W)
 
     #MATRICULA
-    tk.Label(WIND, text="MATRICULA:", bg="white").grid(row=4, column=0, padx=5, pady=5, sticky=E)
-    mat = tk.Entry(WIND)
+    tk.Label(WIND,text="MATRICULA:", bg="#89BBFF").grid(row=4, column=0, padx=5, pady=5, sticky=E)
+    mat = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
     mat.grid(row=4, column=1, sticky=W)
     
     #NOMBRE DEL ALUMNO
-    tk.Label(WIND, text="NOMBRE DEL ALUMNO:", bg="white").grid(row=4, column=2, sticky=E, padx=5)
-    nom = tk.Entry(WIND)
+    tk.Label(WIND,text="NOMBRE DEL ALUMNO:", bg="#89BBFF").grid(row=4, column=2, sticky=E, padx=5)
+    nom = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
     nom.grid(row=4, column=3, sticky=W)
     
     #USUARIO
     user1 = e1.get()
-    tk.Label(WIND, text="USUARIO:", bg="white").grid(row=4, column=4, padx=5)
-    user = tk.Label(WIND, text= user1, bg="white")
+    tk.Label(WIND, text="USUARIO:", bg="#89BBFF").grid(row=4, column=4, padx=5)
+    user = tk.Label(WIND, text= user1, bg="#89BBFF")
     user.grid(row=4, column=5)
 
     #GRUPO
-    tk.Label(WIND, text="GRUPO:", bg="white").grid(row=5, column=0, sticky=E, pady=5, padx=5)
-    gru = tk.Entry(WIND)
+    tk.Label(WIND, text="GRUPO:", bg="#89BBFF").grid(row=5, column=0, sticky=E, pady=5, padx=5)
+    gru = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
     gru.grid(row=5, column=1, sticky=W)
 
     #LICENCIATURA
-    tk.Label(WIND, text="LICENCIATURA:", bg="white").grid(row=5, column=2, padx=5, sticky=E)
-    lice = tk.Entry(WIND)
+    tk.Label(WIND, text="LICENCIATURA:", bg="#89BBFF").grid(row=5, column=2, padx=5, sticky=E)
+    lice = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
     lice.grid(row=5, column=3, sticky=W)
 
     #FECHA
-    tk.Label(WIND, text="FECHA:", bg="white").grid(row=5, column=4, padx=5)
-    dateUno = tk.Label(WIND, text=date.today(), bg="white")
+    tk.Label(WIND, text="FECHA:", bg="#89BBFF").grid(row=5, column=4, padx=5)
+    dateUno = tk.Label(WIND, text=date.today(), bg="#89BBFF",relief=tk.GROOVE, bd=3)
     date1 = date.today()
     dateUno.grid(row=5, column=5)
 
-    tk.Label(WIND, text="CONCEPTOS", bg="white").grid(row=6, column=1)
+    tk.Label(WIND, text="CONCEPTOS", bg="#89BBFF",relief=tk.GROOVE, bd=3).grid(row=6, column=1)
     #INICIAN LOS CONCEPTOS
 
-    conc1 = tk.Entry(WIND, width=30)
+    conc1 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc1.grid(row=7, column=1)
 
-    conc2 = tk.Entry(WIND, width=30)
+    conc2 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc2.grid(row=8, column=1)
 
-    conc3 = tk.Entry(WIND, width=30)
+    conc3 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc3.grid(row=9, column=1)
 
-    conc4 = tk.Entry(WIND, width=30)
+    conc4 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc4.grid(row=10, column=1)
 
-    conc5 = tk.Entry(WIND, width=30)
+    conc5 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc5.grid(row=11, column=1)
 
-    conc6 = tk.Entry(WIND, width=30)
+    conc6 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc6.grid(row=12, column=1)
 
-    conc7 = tk.Entry(WIND, width=30)
+    conc7 = tk.Entry(WIND, width=30,relief=tk.SUNKEN, bd=3)
     conc7.grid(row=13, column=1)
 
     #IMPORTE
-    tk.Label(WIND, text="IMPORTE:", bg="white").grid(row=6, column=2)
+    tk.Label(WIND, text="IMPORTE:", bg="#89BBFF",relief=tk.GROOVE).grid(row=6, column=2)
 
-    impo1 = tk.Entry(WIND, width=10)
+    impo1 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo1.grid(row=7, column=2)
 
-    impo2 = tk.Entry(WIND, width=10)
+    impo2 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo2.grid(row=8, column=2)
 
-    impo3 = tk.Entry(WIND, width=10)
+    impo3 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo3.grid(row=9, column=2)
 
-    impo4 = tk.Entry(WIND, width=10)
+    impo4 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo4.grid(row=10, column=2)
 
-    impo5 = tk.Entry(WIND, width=10)
+    impo5 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo5.grid(row=11, column=2)
 
-    impo6 = tk.Entry(WIND, width=10)
+    impo6 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo6.grid(row=12, column=2)
 
-    impo7 = tk.Entry(WIND, width=10)
+    impo7 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     impo7.grid(row=13, column=2)
 
     #%
-    tk.Label(WIND, text="%", bg="white").grid(row=6, column=3)
+    tk.Label(WIND, text="%", bg="#89BBFF",relief=tk.GROOVE, bd=3).grid(row=6, column=3)
 
     combo1 = ttk.Combobox(
         WIND,
         state="readonly",
         values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        
     )
     combo1.config(width=10, height=10)
     combo1.grid(row=7, column=3, pady=3)
@@ -621,65 +623,65 @@ def INDEX():
     combo7.grid(row=13, column=3, pady=3)
 
     #RECARGOS
-    tk.Label(WIND, text="RECARGOS:", bg="white").grid(row=6, column=4, padx=10)
+    tk.Label(WIND, text="RECARGOS:", bg="#89BBFF",relief=tk.GROOVE).grid(row=6, column=4, padx=10)
 
-    rec1 = tk.Entry(WIND, width=10)
+    rec1 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec1.grid(row=7, column=4, padx=10)
 
-    rec2 = tk.Entry(WIND, width=10)
+    rec2 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec2.grid(row=8, column=4)
 
-    rec3 = tk.Entry(WIND, width=10)
+    rec3 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec3.grid(row=9, column=4)
 
-    rec4 = tk.Entry(WIND, width=10)
+    rec4 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec4.grid(row=10, column=4)
 
-    rec5 = tk.Entry(WIND, width=10)
+    rec5 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec5.grid(row=11, column=4)
 
-    rec6 = tk.Entry(WIND, width=10)
+    rec6 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec6.grid(row=12, column=4)
 
-    rec7 = tk.Entry(WIND, width=10)
+    rec7 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
     rec7.grid(row=13, column=4)
 
     #SUBTOTAL
-    tk.Label(WIND, text="SUBTOTAL:", bg="white").grid(row=6, column=5, padx=1)
+    tk.Label(WIND, text="SUBTOTAL:", bg="#89BBFF",relief=tk.GROOVE).grid(row=6, column=5, padx=1)
 
-    subt1 = tk.Entry(WIND, width=10)
+    subt1 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt1.grid(row=7, column=5, padx=1)
 
-    subt2 = tk.Entry(WIND, width=10)
+    subt2 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt2.grid(row=8, column=5)
 
-    subt3 = tk.Entry(WIND, width=10)
+    subt3 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt3.grid(row=9, column=5)
 
-    subt4 = tk.Entry(WIND, width=10)
+    subt4 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt4.grid(row=10, column=5)
 
-    subt5 = tk.Entry(WIND, width=10)
+    subt5 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt5.grid(row=11, column=5)
 
-    subt6 = tk.Entry(WIND, width=10)
+    subt6 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt6.grid(row=12, column=5)
 
-    subt7 = tk.Entry(WIND, width=10)
+    subt7 = tk.Entry(WIND, width=10,relief=tk.SUNKEN, bd=3)
     subt7.grid(row=13, column=5)
 
     #CANTIDAD QUE RECIBE
-    cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="white").place(x=755, y=172, width=140, height=19)
-    cant_res = tk.Entry(WIND, width=25)
+    cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="#89BBFF").place(x=755, y=172, width=140, height=19)
+    cant_res = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
     cant_res.place(x=775, y=203, width=105, height=19)
 
     #CAMBIO
-    cambio = tk.Label(WIND, text="CAMBIO", bg="white").place(x=795, y=235, width=60, height=19)
-    cambio = tk.Entry(WIND, width=25)
+    cambio = tk.Label(WIND, text="CAMBIO", bg="#89BBFF").place(x=795, y=235, width=60, height=19)
+    cambio = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
     cambio.place(x=775, y=260, width=105, height=19)
 
     #FORMA DE PAGO
-    tk.Label(WIND, text="FORMA DE PAGO", bg="white").place(x=777, y=295, width=100, height=19)
+    tk.Label(WIND, text="FORMA DE PAGO", bg="#89BBFF").place(x=777, y=295, width=100, height=19)
     formP = ttk.Combobox(
         WIND,
         state="readonly",
@@ -689,12 +691,12 @@ def INDEX():
     formP.place(x=775, y=325, width=105, height=19)
 
     #APROVACION
-    aprov = tk.Label(WIND, text="APROVACIÓN", bg="white").place(x=783, y=357, width=90, height=19)
-    aprov = tk.Entry(WIND, width=25)
+    aprov = tk.Label(WIND, text="APROVACIÓN", bg="#89BBFF").place(x=783, y=357, width=90, height=19)
+    aprov = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
     aprov.place(x=775, y=385, width=105, height=19)
 
     #CUENTA RECEPTORA
-    cuenta_res = tk.Label(WIND, text="CUENTA RECEPTORA", bg="white").place(x=765, y=420, width=120, height=19)
+    cuenta_res = tk.Label(WIND, text="CUENTA RECEPTORA", bg="#89BBFF").place(x=765, y=420, width=120, height=19)
     cuenta_res = ttk.Combobox(
         WIND,
         state="readonly",
@@ -705,21 +707,21 @@ def INDEX():
 
 
     #OBSERVACIONES
-    observ = tk.Label(WIND, text="OBSERVACIONES:", bg="white").place(x=85, y=480, width=110, height=20)
-    observ = tk.Entry(WIND, width=30)
+    observ = tk.Label(WIND, text="OBSERVACIONES:", bg="#89BBFF").place(x=85, y=480, width=110, height=20)
+    observ = tk.Entry(WIND, width=30,relief=tk.SUNKEN)
     observ.place(x=210, y=480, width=500, height=20)
 
     #BOTONES
-    boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="white", command=enviar_datos)
+    boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=enviar_datos)
     boton_enviar.place(x=85, y=520, width=100, height=30)
 
-    btn_Consultar = tk.Button(WIND, text="CONSULTAR", bg="white", command=Consultar)
+    btn_Consultar = tk.Button(WIND, text="CONSULTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consultar)
     btn_Consultar.place(x=210, y=520, width=100, height=30)
 
-    btn_Insert = tk.Button(WIND, text="INSERTAR", bg="white", command=Insertar)
+    btn_Insert = tk.Button(WIND, text="INSERTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command=Insertar)
     btn_Insert.place(x=330, y=520, width=100, height=30)
 
-    btn_Insert = tk.Button(WIND, text="ACTUALIZAR", bg="white",)
+    btn_Insert = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5)
     btn_Insert.place(x=460, y=520, width=100, height=30)
 
     #pruebas
@@ -758,6 +760,7 @@ ventana.geometry("700x400")
 ventana.config(bg="#89BBFF")
 #se le añade un titulo a la app
 ventana.title("SISTEMA DE COBROS")
+
 # Centrar la ventana en la pantalla
 ventana.update_idletasks()
 width = ventana.winfo_width()
