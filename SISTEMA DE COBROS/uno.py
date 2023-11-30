@@ -11,9 +11,9 @@ import psycopg2 #importacion del modulo
 
 #CLASE MAIN todo Va dentro de esta CLASS
 def INDEX():
-    #VENTANA SECUNDARIA REGISTRO ALUMNO
-    def Inser_Alum():
-        def Guardar_Alum():
+    #VENTANA ACTUALIZAR REGISTRO DE ALUMNO
+    def act_Alum():
+        def Save_Alum():
             MATRICULA = matri2.get()
             ALU = alumno.get()
             PLAN = plantel.get()
@@ -25,7 +25,170 @@ def INDEX():
             FINSCRIPCION = inscripcion.get()
             ESTATUS = estatus.get()
             FESTATUS = festatus.get()
-            print("DATOS GUARDADOS")
+            print("DATOS ACTUALIZADOS")
+
+        # Crear una ventana secundaria.
+        window_alu = tk.Toplevel()
+        #color de fondo BG
+        window_alu.config(bg="#89BBFF")
+        #se le añade un titulo a la app
+        window_alu.title("ACTUALIZAR REGISTRO ALUMNOS")
+        window_alu.config(width=1080, height=600)
+
+        #MATRICULA
+        tk.Label(window_alu, text="MATRICULA", bg="white").place(x=50, y=70, width=80, height=20)
+        matri2 = tk.Entry(window_alu, width=10)
+        matri2.place(x=135, y=70, width=80, height=20)
+
+        #ALUMNO
+        tk.Label(window_alu, text="ALUMNO", bg="white").place(x=250, y=70, width=80, height=20)
+        alumno = tk.Entry(window_alu, width=10)
+        alumno.place(x=335, y=70, width=80, height=20)
+
+        #OFERTA EDUCATIVA 
+        tk.Label(window_alu, text="OFERTA EDUCATIVA", bg="white").place(x=440, y=70, width=120, height=20)
+        ofedu = tk.Entry(window_alu, width=10)
+        ofedu.place(x=565, y=70, width=200, height=20)
+
+        #PLANTEL
+        tk.Label(window_alu, text="PLANTEL", bg="white").place(x=790, y=70, width=75, height=20)
+        plantel = tk.Entry(window_alu, width=10)
+        plantel.place(x=870, y=70, width=120, height=20)
+
+        #GRADO
+        tk.Label(window_alu, text="GRADO", bg="white").place(x=50, y=110, width=40, height=20)
+        grad = tk.Entry(window_alu, width=10)
+        grad.place(x=100, y=110, width=40, height=20)
+
+        #GRUPO
+        tk.Label(window_alu, text="GRUPO", bg="white").place(x=150, y=110, width=40, height=20)
+        grup = tk.Entry(window_alu, width=10)
+        grup.place(x=200, y=110, width=40, height=20)
+
+        #PERIODO
+        tk.Label(window_alu, text="PERIODO", bg="white").place(x=250, y=110, width=50, height=20)
+        perido = tk.Entry(window_alu, width=10)
+        perido.place(x=310, y=110, width=80, height=20)
+
+        #TURNO
+        tk.Label(window_alu, text="TURNO", bg="white").place(x=400, y=110, width=50, height=20)
+        turno = tk.Entry(window_alu, width=10)
+        turno.place(x=460, y=110, width=80, height=20)
+
+        #FECHA DE INSCRIPCION
+        tk.Label(window_alu, text="FECHA DE INSCRIPCION", bg="white").place(x=50, y=150, width=133, height=20)
+        inscripcion = tk.Entry(window_alu, width=10)
+        inscripcion.place(x=190, y=150, width=100, height=20)
+
+        #ESTATUS
+        tk.Label(window_alu, text="ESTATUS", bg="white").place(x=300, y=150, width=80, height=20)
+        estatus = tk.Entry(window_alu, width=10)
+        estatus.place(x=385, y=150, width=80, height=20)
+
+        #FECHA ESTATUS
+        tk.Label(window_alu, text="FECHA ESTATUS", bg="white").place(x=480, y=150, width=90, height=20)
+        festatus = tk.Entry(window_alu, width=10)
+        festatus.place(x=575, y=150, width=80, height=20)
+
+        #Boton cerrar
+        boton_cerrar = ttk.Button(window_alu, text="Cerrar ventana", command=window_alu.destroy)
+        boton_cerrar.place(x=50, y=200, width=90, height=40)
+
+        #Boton guardar
+        boton_guardar = ttk.Button(window_alu, text="GUARDAR", command= Save_Alum)
+        boton_guardar.place(x=150, y=200, width=90, height=40)
+
+        # Cierra la ventana principal
+        ventana.withdraw()
+        
+    #VENTANA ACTUALIZAR REGISTRO CONCEPTO
+    def act_Concep():
+        def save_Concep():
+            CODIGO = codigo.get()
+            CONCEP = concepto.get()
+            CONTABLE = contable.get()
+            COSTO = costo.get()
+            CLAS = clasificacion.get()
+            print("DATOS ACTUALIZADOS CORRECTAMENTE")
+
+        # Crear una ventana secundaria.
+        window_con = tk.Toplevel()
+        #color de fondo BG
+        window_con.config(bg="#89BBFF")
+        #se le añade un titulo a la app
+        window_con.title("ACTUALIZAR REGISTRO CONCEPTOS")
+        window_con.config(width=1080, height=600)
+
+        #CODIGO
+        tk.Label(window_con, text="CODIGO", bg="white").place(x=50, y=70, width=80, height=20)
+        codigo = tk.Entry(window_con, width=10)
+        codigo.place(x=135, y=70, width=80, height=20)
+
+        #CONCEPTO
+        tk.Label(window_con, text="CONCEPTO", bg="white").place(x=250, y=70, width=80, height=20)
+        concepto = tk.Entry(window_con, width=10)
+        concepto.place(x=335, y=70, width=80, height=20)
+
+        #CUENTA CONTABLE 
+        tk.Label(window_con, text="CUENTA CONTABLE", bg="white").place(x=440, y=70, width=120, height=20)
+        contable = tk.Entry(window_con, width=10)
+        contable.place(x=565, y=70, width=200, height=20)
+        #COSTO
+        tk.Label(window_con, text="COSTO", bg="white").place(x=790, y=70, width=75, height=20)
+        costo = tk.Entry(window_con, width=10)
+        costo.place(x=870, y=70, width=120, height=20)
+
+        #CLASIFICACION
+        tk.Label(window_con, text="CLASIFICACION", bg="white").place(x=50, y=110, width=100, height=20)
+        clasificacion = tk.Entry(window_con, width=10)
+        clasificacion.place(x=160, y=110, width=100, height=20)
+
+        #Boton cerrar
+        boton_cerrar = ttk.Button( window_con, text="Cerrar ventana", command=window_con.destroy)
+        boton_cerrar.place(x=50, y=200, width=90, height=40)
+        #Boton Guardar
+        boton_guardar = ttk.Button(window_con, text="GUARDAR",command=save_Concep)
+        boton_guardar.place(x=150, y=200, width=90, height=40)
+        # Cierra la ventana principal
+        ventana.withdraw()
+
+    #VENTANA ACTUALIZAR
+    def actualizar():
+        # Crear una ventana secundaria.
+        window_act = tk.Toplevel()
+        #color de fondo BG
+        window_act.config(bg="#89BBFF")
+        #se le añade un titulo a la app
+        window_act.title("ACTUALIZAR REGISTROS")
+        window_act.config(width=500, height=300)
+            
+        # Crear un botón dentro de la ventana secundaria
+        # para cerrar la misma.
+        btn_Alumnos_insert = ttk.Button(
+            window_act,
+            text="Insertar Nuevo Alumnos", 
+            command=act_Alum
+        )
+        btn_Conceptos_insert = ttk.Button(
+            window_act,
+            text="Insertar Nuevo Conceptos", 
+            command=act_Concep
+        )
+        btn_cerrar_insert = ttk.Button(
+            window_act,
+            text="Cerrar ventana", 
+            command=window_act.destroy
+        )
+
+        btn_cerrar_insert.place(x=50, y=100, width=90, height=40)
+        btn_Alumnos_insert.place(x=150, y=100, width=145, height=40)
+        btn_Conceptos_insert.place(x=310, y=100, width=150, height=40)
+
+        # Cierra la ventana principal
+        ventana.withdraw()
+        
+    #VENTANA SECUNDARIA REGISTRO ALUMNO
+    def Inser_Alum():
 
         # Crear una ventana secundaria
         ventana_ins = tk.Toplevel()
@@ -35,67 +198,12 @@ def INDEX():
         ventana_ins.title("INSERTAR DATOS")
         ventana_ins.config(width=1000, height=300)
 
-        #MATRICULA
-        tk.Label(ventana_ins, text="MATRICULA", bg="white").place(x=50, y=70, width=80, height=20)
-        matri2 = tk.Entry(ventana_ins, width=10)
-        matri2.place(x=135, y=70, width=80, height=20)
-
-        #ALUMNO
-        tk.Label(ventana_ins, text="ALUMNO", bg="white").place(x=250, y=70, width=80, height=20)
-        alumno = tk.Entry(ventana_ins, width=10)
-        alumno.place(x=335, y=70, width=80, height=20)
-
-        #OFERTA EDUCATIVA 
-        tk.Label(ventana_ins, text="OFERTA EDUCATIVA", bg="white").place(x=440, y=70, width=120, height=20)
-        ofedu = tk.Entry(ventana_ins, width=10)
-        ofedu.place(x=565, y=70, width=200, height=20)
-
-        #PLANTEL
-        tk.Label(ventana_ins, text="PLANTEL", bg="white").place(x=790, y=70, width=75, height=20)
-        plantel = tk.Entry(ventana_ins, width=10)
-        plantel.place(x=870, y=70, width=120, height=20)
-
-        #GRADO
-        tk.Label(ventana_ins, text="GRADO", bg="white").place(x=50, y=110, width=40, height=20)
-        grad = tk.Entry(ventana_ins, width=10)
-        grad.place(x=100, y=110, width=40, height=20)
-
-        #GRUPO
-        tk.Label(ventana_ins, text="GRUPO", bg="white").place(x=150, y=110, width=40, height=20)
-        grup = tk.Entry(ventana_ins, width=10)
-        grup.place(x=200, y=110, width=40, height=20)
-
-        #PERIODO
-        tk.Label(ventana_ins, text="PERIODO", bg="white").place(x=250, y=110, width=50, height=20)
-        perido = tk.Entry(ventana_ins, width=10)
-        perido.place(x=310, y=110, width=80, height=20)
-
-        #TURNO
-        tk.Label(ventana_ins, text="TURNO", bg="white").place(x=400, y=110, width=50, height=20)
-        turno = tk.Entry(ventana_ins, width=10)
-        turno.place(x=460, y=110, width=80, height=20)
-
-        #FECHA DE INSCRIPCION
-        tk.Label(ventana_ins, text="FECHA DE INSCRIPCION", bg="white").place(x=50, y=150, width=133, height=20)
-        inscripcion = tk.Entry(ventana_ins, width=10)
-        inscripcion.place(x=190, y=150, width=100, height=20)
-
-        #ESTATUS
-        tk.Label(ventana_ins, text="ESTATUS", bg="white").place(x=300, y=150, width=80, height=20)
-        estatus = tk.Entry(ventana_ins, width=10)
-        estatus.place(x=385, y=150, width=80, height=20)
-
-        #FECHA ESTATUS
-        tk.Label(ventana_ins, text="FECHA ESTATUS", bg="white").place(x=480, y=150, width=90, height=20)
-        festatus = tk.Entry(ventana_ins, width=10)
-        festatus.place(x=575, y=150, width=80, height=20)
-
         #Boton cerrar
         boton_cerrar = ttk.Button(ventana_ins, text="Cerrar ventana", command=ventana_ins.destroy)
         boton_cerrar.place(x=50, y=200, width=90, height=40)
 
         #Boton guardar
-        boton_guardar = ttk.Button(ventana_ins, text="GUARDAR", command= Guardar_Alum)
+        boton_guardar = ttk.Button(ventana_ins, text="INSERTAR", command= "Guardar_Alum")
         boton_guardar.place(x=150, y=200, width=90, height=40)
 
         # Cierra la ventana principal
@@ -104,13 +212,6 @@ def INDEX():
 
     #VENTANA SECUNDARIA CONCEPTO
     def Inser_Concep():
-        def Guardar_Concep():
-            CODIGO = codigo.get()
-            CONCEP = concepto.get()
-            CONTABLE = contable.get()
-            COSTO = costo.get()
-            CLAS = clasificacion.get()
-            print("DATOS GUARDADOS")
 
         # Crear una ventana secundaria
         ventana_concep = tk.Toplevel()
@@ -120,35 +221,11 @@ def INDEX():
         ventana_concep.title("INSERTAR NUEVO CONCEPTO")
         ventana_concep.config(width=1000, height=300)
 
-        #CODIGO
-        tk.Label(ventana_concep, text="CODIGO", bg="white").place(x=50, y=70, width=80, height=20)
-        codigo = tk.Entry(ventana_concep, width=10)
-        codigo.place(x=135, y=70, width=80, height=20)
-
-        #CONCEPTO
-        tk.Label(ventana_concep, text="CONCEPTO", bg="white").place(x=250, y=70, width=80, height=20)
-        concepto = tk.Entry(ventana_concep, width=10)
-        concepto.place(x=335, y=70, width=80, height=20)
-
-        #CUENTA CONTABLE 
-        tk.Label(ventana_concep, text="CUENTA CONTABLE", bg="white").place(x=440, y=70, width=120, height=20)
-        contable = tk.Entry(ventana_concep, width=10)
-        contable.place(x=565, y=70, width=200, height=20)
-        #COSTO
-        tk.Label(ventana_concep, text="COSTO", bg="white").place(x=790, y=70, width=75, height=20)
-        costo = tk.Entry(ventana_concep, width=10)
-        costo.place(x=870, y=70, width=120, height=20)
-
-        #CLASIFICACION
-        tk.Label(ventana_concep, text="CLASIFICACION", bg="white").place(x=50, y=110, width=100, height=20)
-        clasificacion = tk.Entry(ventana_concep, width=10)
-        clasificacion.place(x=160, y=110, width=100, height=20)
-
         #Boton cerrar
         boton_cerrar = ttk.Button( ventana_concep, text="Cerrar ventana", command=ventana_concep.destroy)
         boton_cerrar.place(x=50, y=200, width=90, height=40)
         #Boton Guardar
-        boton_guardar = ttk.Button(ventana_concep, text="GUARDAR",command=Guardar_Concep)
+        boton_guardar = ttk.Button(ventana_concep, text="INSERTAR",command="Guardar_Concep")
         boton_guardar.place(x=150, y=200, width=90, height=40)
         # Cierra la ventana principal
         ventana.withdraw()
@@ -386,6 +463,24 @@ def INDEX():
 
     # Definir la función que se ejecutará cuando se haga clic en el botón
     def enviar_datos():
+        #conexion a la BD
+        user3 = e1.get()
+        passw3 = e2.get()
+        bd="sistema"
+        try:
+            conexion = psycopg2.connect(
+                                user=user3,
+                                password=passw3,
+                                host='localhost',
+                                port='5432',
+                                database= bd
+                            )
+            messagebox.showinfo("CONEXION BD", "CONEXION ESTABLECIDA")
+            # Crear un cursor para ejecutar consultas SQL
+            cursor = conexion.cursor()
+        except:
+            messagebox.askretrycancel("ERROR", "CONEXION A LA BD FALLIDA.")
+        
         FOL = folio.get()
         MATRI = mat.get()
         NOMA = nom.get()
@@ -402,6 +497,7 @@ def INDEX():
         CON5 = conc5.get()
         CON6 = conc6.get()
         CON7 = conc7.get()
+        CONCEPTOF=CON1+CON2+CON3+CON4+CON5+CON6+CON7
         #impotes datos
         IMP1 = impo1.get()
         IMP2 = impo2.get()
@@ -434,9 +530,11 @@ def INDEX():
         SUB5 = subt5.get()
         SUB6 = subt6.get()
         SUB7 = subt7.get()
+        TOTAL=SUB1+SUB2+SUB3+SUB4+SUB5+SUB6+SUB7
         #Cantidad que recibe
         CANTR = cant_res.get()
         #Cambio
+        CAMBIO = int(CANTR) - int(TOTAL)
         CAM =  cambio.get()
         #forma de pago
         FP = formP.get()
@@ -446,8 +544,77 @@ def INDEX():
         CUR = cuenta_res.get()
         #Observaciones
         OBSERVA = observ.get()
+        # Crear un cursor para ejecutar consultas SQL
+        cursor = conexion.cursor()
 
-        print("DATOS GUARDADOS")
+        try:
+            # Crear un cursor para ejecutar consultas SQL
+            cursor = conexion.cursor()
+            # Ejecutar la consulta de inserción (adaptar según tu tabla)
+            consulta = "INSERT INTO ventas (folio, plantel, matri, nombre, grupo, licenciatura, fecha, cant_recibe, forma_p, aprov, cuenta_rec, observaciones, subtotal, concep) VALUES (%s, %s)"
+            cursor.execute(consulta, (FOL, PLA, MATRI,NOMA, GRUP, LIC, FE, CANTR, FP, APRO, CUR, OBSERVA, TOTAL, CONCEPTOF))
+
+            # Confirmar la transacción
+            conexion.commit()
+
+            # Limpiar campos de entrada después de la inserción
+            folio.delete(0, tk.END)
+            plan.delete(0, tk.END)
+            mat.delete(0, tk.END)
+            nom.delete(0, tk.END)
+            gru.delete(0, tk.END)
+            lice.delete(0, tk.END)
+            conc1.delete(0, tk.END)
+            conc2.delete(0, tk.END)
+            conc3.delete(0, tk.END)
+            conc4.delete(0, tk.END)
+            conc5.delete(0, tk.END)
+            conc6.delete(0, tk.END)
+            conc7.delete(0, tk.END)
+            impo1.delete(0, tk.END)
+            impo1.delete(0, tk.END)
+            impo2.delete(0, tk.END)
+            impo3.delete(0, tk.END)
+            impo4.delete(0, tk.END)
+            impo5.delete(0, tk.END)
+            impo6.delete(0, tk.END)
+            impo7.delete(0, tk.END)
+            combo1.delete(0,tk.END)
+            combo2.delete(0,tk.END)
+            combo3.delete(0,tk.END)
+            combo4.delete(0,tk.END)
+            combo5.delete(0,tk.END)
+            combo6.delete(0,tk.END)
+            combo7.delete(0,tk.END)
+            rec1.delete(0,tk.END)
+            rec2.delete(0,tk.END)
+            rec3.delete(0,tk.END)
+            rec4.delete(0,tk.END)
+            rec5.delete(0,tk.END)
+            rec6.delete(0,tk.END)
+            rec7.delete(0,tk.END)
+            subt1.delete(0,tk.END)
+            subt2.delete(0,tk.END)
+            subt3.delete(0,tk.END)
+            subt4.delete(0,tk.END)
+            subt5.delete(0,tk.END)
+            subt6.delete(0,tk.END)
+            subt7.delete(0,tk.END)
+            cant_res.delete(0,tk.END)
+            cambio.delete(0,tk.END)
+            formP.delete(0,tk.END)
+            aprov.delete(0,tk.END)
+            cuenta_res.delete(0,tk.END)
+            observ.delete(0,tk.END)
+            print("Datos ingresados correctamente.")
+        except Exception as e:
+            # Manejar cualquier error que pueda ocurrir durante la inserción
+            print(f"Error al ingresar datos: {e}")
+            conexion.rollback()
+
+        # Cerrar la conexión y el cursor
+        cursor.close()
+        conexion.close()
         
     #VENTANA PRINCIPAL
     WIND = tk.Toplevel(ventana)
@@ -721,7 +888,7 @@ def INDEX():
     btn_Insert = tk.Button(WIND, text="INSERTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command=Insertar)
     btn_Insert.place(x=330, y=520, width=100, height=30)
 
-    btn_Insert = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5)
+    btn_Insert = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=actualizar)
     btn_Insert.place(x=460, y=520, width=100, height=30)
 
     #pruebas
@@ -732,19 +899,27 @@ def INDEX():
     ventana.withdraw()
 
 def Evalue():
-    def close_window(window):
-     window.destroy()
-     
-
-    aux1 = e1.get()
-    aux2 = e2.get()
-    if(aux1=="" and aux2==""):
-        
+    user3 = e1.get()
+    passw3 = e2.get()
+    bd="sistema"
+    try:
+        conexion = psycopg2.connect(
+                            user=user3,
+                            password=passw3,
+                            host='localhost',
+                            port='5432',
+                            database= bd
+                        )
         messagebox.showinfo("INICIO DE SESION", "DATOS CORRECTOS")
         INDEX()
-    else:
+    except:
         messagebox.askretrycancel("ERROR", "Inicio de Sesion fallido, Intentelo de nuevo.")
-    
+    # Crear un cursor para ejecutar consultas SQL
+    cursor = conexion.cursor()
+    # Cerrar la conexión y el cursor
+    cursor.close()
+    conexion.close()
+
 def toggle_visibility():
     if e2.cget("show") == "*":
         eye_button.config(image=open_eye)
