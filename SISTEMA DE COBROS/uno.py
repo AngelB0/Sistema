@@ -551,8 +551,11 @@ def INDEX():
             # Crear un cursor para ejecutar consultas SQL
             cursor = conexion.cursor()
             # Ejecutar la consulta de inserción (adaptar según tu tabla)
-            consulta = "INSERT INTO ventas (folio, plantel, matri, nombre, grupo, licenciatura, fecha, cant_recibe, forma_p, aprov, cuenta_rec, observaciones, subtotal, concep) VALUES (%s, %s)"
-            cursor.execute(consulta, (FOL, PLA, MATRI,NOMA, GRUP, LIC, FE, CANTR, FP, APRO, CUR, OBSERVA, TOTAL, CONCEPTOF))
+            consulta = "INSERT INTO ventas (folio, plantel, matri, nombre, grupo, licenciatura, fecha, cant_recibe, forma_p, aprov, cuenta_rec, concep, observaciones, subtotal) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            # Imprimir la consulta y los valores antes de ejecutarla
+            print("Consulta:", consulta)
+            print("Valores:", (FOL, PLA, MATRI, NOMA, GRUP, LIC, FE, CANTR, FP, APRO, CUR,CONCEPTOF, OBSERVA, TOTAL ))
+            cursor.execute(consulta, (FOL, PLA, MATRI,NOMA, GRUP, LIC, FE, CANTR, FP, APRO, CUR, CONCEPTOF, OBSERVA, TOTAL))
 
             # Confirmar la transacción
             conexion.commit()
