@@ -210,187 +210,137 @@ def INDEX():
         # Cierra la ventana principal
         ventana.withdraw()
 
-    #VENTANA PARA CONSULTAR
+   #VENTANA PARA CONSULTAR
     def Consultar():
-        def Consu_Alum():
-            class TreeviewFrame(ttk.Frame):
-                def __init__(self, *args, **kwargs):
-                    super().__init__(*args, **kwargs)
-                    
-                    # Crear barras de desplazamiento horizontal y vertical
-                    self.hscrollbar = ttk.Scrollbar(self, orient=tk.HORIZONTAL)
-                    self.vscrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL)
-                    
-                    # Crear un Treeview con barras de desplazamiento asociadas
-                    self.treeview = ttk.Treeview(
-                        self,
-                        xscrollcommand=self.hscrollbar.set,
-                        yscrollcommand=self.vscrollbar.set
-                    )
-                    
-                    # Configurar las barras de desplazamiento para controlar el Treeview
-                    self.hscrollbar.config(command=self.treeview.xview)
-                    self.hscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
-                    self.vscrollbar.config(command=self.treeview.yview)
-                    self.vscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-                    
-                    # Empaquetar el Treeview
-                    self.treeview.pack()
-
-                def mostrar_info_archivos(self):
-                    # Iterar sobre los archivos en el directorio del ejecutable de Python
-                    for file in pathlib.Path(sys.executable).parent.iterdir():
-                        # Insertar información sobre cada archivo en el Treeview
-                        self.treeview.insert(
-                            "", tk.END, values=(file.name, file.stat().st_size))
-
-                def mostrar_info_alumnos(self):
-                    def obtener_datosBD():
-                        user3 = e1.get()
-                        passw3 = e2.get()
-                        # conexión a la BD
-                        conexion = psycopg2.connect(user3,
-                                                    passw3,
-                                                    host='localhost',
-                                                    port='5432',
-                                                    database='sistema')
-
-                        # Crear un cursor para ejecutar consultas SQL
-                        cursor = conexion.cursor()
-
-                        # Ejecutar una consulta para obtener datos (reemplaza con tu propia consulta)
-                        cursor.execute("SELECT * FROM alumnos")
-                        datos = cursor.fetchall()
-
-                        # Cerrar la conexión y el cursor
-                        cursor.close()
-                        conexion.close()
-
-                        return datos
-
-                    # Limpiar las filas existentes en el Treeview
-                    for fila in self.treeview.get_children():
-                        self.treeview.delete(fila)
-
-                    # Configurar el Treeview con columnas y encabezados
-                    self.treeview.config(columns=("matricula", "alumno", "plantel", "oferta_edu", "grado", "grupo", "periodo", "turno", "fecha_ins", "estatus", "fecha_est"), show="headings")
-                    self.treeview.heading("matricula", text="Matricula")
-                    self.treeview.heading("alumno", text="Alumno")
-                    self.treeview.heading("plantel", text="Plantel")
-                    self.treeview.heading("oferta_edu", text="Oferta Educativa")
-                    self.treeview.heading("grado", text="Grado")
-                    self.treeview.heading("grupo", text="Grupo")
-                    self.treeview.heading("periodo", text="Periodo")
-                    self.treeview.heading("turno", text="Turno")
-                    self.treeview.heading("fecha_ins", text="Fecha de Inscripcion")
-                    self.treeview.heading("estatus", text="Estatus")
-                    self.treeview.heading("fecha_est", text="Fecha del Estatus")
-                    
-
-                    # Obtener datos de la base de datos y mostrarlos en el Treeview
-                    datos = obtener_datosBD()
-                    for dato in datos:
-                        self.treeview.insert("", "end", values=dato)    
-            # Crear una instancia de la clase TreeviewFrame
-            treeview_frame = TreeviewFrame(ventana_consul)
-
-            # Empaquetar el TreeviewFrame en la ventana principal
-            treeview_frame.pack()
-
-            # Mostrar información de archivos
-            treeview_frame.mostrar_info_archivos()
-
-            # Mostrar información de alumnos
-            treeview_frame.mostrar_info_alumnos()      
-
-        def Consu_Concep():
-            class TreeviewFrame(ttk.Frame):
-                def __init__(self, *args, **kwargs):
-                    super().__init__(*args, **kwargs)
-
-                    # Crear barras de desplazamiento horizontal y vertical
-                    self.hscrollbar = ttk.Scrollbar(self, orient=tk.HORIZONTAL)
-                    self.vscrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL)
-
-                    # Crear un Treeview con barras de desplazamiento asociadas
-                    self.treeview = ttk.Treeview(
-                        self,
-                        xscrollcommand=self.hscrollbar.set,
-                        yscrollcommand=self.vscrollbar.set
-                    )
-
-                    # Configurar las barras de desplazamiento para controlar el Treeview
-                    self.hscrollbar.config(command=self.treeview.xview)
-                    self.hscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
-                    self.vscrollbar.config(command=self.treeview.yview)
-                    self.vscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-                    # Empaquetar el Treeview
-                    self.treeview.pack()
-
-                def mostrar_info_conceptos(self):
-                    def obtener_datos_conceptos():
-                        # conexión a la BD
-                        conexion = psycopg2.connect(
-                            user='user1',
-                            password='1234',
-                            host='localhost',
-                            port='5432',
-                            database='sistema'
-                        )
-
-                        # Crear un cursor para ejecutar consultas SQL
-                        cursor = conexion.cursor()
-
-                        # Ejecutar una consulta para obtener datos de conceptos
-                        cursor.execute("SELECT * FROM conceptos")
-                        datos = cursor.fetchall()
-
-                        # Cerrar la conexión y el cursor
-                        cursor.close()
-                        conexion.close()
-
-                        return datos
-
-                    # Limpiar las filas existentes en el Treeview para conceptos
-                    for fila in self.treeview.get_children():
-                        self.treeview.delete(fila)
-
-                    # Configurar el Treeview con columnas y encabezados para conceptos
-                    self.treeview.config(columns=("codigo", "concepto", "cuenta_cont", "costo", "clasif"), show="headings")
-                    self.treeview.heading("codigo", text="Código")
-                    self.treeview.heading("concepto", text="Concepto")
-                    self.treeview.heading("cuenta_cont", text="Cuenta Contable")
-                    self.treeview.heading("costo", text="Costo")
-                    self.treeview.heading("clasif", text="Clasificación")
-
-                    # Obtener datos de la base de datos y mostrarlos en el Treeview para conceptos
-                    datos = obtener_datos_conceptos()
-                    for dato in datos:
-                        self.treeview.insert("", "end", values=dato)
-
-            # Crear una instancia de la clase TreeviewFrame
-            treeview_frame = TreeviewFrame(ventana_consul)
-
-            # Empaquetar el TreeviewFrame en la ventana principal
-            treeview_frame.pack()
-
-            # Mostrar información de conceptos
-            treeview_frame.mostrar_info_conceptos()
-
         ventana_consul=tk.Tk()
-    
         #color de fondo BG
         ventana_consul.config(bg="#89BBFF")
         #se le añade un titulo a la app
         ventana_consul.title("CONSULTA DE REGISTROS")
-        ventana_consul.geometry("1366x700")        
+        ventana_consul.geometry("1366x700")
+
+        def Consu_Alum():
+            # Mostrar información de archivos
+            treeview_frame.mostrar_info_archivos()
+            # Mostrar información de alumnos
+            treeview_frame.mostrar_info_alumnos()
+
+
+        def Consu_Concep():
+            # Mostrar información de conceptos
+            treeview_frame.mostrar_info_conceptos()
+
+
+        class TreeviewFrame(ttk.Frame):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+
+                self.hscrollbar = ttk.Scrollbar(self, orient=tk.HORIZONTAL)
+                self.vscrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL)
+                self.treeview = ttk.Treeview(
+                    self,
+                    xscrollcommand=self.hscrollbar.set,
+                    yscrollcommand=self.vscrollbar.set
+                )
+
+                self.hscrollbar.config(command=self.treeview.xview)
+                self.hscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+                self.vscrollbar.config(command=self.treeview.yview)
+                self.vscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+                self.treeview.pack()
+
+                # Atributo para rastrear el estado del Treeview (minimizado o no)
+                self.minimizado = False
+
+            def mostrar_info_archivos(self):
+                for file in pathlib.Path(sys.executable).parent.iterdir():
+                    self.treeview.insert(
+                        "", tk.END, values=(file.name, file.stat().st_size))
+
+            def mostrar_info_alumnos(self):
+                def obtener_datosBD():
+                    conexion = psycopg2.connect(user='user1',
+                                                password='1234',
+                                                host='localhost',
+                                                port='5432',
+                                                database='sistema')
+                    cursor = conexion.cursor()
+                    cursor.execute("SELECT * FROM alumnos")
+                    datos = cursor.fetchall()
+                    cursor.close()
+                    conexion.close()
+                    return datos
+
+                for fila in self.treeview.get_children():
+                    self.treeview.delete(fila)
+
+                self.treeview.config(columns=("matricula", "alumno", "plantel", "oferta_edu", "grado", "grupo", "periodo", "turno", "fecha_ins", "estatus", "fecha_est"), show="headings")
+                self.treeview.heading("matricula", text="Matricula")
+                self.treeview.heading("alumno", text="Alumno")
+                self.treeview.heading("plantel", text="Plantel")
+                self.treeview.heading("oferta_edu", text="Oferta Educativa")
+                self.treeview.heading("grado", text="Grado")
+                self.treeview.heading("grupo", text="Grupo")
+                self.treeview.heading("periodo", text="Periodo")
+                self.treeview.heading("turno", text="Turno")
+                self.treeview.heading("fecha_ins", text="Fecha de Inscripción")
+                self.treeview.heading("estatus", text="Estatus")
+                self.treeview.heading("fecha_est", text="Fecha de Estatus")
+
+                datos = obtener_datosBD()
+                for dato in datos:
+                    self.treeview.insert("", "end", values=dato)
+
+            def mostrar_info_conceptos(self):
+                def obtener_datos_conceptos():
+                    conexion = psycopg2.connect(
+                        user='user1',
+                        password='1234',
+                        host='localhost',
+                        port='5432',
+                        database='sistema'
+                    )
+                    cursor = conexion.cursor()
+                    cursor.execute("SELECT * FROM conceptos")
+                    datos = cursor.fetchall()
+                    cursor.close()
+                    conexion.close()
+                    return datos
+
+                for fila in self.treeview.get_children():
+                    self.treeview.delete(fila)
+
+                self.treeview.config(columns=("codigo", "concepto", "cuenta_cont", "costo", "clasif"), show="headings")
+                self.treeview.heading("codigo", text="Código")
+                self.treeview.heading("concepto", text="Concepto")
+                self.treeview.heading("cuenta_cont", text="Cuenta Contable")
+                self.treeview.heading("costo", text="Costo")
+                self.treeview.heading("clasif", text="Clasificación")
+
+                datos = obtener_datos_conceptos()
+                for dato in datos:
+                    self.treeview.insert("", "end", values=dato)
+
+            def toggle_minimizar(self):
+                # Cambiar el estado de minimizado y mostrar u ocultar el Treeview en consecuencia
+                self.minimizado = not self.minimizado
+                if self.minimizado:
+                    self.treeview.pack_forget()
+                else:
+                    self.treeview.pack()
+
+        
+        # Crear una instancia de la clase TreeviewFrame
+        treeview_frame = TreeviewFrame(ventana_consul)
+        # Empaquetar el TreeviewFrame en la ventana principal
+        treeview_frame.pack()
 
         # Crear un botón dentro de la ventana secundaria
         # para cerrar la misma.            
         btn_Alumnos = ttk.Button(
             ventana_consul,
-            text="Consultar Alumnos", 
+            text="Consultar Alumnos",
             command=Consu_Alum
         )
         btn_Conceptos = ttk.Button(
@@ -403,12 +353,12 @@ def INDEX():
         btn_Alumnos.place(x=150, y=600, width=120, height=40)
         btn_Conceptos.place(x=280, y=600, width=125, height=40)
 
-        def close_window(window):
-            # Cierra la ventana principal
-            WIND.withdraw()
-            window.destroy()
-            WIND.deiconify()
-
+    def close_window(window):
+        # Cierra la ventana principal
+        WIND.withdraw()
+        window.destroy()
+        WIND.deiconify()
+        
     def Insertar():
         def import_data_con(file_path):
             table_name='conceptos'
@@ -1106,6 +1056,7 @@ def INDEX():
     # Cierra la ventana principal
     ventana.withdraw()
 
+#LOGIN
 def Evalue():
     user3 = e1.get()
     passw3 = e2.get()
@@ -1170,6 +1121,8 @@ l2 = Label(ventana, text="PASSWORD", font=("Candara", 20, "bold"), bg='#89BBFF')
 e2 = Entry(ventana, font=30, show='*', relief=SOLID)
 e2.grid(row=5, column=1, pady=5, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
+# Asocia la tecla Enter a la función Evalue
+e2.bind("<Return>", lambda event: Evalue())
 
 # IMAGEN adding image (remember image should be PNG and not JPG)
 img = PhotoImage(file='img/LOGO_TRANSPARENTE.png')
@@ -1194,7 +1147,7 @@ eye_button = Button(ventana, command=toggle_visibility)
 open_eye = PhotoImage(file='img/visible.png')  # Ajusta la ruta y el nombre de la imagen
 close_eye = PhotoImage(file='img/ojo.png')  # Ajusta la ruta y el nombre de la imagen
 eye_button.config(image=close_eye, bd=0, bg="#89BBFF")
-eye_button.grid(row=5, column=2, padx=(100, 10),columnspan=2) # Ajusta las coordenadas según sea necesario
+eye_button.grid(row=5, column=2, padx=(135, 10),columnspan=2) # Ajusta las coordenadas según sea necesario
 ventana.grid_columnconfigure(2, weight=1)  # Ajusta el peso de la columna para centrar
 
 #moverse con las flechas para el label y boton 
@@ -1210,7 +1163,6 @@ def arriba(event):
     if isinstance(limite2, tk.Entry):
         limite2.focus()
     return "break"
-
 # Asocia el evento <Down> a la función para cada Entry
 e1.bind("<Down>", abajo)
 e1.bind("<Up>", arriba)
@@ -1218,6 +1170,5 @@ e2.bind("<Down>", abajo)
 e2.bind("<Up>", arriba)
 # Boton a label
 b1.bind("<Up>", lambda event: e2.focus())
-
 
 ventana.mainloop()
