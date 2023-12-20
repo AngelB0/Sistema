@@ -359,6 +359,7 @@ def INDEX():
         window.destroy()
         WIND.deiconify()
         
+
     def Insertar():
         def import_data_con(file_path):
             table_name='conceptos'
@@ -664,7 +665,7 @@ def INDEX():
 
         cursor = conexion.cursor()
 
-        cursor.execute("SELECT * FROM alumnos WHERE matricula = %s", (llave_primaria,))
+        cursor.execute("SELECT * FROM alumnos WHERE Matricula = %s", (llave_primaria,))
         registro_completo = cursor.fetchone()
 
         cursor.close()
@@ -1055,7 +1056,6 @@ def INDEX():
     mostrar_mat()
     # Cierra la ventana principal
     ventana.withdraw()
-
 #LOGIN
 def Evalue():
     user3 = e1.get()
@@ -1172,3 +1172,4 @@ e2.bind("<Up>", arriba)
 b1.bind("<Up>", lambda event: e2.focus())
 
 ventana.mainloop()
+hola
