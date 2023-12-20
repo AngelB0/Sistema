@@ -1172,3 +1172,4 @@ e2.bind("<Up>", arriba)
 b1.bind("<Up>", lambda event: e2.focus())
 
 ventana.mainloop()
+#hola
