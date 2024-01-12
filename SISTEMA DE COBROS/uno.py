@@ -13,149 +13,449 @@ import psycopg2 #importacion del modulo
 
 #CLASE MAIN todo Va dentro de esta CLASS
 def INDEX():
-    #VENTANA ACTUALIZAR REGISTRO DE ALUMNO
-    def act_Alum():
-        def Save_Alum():
-            MATRICULA = matri2.get()
-            ALU = alumno.get()
-            PLAN = plantel.get()
-            OFED = ofedu.get()
-            GRAD = grad.get()
-            GRUPO = grad.get()
-            PERIODO = perido.get()
-            TURNO = turno.get()
-            FINSCRIPCION = inscripcion.get()
-            ESTATUS = estatus.get()
-            FESTATUS = festatus.get()
-            print("DATOS ACTUALIZADOS")
-
-        # Crear una ventana secundaria.
-        window_alu = tk.Toplevel()
-        #color de fondo BG
-        window_alu.config(bg="#89BBFF")
-        #se le añade un titulo a la app
-        window_alu.title("ACTUALIZAR REGISTRO ALUMNOS")
-        window_alu.config(width=1080, height=600)
-
-        #MATRICULA
-        tk.Label(window_alu, text="MATRICULA", bg="white").place(x=50, y=70, width=80, height=20)
-        matri2 = tk.Entry(window_alu, width=10)
-        matri2.place(x=135, y=70, width=80, height=20)
-
-        #ALUMNO
-        tk.Label(window_alu, text="ALUMNO", bg="white").place(x=250, y=70, width=80, height=20)
-        alumno = tk.Entry(window_alu, width=10)
-        alumno.place(x=335, y=70, width=80, height=20)
-
-        #OFERTA EDUCATIVA 
-        tk.Label(window_alu, text="OFERTA EDUCATIVA", bg="white").place(x=440, y=70, width=120, height=20)
-        ofedu = tk.Entry(window_alu, width=10)
-        ofedu.place(x=565, y=70, width=200, height=20)
-
-        #PLANTEL
-        tk.Label(window_alu, text="PLANTEL", bg="white").place(x=790, y=70, width=75, height=20)
-        plantel = tk.Entry(window_alu, width=10)
-        plantel.place(x=870, y=70, width=120, height=20)
-
-        #GRADO
-        tk.Label(window_alu, text="GRADO", bg="white").place(x=50, y=110, width=40, height=20)
-        grad = tk.Entry(window_alu, width=10)
-        grad.place(x=100, y=110, width=40, height=20)
-
-        #GRUPO
-        tk.Label(window_alu, text="GRUPO", bg="white").place(x=150, y=110, width=40, height=20)
-        grup = tk.Entry(window_alu, width=10)
-        grup.place(x=200, y=110, width=40, height=20)
-
-        #PERIODO
-        tk.Label(window_alu, text="PERIODO", bg="white").place(x=250, y=110, width=50, height=20)
-        perido = tk.Entry(window_alu, width=10)
-        perido.place(x=310, y=110, width=80, height=20)
-
-        #TURNO
-        tk.Label(window_alu, text="TURNO", bg="white").place(x=400, y=110, width=50, height=20)
-        turno = tk.Entry(window_alu, width=10)
-        turno.place(x=460, y=110, width=80, height=20)
-
-        #FECHA DE INSCRIPCION
-        tk.Label(window_alu, text="FECHA DE INSCRIPCION", bg="white").place(x=50, y=150, width=133, height=20)
-        inscripcion = tk.Entry(window_alu, width=10)
-        inscripcion.place(x=190, y=150, width=100, height=20)
-
-        #ESTATUS
-        tk.Label(window_alu, text="ESTATUS", bg="white").place(x=300, y=150, width=80, height=20)
-        estatus = tk.Entry(window_alu, width=10)
-        estatus.place(x=385, y=150, width=80, height=20)
-
-        #FECHA ESTATUS
-        tk.Label(window_alu, text="FECHA ESTATUS", bg="white").place(x=480, y=150, width=90, height=20)
-        festatus = tk.Entry(window_alu, width=10)
-        festatus.place(x=575, y=150, width=80, height=20)
-
-        #Boton cerrar
-        boton_cerrar = ttk.Button(window_alu, text="Cerrar ventana", command=window_alu.destroy)
-        boton_cerrar.place(x=50, y=200, width=90, height=40)
-
-        #Boton guardar
-        boton_guardar = ttk.Button(window_alu, text="GUARDAR", command= Save_Alum)
-        boton_guardar.place(x=150, y=200, width=90, height=40)
-
-        # Cierra la ventana principal
-        ventana.withdraw()
-        
-    #VENTANA ACTUALIZAR REGISTRO CONCEPTO
-    def act_Concep():
-        def save_Concep():
-            CODIGO = codigo.get()
-            CONCEP = concepto.get()
-            CONTABLE = contable.get()
-            COSTO = costo.get()
-            CLAS = clasificacion.get()
-            print("DATOS ACTUALIZADOS CORRECTAMENTE")
-
-        # Crear una ventana secundaria.
-        window_con = tk.Toplevel()
-        #color de fondo BG
-        window_con.config(bg="#89BBFF")
-        #se le añade un titulo a la app
-        window_con.title("ACTUALIZAR REGISTRO CONCEPTOS")
-        window_con.config(width=1080, height=600)
-
-        #CODIGO
-        tk.Label(window_con, text="CODIGO", bg="white").place(x=50, y=70, width=80, height=20)
-        codigo = tk.Entry(window_con, width=10)
-        codigo.place(x=135, y=70, width=80, height=20)
-
-        #CONCEPTO
-        tk.Label(window_con, text="CONCEPTO", bg="white").place(x=250, y=70, width=80, height=20)
-        concepto = tk.Entry(window_con, width=10)
-        concepto.place(x=335, y=70, width=80, height=20)
-
-        #CUENTA CONTABLE 
-        tk.Label(window_con, text="CUENTA CONTABLE", bg="white").place(x=440, y=70, width=120, height=20)
-        contable = tk.Entry(window_con, width=10)
-        contable.place(x=565, y=70, width=200, height=20)
-        #COSTO
-        tk.Label(window_con, text="COSTO", bg="white").place(x=790, y=70, width=75, height=20)
-        costo = tk.Entry(window_con, width=10)
-        costo.place(x=870, y=70, width=120, height=20)
-
-        #CLASIFICACION
-        tk.Label(window_con, text="CLASIFICACION", bg="white").place(x=50, y=110, width=100, height=20)
-        clasificacion = tk.Entry(window_con, width=10)
-        clasificacion.place(x=160, y=110, width=100, height=20)
-
-        #Boton cerrar
-        boton_cerrar = ttk.Button( window_con, text="Cerrar ventana", command=window_con.destroy)
-        boton_cerrar.place(x=50, y=200, width=90, height=40)
-        #Boton Guardar
-        boton_guardar = ttk.Button(window_con, text="GUARDAR",command=save_Concep)
-        boton_guardar.place(x=150, y=200, width=90, height=40)
-        # Cierra la ventana principal
-        ventana.withdraw()
-
     #VENTANA ACTUALIZAR
     def actualizar():
+        #VENTANA ACTUALIZAR REGISTRO DE ALUMNO
+        def act_Alum():
+            def Save_Alum():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                cursor = conexion.cursor()
+
+                aux1 = int(matri2.get())
+                aux2 = alumno_a.get(1.0, tk.END)
+                aux3 = plantel_a.get(1.0, tk.END)
+                aux4 = ofedu_a.get(1.0, tk.END)
+                aux5= int(grad_a.get(1.0, tk.END))
+                aux6 = grup_a.get(1.0, tk.END)
+                aux7 = perido_a.get(1.0, tk.END)
+                aux8 = turno_al.get(1.0, tk.END)
+                aux9 = inscripcion_a.get(1.0, tk.END)
+                aux10 = estatus_a.get(1.0, tk.END)
+                aux11 = festatus_a.get(1.0, tk.END)
+                cursor.execute("UPDATE prueba SET alumno = %s, plantel = %s, oferta_edu = %s, grado = %s, grupo = %s, periodo = %s, turno = %s, fecha_ins = %s , estatus = %s, fecha_est = %s WHERE matricula = %s",
+                                (aux2, aux3, aux4, aux5, aux6, aux7, aux8, aux9, aux10, aux11, aux1))
+                messagebox.showinfo("VALIDACION", "DATOS ACTUALIZADOS")
+                matri2.delete(0, tk.END)
+                alumno_a.delete(1.0, tk.END)
+                plantel_a.delete(1.0, tk.END)
+                ofedu_a.delete(1.0, tk.END)
+                grad_a.delete(1.0, tk.END)
+                grup_a.delete(1.0, tk.END)
+                perido_a.delete(1.0, tk.END)
+                turno_al.delete(1.0, tk.END)
+                inscripcion_a.delete(1.0, tk.END)
+                estatus_a.delete(1.0, tk.END)
+                festatus_a.delete(1.0, tk.END)
+
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+
+            def obtener_registro_completo_act(llave_primaria):
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+
+                cursor = conexion.cursor()
+
+                cursor.execute("SELECT * FROM prueba WHERE Matricula = %s", (llave_primaria,))
+                registro_completo = cursor.fetchone()
+
+                cursor.close()
+                conexion.close()
+
+                return registro_completo
+
+            def accion_al_seleccionar_act(event):
+            # Añade más vectores según sea necesario para las demás columnas
+                opcion_seleccionada = matri2.get()
+                # Actualizar el contenido del Label con la opción seleccionada
+                #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+                if opcion_seleccionada:
+                    registro_completo = obtener_registro_completo_act(opcion_seleccionada)
+                    if registro_completo:
+                        #segun la matricula imprimimos la informacion del alumno
+                        entered_text_1 = str(registro_completo[1])#ALUMNO
+                        alumno_a.config(state=tk.NORMAL)
+                        alumno_a.delete(1.0, tk.END)
+                        alumno_a.insert(tk.END, f"{entered_text_1}")
+
+                        entered_text_2 = str(registro_completo[2])#PLANTEL
+                        plantel_a.config(state=tk.NORMAL)
+                        plantel_a.delete(1.0, tk.END)
+                        plantel_a.insert(tk.END, f"{entered_text_2}")
+
+                        entered_text_3 = str(registro_completo[3])#OFERTA EDUCATIVA
+                        ofedu_a.config(state=tk.NORMAL)
+                        ofedu_a.delete(1.0, tk.END)
+                        ofedu_a.insert(tk.END, f"{entered_text_3}")
+
+                        entered_text_4 = str(registro_completo[4])#GRADO
+                        grad_a.config(state=tk.NORMAL)
+                        grad_a.delete(1.0, tk.END)
+                        grad_a.insert(tk.END, f"{entered_text_4}")
+
+                        entered_text_5 = str(registro_completo[5])#GRUPO
+                        grup_a.config(state=tk.NORMAL)
+                        grup_a.delete(1.0, tk.END)
+                        grup_a.insert(tk.END, f"{entered_text_5}")
+                        entered_text_6 = str(registro_completo[6])#PERIODO
+                        perido_a.config(state=tk.NORMAL)
+                        perido_a.delete(1.0, tk.END)
+                        perido_a.insert(tk.END, f"{entered_text_6}")
+                        entered_text_7 = str(registro_completo[7])#TURNO
+                        turno_al.config(state=tk.NORMAL)
+                        turno_al.delete(1.0, tk.END)
+                        turno_al.insert(tk.END, f"{entered_text_7}")
+                        entered_text_8 = str(registro_completo[8])#INSCRIPCION
+                        inscripcion_a.config(state=tk.NORMAL)
+                        inscripcion_a.delete(1.0, tk.END)
+                        inscripcion_a.insert(tk.END, f"{entered_text_8}")
+                        entered_text_9 = str(registro_completo[9])#ESTATUS
+                        estatus_a.config(state=tk.NORMAL)
+                        estatus_a.delete(1.0, tk.END)
+                        estatus_a.insert(tk.END, f"{entered_text_9}")
+                        entered_text_10 = str(registro_completo[10])#TURNO
+                        festatus_a.config(state=tk.NORMAL)
+                        festatus_a.delete(1.0, tk.END)
+                        festatus_a.insert(tk.END, f"{entered_text_10}")
+                    else:
+                        print("Registro no encontrado.")
+
+            def obtener_mat_bd_act():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                # Crear un cursor para ejecutar consultas SQL
+                cursor = conexion.cursor()
+
+                # Ejecutar una consulta para obtener opciones (reemplaza con tu propia consulta)
+                cursor.execute("SELECT * FROM alumnos")
+                matris = cursor.fetchall()
+
+                # Cerrar la conexión y el cursor
+                cursor.close()
+                conexion.close()
+
+                return matris
+
+            def on_key_release_act(event):
+                    number = mostrar_mat_act()
+                    try:
+                        value = int(combobox_var.get())
+                        filtered_values = [item for item in number if str(value) in str(item)]
+
+                    except ValueError:
+                        filtered_values = []
+
+                    matri2['values'] = filtered_values
+
+            def mostrar_mat_act():
+                # Obtener las opciones de la base de datos
+                opciones_bd_mat = obtener_mat_bd_act()
+                # Limpiar el ComboBox
+                matri2['values'] = ()
+                # Configurar las nuevas opciones en el ComboBox
+                matri2['values'] = [opcion[0] for opcion in opciones_bd_mat]
+                number_list = matri2['values'] = [opcion[0] for opcion in opciones_bd_mat]
+
+                return number_list
+            
+
+            # Crear una ventana secundaria.
+            window_alu = tk.Toplevel()
+            #color de fondo BG
+            window_alu.config(bg="#89BBFF")
+            #se le añade un titulo a la app
+            window_alu.title("ACTUALIZAR REGISTRO ALUMNOS")
+            window_alu.config(width=1080, height=600)
+
+            #MATRICULA
+            tk.Label(window_alu, text="MATRICULA:", bg="#89BBFF").place(x=44, y=70, width=80, height=20)
+            combobox_var = tk.StringVar()
+            matri2 = ttk.Combobox(window_alu, width=20, textvariable=combobox_var)
+            matri2.place(x=126, y=70, width=92, height=20)
+            # Vincular la función al evento <<ComboboxSelected>>
+            matri2.bind("<<ComboboxSelected>>", accion_al_seleccionar_act)
+            matri2.bind('<KeyRelease>', on_key_release_act)
+
+            #ALUMNO
+            tk.Label(window_alu, text="ALUMNO:", bg="#89BBFF").place(x=36, y=100, width=80, height=20)
+            alumno_a = tk.Text(window_alu, height=1, width=35, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            alumno_a.place(x=125, y=100)
+            alumno_a.insert(tk.END, "")
+
+            #OFERTA EDUCATIVA 
+            tk.Label(window_alu, text="OFERTA EDUCATIVA:", bg="#89BBFF").place(x=420, y=100, width=120, height=20)
+            ofedu_a = tk.Text(window_alu, height=1, width=50, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            ofedu_a.place(x=545, y=100)
+            ofedu_a.insert(tk.END, "")
+
+            #PLANTEL
+            tk.Label(window_alu, text="PLANTEL:", bg="#89BBFF").place(x=690, y=130, width=75, height=20)
+            plantel_a = tk.Text(window_alu, height=1, width=22, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            plantel_a.insert(tk.END, "")
+            plantel_a.place(x=770, y=130)
+
+            #GRADO
+            tk.Label(window_alu, text="GRADO:",bg="#89BBFF").place(x=50, y=130, width=40, height=20)
+            grad_a = tk.Text(window_alu, height=1, width=2, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            grad_a.insert(tk.END, "")
+            grad_a.place(x=100, y=130)
+
+            #GRUPO
+            tk.Label(window_alu, text="GRUPO:", bg="#89BBFF").place(x=135, y=130, width=40, height=20)
+            grup_a = tk.Text(window_alu, height=1, width=16, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            grup_a.insert(tk.END, "")
+            grup_a.place(x=185, y=130)
+
+            #PERIODO
+            tk.Label(window_alu, text="PERIODO:", bg="#89BBFF").place(x=335, y=130, width=50, height=20)
+            perido_a = tk.Text(window_alu, height=1, width=15, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            perido_a.insert(tk.END, "")
+            perido_a.place(x=395, y=130)
+
+            #TURNO
+            tk.Label(window_alu, text="TURNO:", bg="#89BBFF").place(x=530, y=130, width=50, height=20)
+            turno_al = tk.Text(window_alu, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            turno_al.insert(tk.END, "")
+            turno_al.place(x=590, y=130)
+
+            #FECHA DE INSCRIPCION
+            tk.Label(window_alu, text="FECHA DE INSCRIPCION:", bg="#89BBFF").place(x=50, y=160, width=133, height=20)
+            inscripcion_a = tk.Text(window_alu, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            inscripcion_a.insert(tk.END, "")
+            inscripcion_a.place(x=190, y=160)
+
+            #ESTATUS
+            tk.Label(window_alu, text="ESTATUS:", bg="#89BBFF").place(x=285, y=160, width=80, height=20)
+            estatus_a = tk.Text(window_alu, height=1, width=11, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            estatus_a.insert(tk.END, "")
+            estatus_a.place(x=362, y=160)
+
+            #FECHA ESTATUS
+            tk.Label(window_alu, text="FECHA ESTATUS:", bg="#89BBFF").place(x=475, y=160, width=90, height=20)
+            festatus_a = tk.Text(window_alu, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            festatus_a.insert(tk.END, "")
+            festatus_a.place(x=570, y=160)
+
+            #Boton cerrar
+            boton_cerrar = ttk.Button(window_alu, text="Cerrar ventana", command=window_alu.destroy)
+            boton_cerrar.place(x=50, y=300, width=90, height=40)
+
+            #Boton guardar
+            boton_guardar = ttk.Button(window_alu, text="GUARDAR", command= Save_Alum)
+            boton_guardar.place(x=150, y=300, width=90, height=40)
+
+            # Cierra la ventana principal
+            mostrar_mat_act()
+            ventana.withdraw()
+        
+        #VENTANA ACTUALIZAR REGISTRO CONCEPTO
+        def act_Concep():
+            def save_Concep():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                cursor = conexion.cursor()
+
+                a1 = int(codigo_a.get())
+                a2 = concepto_a.get(1.0, tk.END)
+                a3 = contable_a.get(1.0, tk.END)
+                a4 = costo_a.get(1.0, tk.END)
+                a5 = clasificacion_a.get(1.0, tk.END)
+                cursor.execute("UPDATE conceptos SET concepto = %s, cuenta_cont = %s, costo = %s, clasif = %s WHERE codigo = %s",
+                                (a2, a3, a4, a5, a1))
+                messagebox.showinfo("VALIDACION", "DATOS ACTUALIZADOS")
+                codigo_a.delete(0, tk.END)
+                concepto_a.delete(1.0, tk.END)
+                contable_a.delete(1.0, tk.END)
+                costo_a.delete(1.0, tk.END)
+                clasificacion_a.delete(1.0, tk.END)
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+
+            def obtener_registro_completo_act(llave_primaria):
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+
+                cursor = conexion.cursor()
+
+                cursor.execute("SELECT * FROM conceptos WHERE codigo = %s", (llave_primaria,))
+                registro_completo = cursor.fetchone()
+
+                cursor.close()
+                conexion.close()
+
+                return registro_completo
+
+            def accion_al_seleccionar_con(event):
+            # Añade más vectores según sea necesario para las demás columnas
+                opcion_seleccionada = codigo_a.get()
+                # Actualizar el contenido del Label con la opción seleccionada
+                #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+                if opcion_seleccionada:
+                    registro_completo = obtener_registro_completo_act(opcion_seleccionada)
+                    if registro_completo:
+                        #segun la matricula imprimimos la informacion del alumno
+                        entered_text_1 = str(registro_completo[1])#CONCEPTO
+                        concepto_a.config(state=tk.NORMAL)
+                        concepto_a.delete(1.0, tk.END)
+                        concepto_a.insert(tk.END, f"{entered_text_1}")
+
+                        entered_text_2 = str(registro_completo[2])#CUENTA CONTABLE
+                        contable_a.config(state=tk.NORMAL)
+                        contable_a.delete(1.0, tk.END)
+                        contable_a.insert(tk.END, f"{entered_text_2}")
+
+                        entered_text_3 = str(registro_completo[3])#COSTO
+                        costo_a.config(state=tk.NORMAL)
+                        costo_a.delete(1.0, tk.END)
+                        costo_a.insert(tk.END, f"{entered_text_3}")
+
+                        entered_text_4 = str(registro_completo[4])#CLASIFICACION
+                        clasificacion_a.config(state=tk.NORMAL)
+                        clasificacion_a.delete(1.0, tk.END)
+                        clasificacion_a.insert(tk.END, f"{entered_text_4}")
+                    else:
+                        print("Registro no encontrado.")
+
+            def obtener_mat_bd_con():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                # Crear un cursor para ejecutar consultas SQL
+                cursor = conexion.cursor()
+
+                # Ejecutar una consulta para obtener opciones (reemplaza con tu propia consulta)
+                cursor.execute("SELECT * FROM conceptos")
+                matris = cursor.fetchall()
+
+                # Cerrar la conexión y el cursor
+                cursor.close()
+                conexion.close()
+
+                return matris
+
+            def on_key_release_con(event):
+                    number = mostrar_mat_con()
+                    try:
+                        value = int(combobox_con.get())
+                        filtered_values = [item for item in number if str(value) in str(item)]
+
+                    except ValueError:
+                        filtered_values = []
+
+                    codigo_a['values'] = filtered_values
+
+            def mostrar_mat_con():
+                # Obtener las opciones de la base de datos
+                opciones_bd_mat = obtener_mat_bd_con()
+                # Limpiar el ComboBox
+                codigo_a['values'] = ()
+                # Configurar las nuevas opciones en el ComboBox
+                codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat]
+                number_list = codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat]
+
+                return number_list
+
+            # Crear una ventana secundaria.
+            window_con = tk.Toplevel()
+            #color de fondo BG
+            window_con.config(bg="#89BBFF")
+            #se le añade un titulo a la app
+            window_con.title("ACTUALIZAR REGISTRO CONCEPTOS")
+            window_con.config(width=1080, height=600)
+
+            #CODIGO
+            combobox_con = tk.StringVar()
+            tk.Label(window_con, text="CODIGO:", bg="#89BBFF").place(x=40, y=70, width=80, height=20)
+            codigo_a = ttk.Combobox(window_con, width=20, textvariable=combobox_con)
+            codigo_a.place(x=135, y=70, width=80, height=20)
+            # Vincular la función al evento <<ComboboxSelected>>
+            codigo_a.bind("<<ComboboxSelected>>", accion_al_seleccionar_con)
+            codigo_a.bind('<KeyRelease>', on_key_release_con)
+
+            #CONCEPTO
+            tk.Label(window_con, text="CONCEPTO:", bg="#89BBFF").place(x=50, y=100, width=80, height=20)
+            concepto_a = tk.Text(window_con, height=1, width=25, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            concepto_a.place(x=135, y=100)
+            concepto_a.insert(tk.END, "")
+
+            #CUENTA CONTABLE 
+            tk.Label(window_con, text="CUENTA CONTABLE:", bg="#89BBFF").place(x=350, y=100, width=120, height=20)
+            contable_a = tk.Text(window_con, height=1, width=3, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            contable_a.place(x=475, y=100)
+            contable_a.insert(tk.END,"")
+
+            #COSTO
+            tk.Label(window_con, text="COSTO:", bg="#89BBFF").place(x=520, y=100, width=75, height=20)
+            costo_a = tk.Text(window_con, height=1, width=8, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            costo_a.place(x=585, y=100)
+            costo_a.insert(tk.END, "")
+
+            #CLASIFICACION
+            tk.Label(window_con, text="CLASIFICACION:", bg="#89BBFF").place(x=50, y=130, width=100, height=20)
+            clasificacion_a = tk.Text(window_con, height=1, width=15, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            clasificacion_a.place(x=160, y=130)
+            clasificacion_a.insert(tk.END, "")
+
+            #Boton cerrar
+            boton_cerrar = ttk.Button( window_con, text="Cerrar ventana", command=window_con.destroy)
+            boton_cerrar.place(x=50, y=200, width=90, height=40)
+            #Boton Guardar
+            boton_guardar = ttk.Button(window_con, text="GUARDAR",command=save_Concep)
+            boton_guardar.place(x=150, y=200, width=90, height=40)
+            # Cierra la ventana principal
+            mostrar_mat_con()
+            ventana.withdraw()
+            
         # Crear una ventana secundaria.
         window_act = tk.Toplevel()
         #color de fondo BG
@@ -163,50 +463,34 @@ def INDEX():
         #se le añade un titulo a la app
         window_act.title("ACTUALIZAR REGISTROS")
         window_act.config(width=500, height=300)
-            
+                
         # Crear un botón dentro de la ventana secundaria
-        # para cerrar la misma.
-        btn_Alumnos_insert = ttk.Button(
+         # para cerrar la misma.
+        btn_Alumnos_act = ttk.Button(
             window_act,
-            text="Insertar Nuevo Alumnos", 
+            text="Actualizar Alumnos", 
             command=act_Alum
-        )
-        btn_Conceptos_insert = ttk.Button(
+         )
+        btn_Conceptos_act = ttk.Button(
             window_act,
-            text="Insertar Nuevo Conceptos", 
+            text="Actualizar Conceptos", 
             command=act_Concep
         )
-        btn_cerrar_insert = ttk.Button(
+        btn_venta_act = ttk.Button(
+            window_act,
+            text="Actualizar Venta", 
+            command=act_Concep
+        )
+        btn_cerrar_act = ttk.Button(
             window_act,
             text="Cerrar ventana", 
             command=window_act.destroy
         )
-
-        btn_cerrar_insert.place(x=50, y=100, width=90, height=40)
-        btn_Alumnos_insert.place(x=150, y=100, width=145, height=40)
-        btn_Conceptos_insert.place(x=310, y=100, width=150, height=40)
-
-        # Cierra la ventana principal
-        ventana.withdraw()
-
-
-    #VENTANA SECUNDARIA CONCEPTO
-    def Inser_Concep():
-
-        # Crear una ventana secundaria
-        ventana_concep = tk.Toplevel()
-        #Color de fondo BG
-        ventana_concep.config(bg="#89BBFF")
-        #Titulo App
-        ventana_concep.title("INSERTAR NUEVO CONCEPTO")
-        ventana_concep.config(width=1000, height=300)
-
-        #Boton cerrar
-        boton_cerrar = ttk.Button( ventana_concep, text="Cerrar ventana", command=ventana_concep.destroy)
-        boton_cerrar.place(x=50, y=200, width=90, height=40)
-        #Boton Guardar
-        boton_guardar = ttk.Button(ventana_concep, text="INSERTAR",command="Guardar_Concep")
-        boton_guardar.place(x=150, y=200, width=90, height=40)
+        
+        btn_cerrar_act.place(x=50, y=100, width=90, height=40)
+        btn_Alumnos_act.place(x=150, y=100, width=145, height=40)
+        btn_Conceptos_act.place(x=310, y=100, width=150, height=40)
+        btn_venta_act.place(x=50, y=150, width=150, height=40)
         # Cierra la ventana principal
         ventana.withdraw()
 
