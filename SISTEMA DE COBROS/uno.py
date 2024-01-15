@@ -1,4 +1,7 @@
 from tkinter import *
+from customtkinter import CTk
+import customtkinter as ctk
+
 import tkinter as tk
 from tkinter import ttk
 from datetime import date
@@ -13,6 +16,80 @@ import psycopg2 #importacion del modulo
 
 #CLASE MAIN todo Va dentro de esta CLASS
 def INDEX():
+    #VENTANA PARA ELIMINAR 
+    def eliminar():
+        def delete_Alum_com():
+            try:
+                # Establecer la conexión a la base de datos
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conn = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+
+                # Crear un objeto cursor
+                cursor = conn.cursor()
+
+                # Ejecutar la consulta para eliminar todos los registros de la tabla
+                cursor.execute("DELETE FROM prueba;")
+
+                # Confirmar la transacción
+                conn.commit()
+
+                # Cerrar el cursor y la conexión
+                cursor.close()
+                conn.close()
+
+                # Mostrar una alerta de éxito
+                messagebox.showinfo("Éxito", "Registros eliminados correctamente.")
+
+            except Exception as e:
+                # Mostrar una alerta de error
+                messagebox.showerror("Error", f"Error al eliminar registros:\n{str(e)}")
+
+        
+        def delete_Concep_com():
+            print("hola")
+
+        # Crear una ventana secundaria.
+        window_delete = tk.Toplevel()
+        #color de fondo BG
+        window_delete.config(bg="#89BBFF")
+        #se le añade un titulo a la app
+        window_delete.title("ELIMINAR REGISTROS")
+        window_delete.config(width=500, height=300)
+        
+        tk.Label(window_delete, text="ELIJA UNA OPCION", bg="#89BBFF", foreground="gray").place(x=50, y=50)
+
+        # Crear un botón dentro de la ventana secundaria
+         # para cerrar la misma.
+        btn_Alumnos_del = ttk.Button(
+            window_delete,
+            text="Eliinar Alumnos (tabla conmpleta)", 
+            command=delete_Alum_com
+         )
+        btn_Conceptos_del = ttk.Button(#FUNCION ELIMINAR CONCEPTOS
+            window_delete,
+            text="Eliminar Conceptos (tabla completa)", 
+            command=delete_Concep_com
+        )
+        btn_cerrar_del = ttk.Button(
+            window_delete,
+            text="Cerrar ventana", 
+            command=window_delete.destroy
+        )
+        
+        btn_cerrar_del.place(x=50, y=100, width=90, height=40)
+        btn_Alumnos_del.place(x=150, y=100, width=145, height=40)
+        btn_Conceptos_del.place(x=310, y=100, width=150, height=40)
+        # Cierra la ventana principal
+        ventana.withdraw()
+
     #VENTANA ACTUALIZAR
     def actualizar():
         #VENTANA ACTUALIZAR REGISTRO DE ALUMNO
@@ -184,7 +261,6 @@ def INDEX():
 
                 return number_list
             
-
             # Crear una ventana secundaria.
             window_alu = tk.Toplevel()
             #color de fondo BG
@@ -396,12 +472,13 @@ def INDEX():
 
             def mostrar_mat_con():
                 # Obtener las opciones de la base de datos
-                opciones_bd_mat = obtener_mat_bd_con()
+                opciones_bd_mat1 = obtener_mat_bd_con()
                 # Limpiar el ComboBox
                 codigo_a['values'] = ()
                 # Configurar las nuevas opciones en el ComboBox
-                codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat]
-                number_list = codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat]
+                codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat1]
+                number_list = codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat1]
+                
 
                 return number_list
 
@@ -417,7 +494,8 @@ def INDEX():
             combobox_con = tk.StringVar()
             tk.Label(window_con, text="CODIGO:", bg="#89BBFF").place(x=40, y=70, width=80, height=20)
             codigo_a = ttk.Combobox(window_con, width=20, textvariable=combobox_con)
-            codigo_a.place(x=135, y=70, width=80, height=20)
+            #codigo_a = ctk.ComboBox(window_con, width=50)
+            codigo_a.place(x=135, y=70)
             # Vincular la función al evento <<ComboboxSelected>>
             codigo_a.bind("<<ComboboxSelected>>", accion_al_seleccionar_con)
             codigo_a.bind('<KeyRelease>', on_key_release_con)
@@ -550,7 +628,7 @@ def INDEX():
                                                 port='5432',
                                                 database='sistema')
                     cursor = conexion.cursor()
-                    cursor.execute("SELECT * FROM alumnos")
+                    cursor.execute("SELECT * FROM prueba")
                     datos = cursor.fetchall()
                     cursor.close()
                     conexion.close()
@@ -643,13 +721,14 @@ def INDEX():
         window.destroy()
         WIND.deiconify()
         
-
     def Insertar():
         def import_data_con(file_path):
+            user4= e1.get()
+            passw4 = e2.get()
             table_name='conceptos'
             try:
                 # Leer el archivo CSV o Excel usando pandas
-                if file_path.endswith('.csv'):
+                if isinstance(file_path, str) and file_path.endswith('.csv'):
                     df = pd.read_csv(file_path)
                 elif file_path.endswith(('.xls', '.xlsx')):
                     df = pd.read_excel(file_path)
@@ -657,8 +736,9 @@ def INDEX():
                     raise ValueError("Formato de archivo no compatible")
 
                 # Establecer conexión a PostgreSQL (actualiza los parámetros según tu configuración)
-                engine = create_engine('postgresql://postgres:yugioh34@localhost:5432/sistema')
-                df.to_sql(table_name, engine, index=False, if_exists='replace')
+                engine = create_engine('postgresql://{user4}:{passw4}@localhost:5432/sistema')
+                df.to_sql(table_name, engine, index=False, if_exists='append')
+
 
                 # Mostrar mensaje de éxito
                 messagebox.showinfo("REGISTROS", "Se añadieron los registros correctamente")
@@ -669,26 +749,32 @@ def INDEX():
 
         # Función para importar datos a PostgreSQL
         def import_data_to_postgres(file_path):
-            table_name='alumnos'
+            user4= e1.get()
+            passw4 = e2.get()
+            table_n1='prueba'
             try:
-                # Leer el archivo CSV o Excel usando pandas
-                if file_path.endswith('.csv'):
+                # Abrir el cuadro de diálogo para seleccionar el archivo Excel o CSV
+                file_path = filedialog.askopenfilename(filetypes=[("Archivos Excel", "*.xlsx;*.xls"), ("Archivos CSV", "*.csv")])
+
+                # Leer el archivo con pandas
+                if file_path.endswith(".csv"):
                     df = pd.read_csv(file_path)
-                elif file_path.endswith(('.xls', '.xlsx')):
-                    df = pd.read_excel(file_path)
                 else:
-                    raise ValueError("Formato de archivo no compatible")
+                    df = pd.read_excel(file_path)
 
-                # Establecer conexión a PostgreSQL (actualiza los parámetros según tu configuración)
-                engine = create_engine('postgresql://postgres:yugioh34@localhost:5432/sistema')
-                df.to_sql(table_name, engine, index=False, if_exists='replace')
+                # Establecer la conexión a la base de datos PostgreSQL
+                engine = create_engine(f"postgresql://{user4}:{passw4}@localhost:5432/sistema")
 
-                # Mostrar mensaje de éxito
-                messagebox.showinfo("REGISTROS", "Se añadieron los registros correctamente")
+                # Insertar los datos en la tabla existente (reemplaza "mi_tabla" con el nombre de tu tabla)
+                df.to_sql(table_n1, con=engine, if_exists="append", index=False)
+
+                # Mostrar una alerta de éxito
+                messagebox.showinfo("Éxito", "Datos importados correctamente.")
+
             except Exception as e:
-                # Mostrar mensaje de error si algo sale mal
-                 messagebox.askretrycancel("ERROR REGISTROS", "El archivo no se pudo insertar correctamente.")
-        # Función para seleccionar el archivo a importar
+                # Mostrar una alerta de error
+                messagebox.showerror("Error", f"Error al importar datos:\n{str(e)}")
+            
         def browse_file():
             file_path = filedialog.askopenfilename()
             file_path_entry.delete(0, tk.END)
@@ -758,7 +844,7 @@ def INDEX():
         FOL = folio.get()
         MATRI = mat.get()
         NOMA = nom.get()
-        GRUP = gru.get()
+        GRUP = grup.get()
         LIC = lice.get()
         FE = date1
         PLA = plan.get()
@@ -839,7 +925,7 @@ def INDEX():
             plan.delete(0, tk.END)
             mat.delete(0, tk.END)
             nom.delete(0, tk.END)
-            gru.delete(0, tk.END)
+            grup.delete(0, tk.END)
             lice.delete(0, tk.END)
             conc1.delete(0, tk.END)
             conc2.delete(0, tk.END)
@@ -997,6 +1083,9 @@ def INDEX():
                 a=nombres
                 plan.config(text=str(registro_completo[2]))
                 nom.config(text= str(registro_completo[1]))
+                grup.config(text=str(registro_completo[5]))
+                lice.config(text=str(registro_completo[3]))
+
                 # Añade más líneas según sea necesario para las demás columnas
                 # Muestra el registro completo
                 print("Registro Completo:", registro_formateado)
@@ -1004,14 +1093,14 @@ def INDEX():
                 print("Matriculas:", matriculas)
                 print("Nombres:", str(registro_completo[1]))
                 print("Plantels:", str(registro_completo[2]))
-                print("Oferta educativa:", oferta_ed)
-                print("Grado:", gra)
-                print("GRUPO:", gru)
-                print("periodo:", periodo)
-                print("turno:", turno)
-                print("fecha inscripcion:", fecha_in)
-                print("estatus:", estatus)
-                print("fecha de estatus:", fecha_es)
+                print("Oferta educativa:", str(registro_completo[3]))
+                print("Grado:", str(registro_completo[4]))
+                print("GRUPO:", str(registro_completo[5]))
+                print("periodo:", str(registro_completo[6]))
+                print("turno:", str(registro_completo[7]))
+                print("fecha inscripcion:", str(registro_completo[8]))
+                print("estatus:", str(registro_completo[9]))
+                print("fecha de estatus:", str(registro_completo[10]))
             else:
                 print("Registro no encontrado.")
 
@@ -1047,7 +1136,6 @@ def INDEX():
         # Configurar las nuevas opciones en el ComboBox
         mat['values'] = [opcion[0] for opcion in opciones_bd_mat]
         
-    
     #VENTANA PRINCIPAL
     WIND = tk.Toplevel(ventana)
     #tamaño de la ventana
@@ -1074,21 +1162,21 @@ def INDEX():
     folio = tk.Entry(WIND, relief=tk.SUNKEN, bd=3, width=10)
     folio.grid(row=3, column=3, sticky=W)
 
-    #PLANTEL
-    tk.Label(WIND, text="PLANTEL", bg="#89BBFF").grid(row=3, column=4, padx=5, pady=5)
-    plan = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30)
-    plan.grid(row=3, column=5, sticky=W)
+    #LICENCIATURA
+    tk.Label(WIND, text="LICENCIATURA:", bg="#89BBFF").grid(row=3, column=4, padx=5, pady=5)
+    lice = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=42, bg="white")
+    lice.place(x=720, y=175, width=100, height=20)
 
     #MATRICULA
     tk.Label(WIND,text="MATRICULA:", bg="#89BBFF").grid(row=4, column=0, padx=5, pady=5, sticky=E)
-    mat = ttk.Combobox(WIND, width=30)
+    mat = ttk.Combobox(WIND, width=20)
     mat.grid(row=4, column=1, sticky=W)
     # Vincular la función al evento <<ComboboxSelected>>
     mat.bind("<<ComboboxSelected>>", accion_al_seleccionar)
     
     #NOMBRE DEL ALUMNO
     tk.Label(WIND,text="NOMBRE DEL ALUMNO:", bg="#89BBFF").grid(row=4, column=2, sticky=E, padx=5)
-    nom = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30)
+    nom = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30, bg="white")
     nom.grid(row=4, column=3, sticky=W)
     
     #USUARIO
@@ -1099,13 +1187,13 @@ def INDEX():
 
     #GRUPO
     tk.Label(WIND, text="GRUPO:", bg="#89BBFF").grid(row=5, column=0, sticky=E, pady=5, padx=5)
-    gru = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
-    gru.grid(row=5, column=1, sticky=W)
+    grup = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=18, bg="white")
+    grup.grid(row=5, column=1, sticky=W)
 
-    #LICENCIATURA
-    tk.Label(WIND, text="LICENCIATURA:", bg="#89BBFF").grid(row=5, column=2, padx=5, sticky=E)
-    lice = tk.Entry(WIND,relief=tk.SUNKEN, bd=3)
-    lice.grid(row=5, column=3, sticky=W)
+    #PLANTEL
+    tk.Label(WIND, text="PLANTEL:", bg="#89BBFF").grid(row=5, column=2, padx=5, sticky=E)
+    plan = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=19, bg="white")
+    plan.grid(row=5, column=3, sticky=W)
 
     #FECHA
     tk.Label(WIND, text="FECHA:", bg="#89BBFF").grid(row=5, column=4, padx=5)
@@ -1272,48 +1360,48 @@ def INDEX():
     subt7.grid(row=13, column=5)
 
     #CANTIDAD QUE RECIBE
-    cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="#89BBFF").place(x=770, y=172, width=140, height=19)
+    cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="#89BBFF").place(x=970, y=182, width=140, height=19)
     cant_res = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
-    cant_res.place(x=790, y=203, width=105, height=19)
+    cant_res.place(x=990, y=213, width=105, height=19)
 
     #CAMBIO
-    cambio = tk.Label(WIND, text="CAMBIO", bg="#89BBFF").place(x=810, y=235, width=60, height=19)
+    cambio = tk.Label(WIND, text="CAMBIO", bg="#89BBFF").place(x=1010, y=245, width=60, height=19)
     cambio = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
-    cambio.place(x=790, y=260, width=105, height=19)
+    cambio.place(x=990, y=270, width=105, height=19)
 
     #FORMA DE PAGO
-    tk.Label(WIND, text="FORMA DE PAGO", bg="#89BBFF").place(x=792, y=295, width=100, height=19)
+    tk.Label(WIND, text="FORMA DE PAGO", bg="#89BBFF").place(x=992, y=305, width=100, height=19)
     formP = ttk.Combobox(
         WIND,
         state="readonly",
         values=["Efectivo", "Tarjeta de Credito", "Tarjeta de Debito", "Cheque", "Deposito Bancario"]
     )
     formP.config(width=22, height=10)
-    formP.place(x=790, y=325, width=105, height=19)
+    formP.place(x=990, y=335, width=105, height=19)
 
     #APROVACION
-    aprov = tk.Label(WIND, text="APROVACIÓN", bg="#89BBFF").place(x=798, y=357, width=90, height=19)
+    aprov = tk.Label(WIND, text="APROVACIÓN", bg="#89BBFF").place(x=998, y=367, width=90, height=19)
     aprov = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
-    aprov.place(x=790, y=385, width=105, height=19)
+    aprov.place(x=990, y=395, width=105, height=19)
 
     #CUENTA RECEPTORA
-    cuenta_res = tk.Label(WIND, text="CUENTA RECEPTORA", bg="#89BBFF").place(x=780, y=420, width=120, height=19)
+    cuenta_res = tk.Label(WIND, text="CUENTA RECEPTORA", bg="#89BBFF").place(x=980, y=430, width=120, height=19)
     cuenta_res = ttk.Combobox(
         WIND,
         state="readonly",
         values=["Santander", "No aplica"]
     )
     cuenta_res.config(width=22, height=10)
-    cuenta_res.place(x=790, y=455, width=105, height=19)
+    cuenta_res.place(x=990, y=465, width=105, height=19)
 
     #OBSERVACIONES
-    observ = tk.Label(WIND, text="OBSERVACIONES:", bg="#89BBFF").place(x=85, y=480, width=110, height=20)
+    tk.Label(WIND, text="OBSERVACIONES:", bg="#89BBFF").place(x=85, y=480, width=110, height=20)
     observ = tk.Entry(WIND, width=30,relief=tk.SUNKEN)
-    observ.place(x=210, y=480, width=300, height=20)
+    observ.place(x=210, y=480, width=510, height=20)
 
     #TOTAL A PAGAR
-    total = tk.Label(WIND, text="TOTAL", bg="#89BBFF").place(x=570, y=480, width=40, height=20)
-    total1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white").place(x=655, y=480, width=79, height=20)
+    total = tk.Label(WIND, text="TOTAL", bg="#89BBFF").place(x=752, y=480, width=40, height=20)
+    total1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white").place(x=806, y=480, width=79, height=20)
 
     #BOTONES
     boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=enviar_datos)
@@ -1325,15 +1413,11 @@ def INDEX():
     btn_Insert = tk.Button(WIND, text="INSERTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command=Insertar)
     btn_Insert.place(x=330, y=520, width=100, height=30)
 
-    btn_Insert = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=actualizar)
-    btn_Insert.place(x=460, y=520, width=100, height=30)
+    btn_Actualizar = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=actualizar)
+    btn_Actualizar.place(x=460, y=520, width=100, height=30)
 
-    btn_Insert = tk.Button(WIND, text="ELIMINAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command="Eliminar")
-    btn_Insert.place(x=580, y=520, width=100, height=30)
-
-    #pruebas
-    #pru = tk.Label(ventana, text="PRUEBA:", bg="white").place(x=100, y=500, width=90, height=40)
-    #prueba = tk.Entry(ventana, width=30).place(x=200, y=500, width=90, height=40)
+    btn_eliminar = tk.Button(WIND, text="ELIMINAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=eliminar)
+    btn_eliminar.place(x=580, y=520, width=100, height=30)
 
     # Llamar a las funciones al inicio
     mostrar_opciones_combo()
