@@ -1,5 +1,5 @@
 from tkinter import *
-from customtkinter import CTk
+from customtkinter import CTk, CTkComboBox
 import customtkinter as ctk
 
 import tkinter as tk
@@ -36,7 +36,7 @@ def INDEX():
                 cursor = conn.cursor()
 
                 # Ejecutar la consulta para eliminar todos los registros de la tabla
-                cursor.execute("DELETE FROM prueba;")
+                cursor.execute("DELETE FROM alumnos;")
 
                 # Confirmar la transacción
                 conn.commit()
@@ -628,7 +628,7 @@ def INDEX():
                                                 port='5432',
                                                 database='sistema')
                     cursor = conexion.cursor()
-                    cursor.execute("SELECT * FROM prueba")
+                    cursor.execute("SELECT * FROM alumnos")
                     datos = cursor.fetchall()
                     cursor.close()
                     conexion.close()
@@ -736,7 +736,7 @@ def INDEX():
                     raise ValueError("Formato de archivo no compatible")
 
                 # Establecer conexión a PostgreSQL (actualiza los parámetros según tu configuración)
-                engine = create_engine('postgresql://{user4}:{passw4}@localhost:5432/sistema')
+                engine = create_engine(f'postgresql://{user4}:{passw4}@localhost:5432/sistema')
                 df.to_sql(table_name, engine, index=False, if_exists='append')
 
 
@@ -751,7 +751,7 @@ def INDEX():
         def import_data_to_postgres(file_path):
             user4= e1.get()
             passw4 = e2.get()
-            table_n1='prueba'
+            table_n1='alumnos'
             try:
                 # Abrir el cuadro de diálogo para seleccionar el archivo Excel o CSV
                 file_path = filedialog.askopenfilename(filetypes=[("Archivos Excel", "*.xlsx;*.xls"), ("Archivos CSV", "*.csv")])
@@ -1136,288 +1136,229 @@ def INDEX():
         # Configurar las nuevas opciones en el ComboBox
         mat['values'] = [opcion[0] for opcion in opciones_bd_mat]
         
+        vector1=[]
+        vector1=[opcion[0] for opcion in opciones_bd_mat] 
+        
+        #mat.configure(values=[opcion[0] for opcion in opciones_bd_mat])
+
+        
     #VENTANA PRINCIPAL
     WIND = tk.Toplevel(ventana)
     #tamaño de la ventana
     WIND.geometry("1366x768")
     #color de fondo BG
-    WIND.config(bg="#89BBFF")
+    WIND.config(bg="#1D1212")
     #se le añade un titulo a la app
     WIND.title("SISTEMA DE COBROS")
 
     #LOGO
     WIND.iconbitmap("img/LG.ico")
     #la metemos dentro de un label para poder mostrarla
-    eti= Label(WIND, image = img1, bg='#89BBFF')
+    eti= Label(WIND, image = img1, bg='#1D1212')
     #eti = tk.Label(WIND, image=imagen_sub)
     eti.place(x=20, y=10)
 
     #Formulario Crear los widgets del formulario
-
-    #espacio en blanco de la tabla
-    tk.Label(WIND, text="SISTEMA DE COBROS", font="Candara 30 bold", bg='#89BBFF', fg="#4169e1", width=0, height=3).grid(row=0, column=6, pady=5)
+    tk.Label(WIND, text="PAQUETES DE GRADUACION", font="Candara 30 bold", bg='#1D1212', fg="#4169e1", width=0, height=3).place(x=800, y=0)
         
     #FOLIO
-    tk.Label(WIND, text="FOLIO:", bg="#89BBFF").grid(row=3, column=2, padx=5, pady=5, sticky = E)
-    folio = tk.Entry(WIND, relief=tk.SUNKEN, bd=3, width=10)
-    folio.grid(row=3, column=3, sticky=W)
-
-    #LICENCIATURA
-    tk.Label(WIND, text="LICENCIATURA:", bg="#89BBFF").grid(row=3, column=4, padx=5, pady=5)
-    lice = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=42, bg="white")
-    lice.place(x=720, y=175, width=100, height=20)
+    tk.Label(WIND, text="FOLIO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 16 bold").place(x=500, y=60, width=70, height=30)
+    folio = tk.Entry(WIND, relief=tk.SUNKEN, bd=3, font="Candara 14 bold")
+    folio.place(x=600, y=60, width=100, height=30)
 
     #MATRICULA
-    tk.Label(WIND,text="MATRICULA:", bg="#89BBFF").grid(row=4, column=0, padx=5, pady=5, sticky=E)
-    mat = ttk.Combobox(WIND, width=20)
-    mat.grid(row=4, column=1, sticky=W)
+    opciones_bd_mat = obtener_mat_bd()
+    tk.Label(WIND,text="MATRICULA:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=50, y=150, width=100, height=25)
+    mat = ttk.Combobox(WIND, width=30, font="Candara 12 bold")
+    vector1=[]
+    vector1=[opcion[0] for opcion in opciones_bd_mat] 
+    #mat = CTkComboBox(WIND, values=[""])
+    mat.place(x=160, y=150, width=110, height=25)
     # Vincular la función al evento <<ComboboxSelected>>
     mat.bind("<<ComboboxSelected>>", accion_al_seleccionar)
     
     #NOMBRE DEL ALUMNO
-    tk.Label(WIND,text="NOMBRE DEL ALUMNO:", bg="#89BBFF").grid(row=4, column=2, sticky=E, padx=5)
-    nom = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30, bg="white")
-    nom.grid(row=4, column=3, sticky=W)
-    
-    #USUARIO
-    user1 = e1.get()
-    tk.Label(WIND, text="USUARIO:", bg="#89BBFF").grid(row=4, column=4, padx=5)
-    user = tk.Label(WIND, text= user1, bg="#89BBFF")
-    user.grid(row=4, column=5)
+    tk.Label(WIND,text="NOMBRE DEL ALUMNO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=280, y=150, width=185, height=25)
+    nom = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30, bg="white", font="Candara 11 bold")
+    nom.place(x=475, y=150, width=350, height=25)
+
+    #LICENCIATURA
+    tk.Label(WIND, text="LICENCIATURA:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=50, y=185, width=125, height=25)
+    lice = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=42, bg="white", font="Candara 11 bold")
+    lice.place(x=185, y=185, width=395, height=25)
 
     #GRUPO
-    tk.Label(WIND, text="GRUPO:", bg="#89BBFF").grid(row=5, column=0, sticky=E, pady=5, padx=5)
-    grup = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=18, bg="white")
-    grup.grid(row=5, column=1, sticky=W)
+    tk.Label(WIND, text="GRUPO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=590, y=185, width=70, height=25)
+    grup = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=18, bg="white", font="Candara 11 bold")
+    grup.place(x=675, y=185, width=150, height=25)
 
     #PLANTEL
-    tk.Label(WIND, text="PLANTEL:", bg="#89BBFF").grid(row=5, column=2, padx=5, sticky=E)
-    plan = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=19, bg="white")
-    plan.grid(row=5, column=3, sticky=W)
+    tk.Label(WIND, text="PLANTEL:", bg="#565151",fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold" ).place(x=50, y=225, width=80, height=25)
+    plan = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=19, bg="white", font="Candara 11 bold")
+    plan.place(x=140, y=225, width=160, height=25)
 
     #FECHA
-    tk.Label(WIND, text="FECHA:", bg="#89BBFF").grid(row=5, column=4, padx=5)
-    dateUno = tk.Label(WIND, text=date.today(), bg="#89BBFF",relief=tk.GROOVE, bd=3)
+    tk.Label(WIND, text="FECHA:", bg="#565151",fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=320, y=225, width=70, height=25)
+    dateUno = tk.Label(WIND, text=date.today(), bg="#1D1212", bd=3,fg="white", font="Candara 11 bold")
     date1 = date.today()
-    dateUno.grid(row=5, column=5)
+    dateUno.place(x=400, y=225, width=70, height=25)
 
-    tk.Label(WIND, text="CONCEPTOS", bg="#89BBFF",relief=tk.GROOVE, bd=3).grid(row=6, column=1)
+    #USUARIO
+    user1 = e1.get()
+    tk.Label(WIND, text="USUARIO:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold" ).place(x=950, y=120)
+    user = tk.Label(WIND, text= user1, bg="#1D1212", bd=3, fg="white", font="Candara 12 bold" )
+    user.place(x=1030, y=120, width=50)
+
+    tk.Label(WIND, text="CONCEPTOS", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=100, y=265, width=95, height=25)
     #INICIAN LOS CONCEPTOS
-
-    conc1 = ttk.Combobox(WIND, width=27)
-    conc1.grid(row=7, column=1)
-
-    conc2 = ttk.Combobox(WIND, width=27)
-    conc2.grid(row=8, column=1)
-
-    conc3 = ttk.Combobox(WIND, width=27)
-    conc3.grid(row=9, column=1)
-
-    conc4 = ttk.Combobox(WIND, width=27)
-    conc4.grid(row=10, column=1)
-
-    conc5 = ttk.Combobox(WIND, width=27)
-    conc5.grid(row=11, column=1)
-
-    conc6 = ttk.Combobox(WIND, width=27)
-    conc6.grid(row=12, column=1)
-
-    conc7 = ttk.Combobox(WIND, width=27)
-    conc7.grid(row=13, column=1)
-
+    conc1 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
+    conc1.place(x=50, y=305, width=200, height=25)
+    conc2 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
+    conc2.place(x=50, y=335, width=200, height=25)
+    conc3 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
+    conc3.place(x=50, y=365, width=200, height=25)
+    conc4 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
+    conc4.place(x=50, y=395, width=200, height=25)
+    conc5 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
+    conc5.place(x=50, y=425, width=200, height=25)
+    conc6 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
+    conc6.place(x=50, y=455, width=200, height=25)
+    conc7 = ttk.Combobox(WIND, width=27,font="Candara 11 bold")
+    conc7.place(x=50, y=485, width=200, height=25)
     #IMPORTE
-    tk.Label(WIND, text="IMPORTE:", bg="#89BBFF",relief=tk.GROOVE).grid(row=6, column=2)
-
+    tk.Label(WIND, text="IMPORTE", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=270, y=265, width=79, height=25)
     impo1 = tk.Label(WIND, text="", relief=tk.SUNKEN, width=10,bg="white", bd=3)
-    impo1.grid(row=7, column=2)
-
-    impo2 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white")
-    impo2.grid(row=8, column=2)
-
-    impo3 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    impo3.grid(row=9, column=2)
-
-    impo4 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white")
-    impo4.grid(row=10, column=2)
-
-    impo5 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white")
-    impo5.grid(row=11, column=2)
-
-    impo6 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    impo6.grid(row=12, column=2)
-
-    impo7 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    impo7.grid(row=13, column=2)
-
+    impo1.place(x=270, y=305, width=79, height=25)
+    impo2 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white", font="Candara 11 bold")
+    impo2.place(x=270, y=335, width=79, height=25)
+    impo3 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    impo3.place(x=270, y=365, width=79, height=25)
+    impo4 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white", font="Candara 11 bold")
+    impo4.place(x=270, y=395, width=79, height=25)
+    impo5 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white", font="Candara 11 bold")
+    impo5.place(x=270, y=425, width=79, height=25)
+    impo6 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white",font="Candara 11 bold")
+    impo6.place(x=270, y=455, width=79, height=25)
+    impo7 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    impo7.place(x=270, y=485, width=79, height=25)
     #%
-    tk.Label(WIND, text="%", bg="#89BBFF",relief=tk.GROOVE, bd=3).grid(row=6, column=3)
+    tk.Label(WIND, text="%",  bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=380, y=265, width=30, height=25)
+    combo1 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo1.place(x=370, y=305, width=50, height=23)
 
-    combo1 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-        
-    )
-    combo1.config(width=10, height=10)
-    combo1.grid(row=7, column=3, pady=3)
+    combo2 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo2.place(x=370, y=335, width=50, height=23)
 
-    combo2 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    )
-    combo2.config(width=10, height=10)
-    combo2.grid(row=8, column=3, pady=3)
+    combo3 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo3.place(x=370, y=365, width=50, height=23)
 
-    combo3 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    )
-    combo3.config(width=10, height=10)
-    combo3.grid(row=9, column=3, pady=3)
+    combo4 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo4.place(x=370, y=395, width=50, height=23)
 
+    combo5 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo5.place(x=370, y=425, width=50, height=20)
 
-    combo4 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    )
-    combo4.config(width=10, height=10)
-    combo4.grid(row=10, column=3, pady=3)
+    combo6 = ttk.Combobox(WIND, state="normal", font="Candara 11 bold", values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo6.place(x=370, y=455, width=50, height=23)
 
-    combo5 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    )
-    combo5.config(width=10, height=10)
-    combo5.grid(row=11, column=3, pady=3)
-
-
-    combo6 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    )
-    combo6.config(width=10, height=10)
-    combo6.grid(row=12, column=3, pady=3)
-
-    combo7 = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    )
-    combo7.config(width=10, height=10)
-    combo7.grid(row=13, column=3, pady=3)
-
+    combo7 = ttk.Combobox(WIND, state="normal", font="Candara 11 bold", values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo7.place(x=370, y=485, width=50, height=23)
     #RECARGOS
-    tk.Label(WIND, text="RECARGOS:", bg="#89BBFF",relief=tk.GROOVE).grid(row=6, column=4, padx=10)
+    tk.Label(WIND, text="RECARGOS:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=445, y=265, width=85, height=25)
 
-    rec1 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec1.grid(row=7, column=4, padx=10)
+    rec1 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec1.place(x=465, y=305, width=50, height=24)
 
-    rec2 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec2.grid(row=8, column=4)
+    rec2 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec2.place(x=465, y=335, width=50, height=24)
 
-    rec3 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec3.grid(row=9, column=4)
+    rec3 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec3.place(x=465, y=365, width=50, height=24)
 
-    rec4 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec4.grid(row=10, column=4)
+    rec4 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec4.place(x=465, y=395, width=50, height=24)
 
-    rec5 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec5.grid(row=11, column=4)
+    rec5 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec5.place(x=465, y=425, width=50, height=24)
 
-    rec6 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec6.grid(row=12, column=4)
+    rec6 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec6.place(x=465, y=455, width=50, height=24)
 
-    rec7 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3)
-    rec7.grid(row=13, column=4)
+    rec7 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec7.place(x=465, y=485, width=50, height=24)
 
     #SUBTOTAL
-    tk.Label(WIND, text="SUBTOTAL:", bg="#89BBFF",relief=tk.GROOVE).grid(row=6, column=5, padx=1)
+    tk.Label(WIND, text="SUBTOTAL:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=560, y=265, width=90, height=25)
+    subt1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt1.place(x=575, y=305,width=60, height=25)
 
-    subt1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt1.grid(row=7, column=5, padx=1)
+    subt2 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt2.place(x=575, y=335, width=60, height=25)
 
-    subt2 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt2.grid(row=8, column=5)
+    subt3 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt3.place(x=575, y=365, width=60, height=25)
 
-    subt3 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt3.grid(row=9, column=5)
+    subt4 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt4.place(x=575, y=395, width=60, height=25)
 
-    subt4 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt4.grid(row=10, column=5)
+    subt5 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white",font="Candara 11 bold")
+    subt5.place(x=575, y=425, width=60, height=25)
 
-    subt5 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt5.grid(row=11, column=5)
+    subt6 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt6.place(x=575, y=455, width=60, height=25)
 
-    subt6 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt6.grid(row=12, column=5)
-
-    subt7 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white")
-    subt7.grid(row=13, column=5)
-
-    #CANTIDAD QUE RECIBE
-    cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="#89BBFF").place(x=970, y=182, width=140, height=19)
-    cant_res = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
-    cant_res.place(x=990, y=213, width=105, height=19)
-
-    #CAMBIO
-    cambio = tk.Label(WIND, text="CAMBIO", bg="#89BBFF").place(x=1010, y=245, width=60, height=19)
-    cambio = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
-    cambio.place(x=990, y=270, width=105, height=19)
-
-    #FORMA DE PAGO
-    tk.Label(WIND, text="FORMA DE PAGO", bg="#89BBFF").place(x=992, y=305, width=100, height=19)
-    formP = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=["Efectivo", "Tarjeta de Credito", "Tarjeta de Debito", "Cheque", "Deposito Bancario"]
-    )
-    formP.config(width=22, height=10)
-    formP.place(x=990, y=335, width=105, height=19)
-
-    #APROVACION
-    aprov = tk.Label(WIND, text="APROVACIÓN", bg="#89BBFF").place(x=998, y=367, width=90, height=19)
-    aprov = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3)
-    aprov.place(x=990, y=395, width=105, height=19)
-
-    #CUENTA RECEPTORA
-    cuenta_res = tk.Label(WIND, text="CUENTA RECEPTORA", bg="#89BBFF").place(x=980, y=430, width=120, height=19)
-    cuenta_res = ttk.Combobox(
-        WIND,
-        state="readonly",
-        values=["Santander", "No aplica"]
-    )
-    cuenta_res.config(width=22, height=10)
-    cuenta_res.place(x=990, y=465, width=105, height=19)
-
-    #OBSERVACIONES
-    tk.Label(WIND, text="OBSERVACIONES:", bg="#89BBFF").place(x=85, y=480, width=110, height=20)
-    observ = tk.Entry(WIND, width=30,relief=tk.SUNKEN)
-    observ.place(x=210, y=480, width=510, height=20)
+    subt7 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt7.place(x=575, y=485, width=60, height=25)
 
     #TOTAL A PAGAR
-    total = tk.Label(WIND, text="TOTAL", bg="#89BBFF").place(x=752, y=480, width=40, height=20)
-    total1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white").place(x=806, y=480, width=79, height=20)
+    tk.Label(WIND, text="TOTAL:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=720, y=265, width=70, height=25)
+    total1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold").place(x=715, y=295, width=79, height=25)
+
+    #CANTIDAD QUE RECIBE
+    cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=675, y=340, width=165, height=25)
+    cant_res = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3,font="Candara 11 bold" )
+    cant_res.place(x=705, y=370, width=105, height=25)
+
+    #CAMBIO
+    cambio = tk.Label(WIND, text="CAMBIO", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=720, y=410, width=70, height=25)
+    cambio = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    cambio.place(x=700, y=440, width=105, height=25)
+
+    #FORMA DE PAGO
+    tk.Label(WIND, text="FORMA DE PAGO", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=865, y=265, width=140, height=25)
+    formP = ttk.Combobox( WIND, state="normal",font="Candara 11 bold", values=["Efectivo", "Tarjeta de Credito", "Tarjeta de Debito", "Cheque", "Deposito Bancario"])
+    formP.place(x=880, y=295, width=105, height=25)
+
+    #APROVACION
+    aprov = tk.Label(WIND, text="APROVACIÓN", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=875, y=340, width=120, height=25)
+    aprov = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    aprov.place(x=885, y=370, width=105, height=25)
+
+    #CUENTA RECEPTORA
+    cuenta_res = tk.Label(WIND, text="CUENTA RECEPTORA", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=865, y=410, width=152, height=25)
+    cuenta_res = ttk.Combobox(WIND,state="readonly",values=["Santander", "No aplica"], font="Candara 11 bold")
+    cuenta_res.place(x=883, y=440, width=105, height=25)
+
+    #OBSERVACIONES
+    tk.Label(WIND, text="OBSERVACIONES:",  bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=50, y=525, width=137, height=25)
+    observ = tk.Entry(WIND, width=30,relief=tk.SUNKEN,font="Candara 11 bold")
+    observ.place(x=200, y=525, width=460, height=25)
 
     #BOTONES
     boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=enviar_datos)
-    boton_enviar.place(x=85, y=520, width=100, height=30)
+    boton_enviar.place(x=85, y=600, width=100, height=30)
 
     btn_Consultar = tk.Button(WIND, text="CONSULTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consultar)
-    btn_Consultar.place(x=210, y=520, width=100, height=30)
+    btn_Consultar.place(x=210, y=600, width=100, height=30)
 
     btn_Insert = tk.Button(WIND, text="INSERTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command=Insertar)
-    btn_Insert.place(x=330, y=520, width=100, height=30)
+    btn_Insert.place(x=330, y=600, width=100, height=30)
 
     btn_Actualizar = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=actualizar)
-    btn_Actualizar.place(x=460, y=520, width=100, height=30)
+    btn_Actualizar.place(x=460, y=600, width=100, height=30)
 
     btn_eliminar = tk.Button(WIND, text="ELIMINAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=eliminar)
-    btn_eliminar.place(x=580, y=520, width=100, height=30)
+    btn_eliminar.place(x=580, y=600, width=100, height=30)
 
     # Llamar a las funciones al inicio
     mostrar_opciones_combo()
