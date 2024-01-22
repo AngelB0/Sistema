@@ -1,7 +1,7 @@
+# @autor: JORGE ANGEL BECERRIL GONZALEZ
 from tkinter import *
 from customtkinter import CTk, CTkComboBox
 import customtkinter as ctk
-
 import tkinter as tk
 from tkinter import ttk
 from datetime import date
@@ -13,6 +13,7 @@ import pathlib
 import sys
 from tkinter import messagebox #libreria para los mensajes de alerta
 import psycopg2 #importacion del modulo
+import time#para el tiempo
 
 #CLASE MAIN todo Va dentro de esta CLASS
 def INDEX():
@@ -59,28 +60,31 @@ def INDEX():
         # Crear una ventana secundaria.
         window_delete = tk.Toplevel()
         #color de fondo BG
-        window_delete.config(bg="#89BBFF")
+        window_delete.config(bg="#1D1212")
         #se le añade un titulo a la app
         window_delete.title("ELIMINAR REGISTROS")
         window_delete.config(width=500, height=300)
         
-        tk.Label(window_delete, text="ELIJA UNA OPCION", bg="#89BBFF", foreground="gray").place(x=50, y=50)
+        tk.Label(window_delete, text="ELIJA UNA OPCION", bg="#1D1212", fg="white").place(x=50, y=50)
 
         # Crear un botón dentro de la ventana secundaria
          # para cerrar la misma.
-        btn_Alumnos_del = ttk.Button(
+        btn_Alumnos_del = tk.Button(
             window_delete,
             text="Eliinar Alumnos (tabla conmpleta)", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=delete_Alum_com
          )
-        btn_Conceptos_del = ttk.Button(#FUNCION ELIMINAR CONCEPTOS
+        btn_Conceptos_del = tk.Button(#FUNCION ELIMINAR CONCEPTOS
             window_delete,
             text="Eliminar Conceptos (tabla completa)", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=delete_Concep_com
         )
-        btn_cerrar_del = ttk.Button(
+        btn_cerrar_del = tk.Button(
             window_delete,
             text="Cerrar ventana", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=window_delete.destroy
         )
         
@@ -264,13 +268,13 @@ def INDEX():
             # Crear una ventana secundaria.
             window_alu = tk.Toplevel()
             #color de fondo BG
-            window_alu.config(bg="#89BBFF")
+            window_alu.config(bg="#1D1212")
             #se le añade un titulo a la app
             window_alu.title("ACTUALIZAR REGISTRO ALUMNOS")
             window_alu.config(width=1080, height=600)
 
             #MATRICULA
-            tk.Label(window_alu, text="MATRICULA:", bg="#89BBFF").place(x=44, y=70, width=80, height=20)
+            tk.Label(window_alu, text="MATRICULA:", bg="#1D1212", fg="white").place(x=44, y=70, width=80, height=20)
             combobox_var = tk.StringVar()
             matri2 = ttk.Combobox(window_alu, width=20, textvariable=combobox_var)
             matri2.place(x=126, y=70, width=92, height=20)
@@ -279,71 +283,71 @@ def INDEX():
             matri2.bind('<KeyRelease>', on_key_release_act)
 
             #ALUMNO
-            tk.Label(window_alu, text="ALUMNO:", bg="#89BBFF").place(x=36, y=100, width=80, height=20)
+            tk.Label(window_alu, text="ALUMNO:",bg="#1D1212", fg="white").place(x=36, y=100, width=80, height=20)
             alumno_a = tk.Text(window_alu, height=1, width=35, wrap=tk.NONE, bd=0, padx=2, pady=2)
             alumno_a.place(x=125, y=100)
             alumno_a.insert(tk.END, "")
 
             #OFERTA EDUCATIVA 
-            tk.Label(window_alu, text="OFERTA EDUCATIVA:", bg="#89BBFF").place(x=420, y=100, width=120, height=20)
+            tk.Label(window_alu, text="OFERTA EDUCATIVA:", bg="#1D1212", fg="white").place(x=420, y=100, width=120, height=20)
             ofedu_a = tk.Text(window_alu, height=1, width=50, wrap=tk.NONE, bd=0, padx=2, pady=2)
             ofedu_a.place(x=545, y=100)
             ofedu_a.insert(tk.END, "")
 
             #PLANTEL
-            tk.Label(window_alu, text="PLANTEL:", bg="#89BBFF").place(x=690, y=130, width=75, height=20)
+            tk.Label(window_alu, text="PLANTEL:", bg="#1D1212", fg="white").place(x=690, y=130, width=75, height=20)
             plantel_a = tk.Text(window_alu, height=1, width=22, wrap=tk.NONE, bd=0, padx=2, pady=2)
             plantel_a.insert(tk.END, "")
             plantel_a.place(x=770, y=130)
 
             #GRADO
-            tk.Label(window_alu, text="GRADO:",bg="#89BBFF").place(x=50, y=130, width=40, height=20)
+            tk.Label(window_alu, text="GRADO:",bg="#1D1212", fg="white").place(x=50, y=130, width=40, height=20)
             grad_a = tk.Text(window_alu, height=1, width=2, wrap=tk.NONE, bd=0, padx=2, pady=2)
             grad_a.insert(tk.END, "")
             grad_a.place(x=100, y=130)
 
             #GRUPO
-            tk.Label(window_alu, text="GRUPO:", bg="#89BBFF").place(x=135, y=130, width=40, height=20)
+            tk.Label(window_alu, text="GRUPO:", bg="#1D1212", fg="white").place(x=135, y=130, width=40, height=20)
             grup_a = tk.Text(window_alu, height=1, width=16, wrap=tk.NONE, bd=0, padx=2, pady=2)
             grup_a.insert(tk.END, "")
             grup_a.place(x=185, y=130)
 
             #PERIODO
-            tk.Label(window_alu, text="PERIODO:", bg="#89BBFF").place(x=335, y=130, width=50, height=20)
+            tk.Label(window_alu, text="PERIODO:",bg="#1D1212", fg="white").place(x=335, y=130, width=50, height=20)
             perido_a = tk.Text(window_alu, height=1, width=15, wrap=tk.NONE, bd=0, padx=2, pady=2)
             perido_a.insert(tk.END, "")
             perido_a.place(x=395, y=130)
 
             #TURNO
-            tk.Label(window_alu, text="TURNO:", bg="#89BBFF").place(x=530, y=130, width=50, height=20)
+            tk.Label(window_alu, text="TURNO:",bg="#1D1212", fg="white").place(x=530, y=130, width=50, height=20)
             turno_al = tk.Text(window_alu, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
             turno_al.insert(tk.END, "")
             turno_al.place(x=590, y=130)
 
             #FECHA DE INSCRIPCION
-            tk.Label(window_alu, text="FECHA DE INSCRIPCION:", bg="#89BBFF").place(x=50, y=160, width=133, height=20)
+            tk.Label(window_alu, text="FECHA DE INSCRIPCION:", bg="#1D1212", fg="white").place(x=50, y=160, width=133, height=20)
             inscripcion_a = tk.Text(window_alu, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
             inscripcion_a.insert(tk.END, "")
             inscripcion_a.place(x=190, y=160)
 
             #ESTATUS
-            tk.Label(window_alu, text="ESTATUS:", bg="#89BBFF").place(x=285, y=160, width=80, height=20)
+            tk.Label(window_alu, text="ESTATUS:", bg="#1D1212", fg="white").place(x=285, y=160, width=80, height=20)
             estatus_a = tk.Text(window_alu, height=1, width=11, wrap=tk.NONE, bd=0, padx=2, pady=2)
             estatus_a.insert(tk.END, "")
             estatus_a.place(x=362, y=160)
 
             #FECHA ESTATUS
-            tk.Label(window_alu, text="FECHA ESTATUS:", bg="#89BBFF").place(x=475, y=160, width=90, height=20)
+            tk.Label(window_alu, text="FECHA ESTATUS:", bg="#1D1212", fg="white").place(x=475, y=160, width=90, height=20)
             festatus_a = tk.Text(window_alu, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
             festatus_a.insert(tk.END, "")
             festatus_a.place(x=570, y=160)
 
             #Boton cerrar
-            boton_cerrar = ttk.Button(window_alu, text="Cerrar ventana", command=window_alu.destroy)
+            boton_cerrar = tk.Button(window_alu, text="Cerrar ventana",bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=window_alu.destroy)
             boton_cerrar.place(x=50, y=300, width=90, height=40)
 
             #Boton guardar
-            boton_guardar = ttk.Button(window_alu, text="GUARDAR", command= Save_Alum)
+            boton_guardar = tk.Button(window_alu, text="GUARDAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command= Save_Alum)
             boton_guardar.place(x=150, y=300, width=90, height=40)
 
             # Cierra la ventana principal
@@ -485,14 +489,14 @@ def INDEX():
             # Crear una ventana secundaria.
             window_con = tk.Toplevel()
             #color de fondo BG
-            window_con.config(bg="#89BBFF")
+            window_con.config(bg="#1D1212")
             #se le añade un titulo a la app
             window_con.title("ACTUALIZAR REGISTRO CONCEPTOS")
             window_con.config(width=1080, height=600)
 
             #CODIGO
             combobox_con = tk.StringVar()
-            tk.Label(window_con, text="CODIGO:", bg="#89BBFF").place(x=40, y=70, width=80, height=20)
+            tk.Label(window_con, text="CODIGO:", bg="#1D1212", fg="white").place(x=40, y=70, width=80, height=20)
             codigo_a = ttk.Combobox(window_con, width=20, textvariable=combobox_con)
             #codigo_a = ctk.ComboBox(window_con, width=50)
             codigo_a.place(x=135, y=70)
@@ -501,34 +505,34 @@ def INDEX():
             codigo_a.bind('<KeyRelease>', on_key_release_con)
 
             #CONCEPTO
-            tk.Label(window_con, text="CONCEPTO:", bg="#89BBFF").place(x=50, y=100, width=80, height=20)
+            tk.Label(window_con, text="CONCEPTO:", bg="#1D1212", fg="white").place(x=50, y=100, width=80, height=20)
             concepto_a = tk.Text(window_con, height=1, width=25, wrap=tk.NONE, bd=0, padx=2, pady=2)
             concepto_a.place(x=135, y=100)
             concepto_a.insert(tk.END, "")
 
             #CUENTA CONTABLE 
-            tk.Label(window_con, text="CUENTA CONTABLE:", bg="#89BBFF").place(x=350, y=100, width=120, height=20)
+            tk.Label(window_con, text="CUENTA CONTABLE:", bg="#1D1212", fg="white").place(x=350, y=100, width=120, height=20)
             contable_a = tk.Text(window_con, height=1, width=3, wrap=tk.NONE, bd=0, padx=2, pady=2)
             contable_a.place(x=475, y=100)
             contable_a.insert(tk.END,"")
 
             #COSTO
-            tk.Label(window_con, text="COSTO:", bg="#89BBFF").place(x=520, y=100, width=75, height=20)
+            tk.Label(window_con, text="COSTO:", bg="#1D1212", fg="white").place(x=520, y=100, width=75, height=20)
             costo_a = tk.Text(window_con, height=1, width=8, wrap=tk.NONE, bd=0, padx=2, pady=2)
             costo_a.place(x=585, y=100)
             costo_a.insert(tk.END, "")
 
             #CLASIFICACION
-            tk.Label(window_con, text="CLASIFICACION:", bg="#89BBFF").place(x=50, y=130, width=100, height=20)
+            tk.Label(window_con, text="CLASIFICACION:", bg="#1D1212", fg="white").place(x=50, y=130, width=100, height=20)
             clasificacion_a = tk.Text(window_con, height=1, width=15, wrap=tk.NONE, bd=0, padx=2, pady=2)
             clasificacion_a.place(x=160, y=130)
             clasificacion_a.insert(tk.END, "")
 
             #Boton cerrar
-            boton_cerrar = ttk.Button( window_con, text="Cerrar ventana", command=window_con.destroy)
+            boton_cerrar = tk.Button( window_con, text="Cerrar ventana",bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=window_con.destroy)
             boton_cerrar.place(x=50, y=200, width=90, height=40)
             #Boton Guardar
-            boton_guardar = ttk.Button(window_con, text="GUARDAR",command=save_Concep)
+            boton_guardar = tk.Button(window_con, text="GUARDAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=save_Concep)
             boton_guardar.place(x=150, y=200, width=90, height=40)
             # Cierra la ventana principal
             mostrar_mat_con()
@@ -537,31 +541,35 @@ def INDEX():
         # Crear una ventana secundaria.
         window_act = tk.Toplevel()
         #color de fondo BG
-        window_act.config(bg="#89BBFF")
+        window_act.config(bg="#1D1212")
         #se le añade un titulo a la app
         window_act.title("ACTUALIZAR REGISTROS")
         window_act.config(width=500, height=300)
                 
         # Crear un botón dentro de la ventana secundaria
          # para cerrar la misma.
-        btn_Alumnos_act = ttk.Button(
+        btn_Alumnos_act = tk.Button(
             window_act,
             text="Actualizar Alumnos", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=act_Alum
          )
-        btn_Conceptos_act = ttk.Button(
+        btn_Conceptos_act = tk.Button(
             window_act,
             text="Actualizar Conceptos", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=act_Concep
         )
-        btn_venta_act = ttk.Button(
+        btn_venta_act = tk.Button(
             window_act,
             text="Actualizar Venta", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=act_Concep
         )
-        btn_cerrar_act = ttk.Button(
+        btn_cerrar_act = tk.Button(
             window_act,
             text="Cerrar ventana", 
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=window_act.destroy
         )
         
@@ -576,10 +584,10 @@ def INDEX():
     def Consultar():
         ventana_consul=tk.Tk()
         #color de fondo BG
-        ventana_consul.config(bg="#89BBFF")
+        ventana_consul.config(bg="#1D1212")
         #se le añade un titulo a la app
         ventana_consul.title("CONSULTA DE REGISTROS")
-        ventana_consul.geometry("1366x700")
+        ventana_consul.geometry("1200x600")
 
         def Consu_Alum():
             # Mostrar información de archivos
@@ -587,12 +595,9 @@ def INDEX():
             # Mostrar información de alumnos
             treeview_frame.mostrar_info_alumnos()
 
-
         def Consu_Concep():
             # Mostrar información de conceptos
             treeview_frame.mostrar_info_conceptos()
-
-
         class TreeviewFrame(ttk.Frame):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
@@ -622,11 +627,17 @@ def INDEX():
 
             def mostrar_info_alumnos(self):
                 def obtener_datosBD():
-                    conexion = psycopg2.connect(user='user1',
-                                                password='1234',
-                                                host='localhost',
-                                                port='5432',
-                                                database='sistema')
+                    #conexion a la BD
+                    user3 = e1.get()
+                    passw3 = e2.get()
+                    bd="sistema"
+                    conexion = psycopg2.connect(
+                                user=user3,
+                                password=passw3,
+                                host='localhost',
+                                port='5432',
+                                database= bd
+                            )
                     cursor = conexion.cursor()
                     cursor.execute("SELECT * FROM alumnos")
                     datos = cursor.fetchall()
@@ -656,13 +667,17 @@ def INDEX():
 
             def mostrar_info_conceptos(self):
                 def obtener_datos_conceptos():
+                    #conexion a la BD
+                    user3 = e1.get()
+                    passw3 = e2.get()
+                    bd="sistema"
                     conexion = psycopg2.connect(
-                        user='user1',
-                        password='1234',
-                        host='localhost',
-                        port='5432',
-                        database='sistema'
-                    )
+                                user=user3,
+                                password=passw3,
+                                host='localhost',
+                                port='5432',
+                                database= bd
+                            )
                     cursor = conexion.cursor()
                     cursor.execute("SELECT * FROM conceptos")
                     datos = cursor.fetchall()
@@ -700,20 +715,13 @@ def INDEX():
 
         # Crear un botón dentro de la ventana secundaria
         # para cerrar la misma.            
-        btn_Alumnos = ttk.Button(
-            ventana_consul,
-            text="Consultar Alumnos",
-            command=Consu_Alum
-        )
-        btn_Conceptos = ttk.Button(
-            ventana_consul,
-            text="Consultar Conceptos", 
-            command=Consu_Concep
-        )
-        boton_regresar = ttk.Button(ventana_consul,text="REGRESAR", command=lambda:close_window(ventana_consul))
-        boton_regresar.place(x=50, y=600, width=90, height=40)
-        btn_Alumnos.place(x=150, y=600, width=120, height=40)
-        btn_Conceptos.place(x=280, y=600, width=125, height=40)
+        btn_Alumnos = tk.Button(ventana_consul, text="Consultar Alumnos", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consu_Alum)
+        btn_Conceptos = tk.Button(ventana_consul,text="Consultar Conceptos",bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consu_Concep)
+        boton_regresar = tk.Button(ventana_consul,text="REGRESAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=lambda:close_window(ventana_consul))
+
+        boton_regresar.place(x=50, y=400, width=90, height=40)
+        btn_Alumnos.place(x=150, y=400, width=120, height=40)
+        btn_Conceptos.place(x=280, y=400, width=125, height=40)
 
     def close_window(window):
         # Cierra la ventana principal
@@ -722,33 +730,35 @@ def INDEX():
         WIND.deiconify()
         
     def Insertar():
-        def import_data_con(file_path):
+        def import_data_con():
             user4= e1.get()
             passw4 = e2.get()
-            table_name='conceptos'
+            table_n1='conceptos'
             try:
-                # Leer el archivo CSV o Excel usando pandas
-                if isinstance(file_path, str) and file_path.endswith('.csv'):
+                # Abrir el cuadro de diálogo para seleccionar el archivo Excel o CSV
+                file_path = filedialog.askopenfilename(filetypes=[("Archivos Excel", "*.xlsx;*.xls"), ("Archivos CSV", "*.csv")])
+
+                # Leer el archivo con pandas
+                if file_path.endswith(".csv"):
                     df = pd.read_csv(file_path)
-                elif file_path.endswith(('.xls', '.xlsx')):
-                    df = pd.read_excel(file_path)
                 else:
-                    raise ValueError("Formato de archivo no compatible")
+                    df = pd.read_excel(file_path)
 
-                # Establecer conexión a PostgreSQL (actualiza los parámetros según tu configuración)
-                engine = create_engine(f'postgresql://{user4}:{passw4}@localhost:5432/sistema')
-                df.to_sql(table_name, engine, index=False, if_exists='append')
+                # Establecer la conexión a la base de datos PostgreSQL
+                engine = create_engine(f"postgresql://{user4}:{passw4}@localhost:5432/sistema")
 
+                # Insertar los datos en la tabla existente (reemplaza "mi_tabla" con el nombre de tu tabla)
+                df.to_sql(table_n1, con=engine, if_exists="append", index=False)
 
-                # Mostrar mensaje de éxito
-                messagebox.showinfo("REGISTROS", "Se añadieron los registros correctamente")
+                # Mostrar una alerta de éxito
+                messagebox.showinfo("Éxito", "Datos importados correctamente.")
 
             except Exception as e:
-                # Mostrar mensaje de error si algo sale mal
-                messagebox.askretrycancel("ERROR REGISTROS", "El archivo no se pudo insertar correctamente.")
+                # Mostrar una alerta de error
+                messagebox.showerror("Error", f"Error al importar datos:\n{str(e)}")
 
         # Función para importar datos a PostgreSQL
-        def import_data_to_postgres(file_path):
+        def import_data_to_postgres():
             user4= e1.get()
             passw4 = e2.get()
             table_n1='alumnos'
@@ -774,49 +784,38 @@ def INDEX():
             except Exception as e:
                 # Mostrar una alerta de error
                 messagebox.showerror("Error", f"Error al importar datos:\n{str(e)}")
-            
-        def browse_file():
-            file_path = filedialog.askopenfilename()
-            file_path_entry.delete(0, tk.END)
-            file_path_entry.insert(0, file_path)
 
         # Crear una ventana secundaria.
         ventana_INSERTAR = tk.Toplevel()
         #color de fondo BG
-        ventana_INSERTAR.config(bg="#89BBFF")
+        ventana_INSERTAR.config(bg="#1D1212")
         #se le añade un titulo a la app
         ventana_INSERTAR.title("INSERTAR REGISTROS")
         ventana_INSERTAR.config(width=500, height=300)
-
-        # Etiqueta y entrada para el archivo
-        label1 = tk.Label(ventana_INSERTAR, text="Seleccione el archivo:")
-        label1.place(x=180, y=50, width=150, height=40)
-        file_path_entry = tk.Entry(ventana_INSERTAR, width=50)
-        file_path_entry.place(x=150, y=100, width=200, height=20)
-        browse_button = tk.Button(ventana_INSERTAR, text="Buscar", command=browse_file)
-        browse_button.place(x=210, y=150, width=90, height=40)
-        
         # Crear un botón dentro de la ventana secundaria
         # para cerrar la misma.
-        btn_Alumnos_insert = ttk.Button(
+        btn_Alumnos_insert = tk.Button(
             ventana_INSERTAR,
-            text="Insertar Nuevo Alumnos", 
-            command=lambda: import_data_to_postgres(file_path_entry.get())
+            text="Insertar Nuevos Alumnos",
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
+            command=lambda: import_data_to_postgres()
         )
-        btn_Conceptos_insert = ttk.Button(
+        btn_Conceptos_insert = tk.Button(
             ventana_INSERTAR,
-            text="Insertar Nuevo Conceptos", 
-            command=lambda: import_data_con(file_path_entry.get())
+            text="Insertar Nuevo Conceptos",
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,
+            command=lambda: import_data_con()
         )
-        btn_cerrar_insert = ttk.Button(
+        btn_cerrar_insert = tk.Button(
             ventana_INSERTAR,
-            text="Cerrar ventana", 
+            text="Cerrar ventana",
+            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
             command=ventana_INSERTAR.destroy
         )
 
-        btn_cerrar_insert.place(x=50, y=250, width=90, height=40)
-        btn_Alumnos_insert.place(x=150, y=250, width=145, height=40)
-        btn_Conceptos_insert.place(x=310, y=250, width=150, height=40)
+        btn_cerrar_insert.place(x=50, y=150, width=90, height=40)
+        btn_Alumnos_insert.place(x=150, y=150, width=145, height=40)
+        btn_Conceptos_insert.place(x=310, y=150, width=150, height=40)
 
         # Cierra la ventana principal
         ventana.withdraw()
@@ -1027,11 +1026,16 @@ def INDEX():
         conc7['values'] = [opcion[0] for opcion in opciones_bd_con]
     
     def obtener_registro_completo(llave_primaria):
-        conexion = psycopg2.connect(user='postgres',
-                                    password='yugioh34',
-                                    host='localhost',
-                                    port='5432',
-                                    database='sistema')
+        user3 = e1.get()
+        passw3 = e2.get()
+        bd="sistema"
+        conexion = psycopg2.connect(
+                            user=user3,
+                            password=passw3,
+                            host='localhost',
+                            port='5432',
+                            database= bd
+                        )
 
         cursor = conexion.cursor()
 
@@ -1042,8 +1046,29 @@ def INDEX():
         conexion.close()
 
         return registro_completo
+    
+    def obtener_registro_completo_concep(OPCC):
+            user3 = e1.get()
+            passw3 = e2.get()
+            bd="sistema"
+            conexion = psycopg2.connect(
+                                user=user3,
+                                password=passw3,
+                                host='localhost',
+                                port='5432',
+                                database= bd
+                            )
 
-    def accion_al_seleccionar(event):
+            cursor = conexion.cursor()
+            cursor.execute("SELECT * FROM conceptos WHERE concepto = %s", (OPCC,))
+            RC = cursor.fetchone()
+
+            cursor.close()
+            conexion.close()
+
+            return RC
+    
+    def accion_al_seleccionar_matInicial(event):
          # Vectores para almacenar los valores
         matriculas = []
         nombres = []
@@ -1085,22 +1110,35 @@ def INDEX():
                 nom.config(text= str(registro_completo[1]))
                 grup.config(text=str(registro_completo[5]))
                 lice.config(text=str(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")
 
-                # Añade más líneas según sea necesario para las demás columnas
-                # Muestra el registro completo
-                print("Registro Completo:", registro_formateado)
-                # Al finalizar, puedes acceder a los vectores matriculas, nombres, plantels, etc., para obtener los valores almacenados.
-                print("Matriculas:", matriculas)
-                print("Nombres:", str(registro_completo[1]))
-                print("Plantels:", str(registro_completo[2]))
-                print("Oferta educativa:", str(registro_completo[3]))
-                print("Grado:", str(registro_completo[4]))
-                print("GRUPO:", str(registro_completo[5]))
-                print("periodo:", str(registro_completo[6]))
-                print("turno:", str(registro_completo[7]))
-                print("fecha inscripcion:", str(registro_completo[8]))
-                print("estatus:", str(registro_completo[9]))
-                print("fecha de estatus:", str(registro_completo[10]))
+    def opc_con1(event):
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc1.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                impo1.config(text=str(registro_completo[3]))
             else:
                 print("Registro no encontrado.")
 
@@ -1141,11 +1179,16 @@ def INDEX():
         
         #mat.configure(values=[opcion[0] for opcion in opciones_bd_mat])
 
-        
+    #FUNCION PARA ACTUALIZAR LA HORA
+    def times():
+        current_time=time.strftime("%H:%M:%S") 
+        clock.config(text=current_time, bg='#1D1212' ,fg="white",font="Candara 40 bold")
+        clock.after(200,times)
+
     #VENTANA PRINCIPAL
     WIND = tk.Toplevel(ventana)
     #tamaño de la ventana
-    WIND.geometry("1366x768")
+    WIND.geometry("1300x768")
     #color de fondo BG
     WIND.config(bg="#1D1212")
     #se le añade un titulo a la app
@@ -1159,7 +1202,17 @@ def INDEX():
     eti.place(x=20, y=10)
 
     #Formulario Crear los widgets del formulario
-    tk.Label(WIND, text="PAQUETES DE GRADUACION", font="Candara 30 bold", bg='#1D1212', fg="#4169e1", width=0, height=3).place(x=800, y=0)
+    tk.Label(WIND, text="PAQUETES DE GRADUACION", font="Candara 24 bold", bg='#1D1212', fg="#4169e1", width=0, height=3).place(x=800, y=0)
+
+    #HORA EN TIEMPO REAL
+    clock=Label(WIND,font=("Candara",50,"bold"))
+    clock.place(x=950, y=80)
+    times()
+
+    #USUARIO
+    user1 = e1.get()
+    user = tk.Label(WIND, text= user1, bg="#1D1212", bd=3, fg="white", font="Candara 20 bold" )
+    user.place(x=850, y=185, width=150)
         
     #FOLIO
     tk.Label(WIND, text="FOLIO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 16 bold").place(x=500, y=60, width=70, height=30)
@@ -1175,7 +1228,7 @@ def INDEX():
     #mat = CTkComboBox(WIND, values=[""])
     mat.place(x=160, y=150, width=110, height=25)
     # Vincular la función al evento <<ComboboxSelected>>
-    mat.bind("<<ComboboxSelected>>", accion_al_seleccionar)
+    mat.bind("<<ComboboxSelected>>", accion_al_seleccionar_matInicial)
     
     #NOMBRE DEL ALUMNO
     tk.Label(WIND,text="NOMBRE DEL ALUMNO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=280, y=150, width=185, height=25)
@@ -1203,16 +1256,12 @@ def INDEX():
     date1 = date.today()
     dateUno.place(x=400, y=225, width=70, height=25)
 
-    #USUARIO
-    user1 = e1.get()
-    tk.Label(WIND, text="USUARIO:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold" ).place(x=950, y=120)
-    user = tk.Label(WIND, text= user1, bg="#1D1212", bd=3, fg="white", font="Candara 12 bold" )
-    user.place(x=1030, y=120, width=50)
-
     tk.Label(WIND, text="CONCEPTOS", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=100, y=265, width=95, height=25)
     #INICIAN LOS CONCEPTOS
     conc1 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc1.place(x=50, y=305, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc1.bind("<<ComboboxSelected>>", opc_con1)
     conc2 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc2.place(x=50, y=335, width=200, height=25)
     conc3 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
@@ -1342,11 +1391,11 @@ def INDEX():
     #OBSERVACIONES
     tk.Label(WIND, text="OBSERVACIONES:",  bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=50, y=525, width=137, height=25)
     observ = tk.Entry(WIND, width=30,relief=tk.SUNKEN,font="Candara 11 bold")
-    observ.place(x=200, y=525, width=460, height=25)
+    observ.place(x=200, y=525, width=620, height=25)
 
     #BOTONES
-    boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=enviar_datos)
-    boton_enviar.place(x=85, y=600, width=100, height=30)
+    boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="#00D903", fg="white", relief=tk.RAISED, bd=5, command=enviar_datos)
+    boton_enviar.place(x=875, y=525, width=100, height=30)
 
     btn_Consultar = tk.Button(WIND, text="CONSULTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consultar)
     btn_Consultar.place(x=210, y=600, width=100, height=30)
@@ -1354,10 +1403,10 @@ def INDEX():
     btn_Insert = tk.Button(WIND, text="INSERTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command=Insertar)
     btn_Insert.place(x=330, y=600, width=100, height=30)
 
-    btn_Actualizar = tk.Button(WIND, text="ACTUALIZAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=actualizar)
+    btn_Actualizar = tk.Button(WIND, text="ACTUALIZAR", bg="#FF8F00", fg="white", relief=tk.RAISED, bd=5, command=actualizar)
     btn_Actualizar.place(x=460, y=600, width=100, height=30)
 
-    btn_eliminar = tk.Button(WIND, text="ELIMINAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=eliminar)
+    btn_eliminar = tk.Button(WIND, text="ELIMINAR", bg="#FF0000", fg="white", relief=tk.RAISED, bd=5, command=eliminar)
     btn_eliminar.place(x=580, y=600, width=100, height=30)
 
     # Llamar a las funciones al inicio
@@ -1400,7 +1449,7 @@ ventana = tk.Tk()
 #tamaño de la ventana
 ventana.geometry("700x400")
 #color de fondo BG
-ventana.config(bg="#89BBFF")
+ventana.config(bg="#1D1212")
 #se le añade un titulo a la app
 ventana.title("SISTEMA DE COBROS")
 
@@ -1420,13 +1469,13 @@ for i in range(6):
     ventana.grid_rowconfigure(i, weight=1)
 
 # USUARIO ENTRADA 
-l1=Label(ventana, text="USER",font=("Candara", 20, "bold"), bg='#89BBFF').grid(row=2, column=1, pady=5,columnspan=4)
+l1=Label(ventana, text="USER",font=("Candara", 20, "bold"), bg="#1D1212", fg="white").grid(row=2, column=1, pady=5,columnspan=4)
 e1 = Entry(ventana, font=30, relief=SOLID)
 e1.grid(row=3, column=1, pady=5, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
 
 #CONTRASEÑA ENTRADA 
-l2 = Label(ventana, text="PASSWORD", font=("Candara", 20, "bold"), bg='#89BBFF').grid(row=4, column=1, pady=5, columnspan=4)
+l2 = Label(ventana, text="PASSWORD", font=("Candara", 20, "bold"), bg="#1D1212", fg="white").grid(row=4, column=1, pady=5, columnspan=4)
 e2 = Entry(ventana, font=30, show='*', relief=SOLID)
 e2.grid(row=5, column=1, pady=5, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
@@ -1436,7 +1485,7 @@ e2.bind("<Return>", lambda event: Evalue())
 # IMAGEN adding image (remember image should be PNG and not JPG)
 img = PhotoImage(file='img/LOGO_TRANSPARENTE.png')
 img1 = img.subsample(2, 2)
-Label(ventana,image=img1, bg="#89BBFF").grid(row=1, column=1, pady=10, columnspan=4)
+Label(ventana,image=img1, bg="#1D1212").grid(row=1, column=1, pady=10, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
 
 
@@ -1455,7 +1504,7 @@ ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para c
 eye_button = Button(ventana, command=toggle_visibility)
 open_eye = PhotoImage(file='img/visible.png')  # Ajusta la ruta y el nombre de la imagen
 close_eye = PhotoImage(file='img/ojo.png')  # Ajusta la ruta y el nombre de la imagen
-eye_button.config(image=close_eye, bd=0, bg="#89BBFF")
+eye_button.config(image=close_eye, bd=0, bg="white")
 eye_button.grid(row=5, column=2, padx=(135, 10),columnspan=2) # Ajusta las coordenadas según sea necesario
 ventana.grid_columnconfigure(2, weight=1)  # Ajusta el peso de la columna para centrar
 
