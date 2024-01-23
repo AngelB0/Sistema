@@ -834,13 +834,13 @@ def INDEX():
                                 port='5432',
                                 database= bd
                             )
-            messagebox.showinfo("CONEXION BD", "CONEXION ESTABLECIDA")
+            messagebox.showinfo("CONEXION BD", "REGISTRO INGRESADO CORRECTAMENTE.")
             # Crear un cursor para ejecutar consultas SQL
             cursor = conexion.cursor()
         except:
-            messagebox.askretrycancel("ERROR", "CONEXION A LA BD FALLIDA.")
+            messagebox.askretrycancel("ERROR", "OCURRIO UN ERROR AL INGRESAR LOS DATOS, PORFAVOR CORROBORE QUE TODOS LOS DATOS SEAN CORRECTOS")
         
-        FOL = folio.get()
+        FOL = folio.get("1.0", tk.END)
         MATRI = mat.get()
         NOMA = nom.get()
         GRUP = grup.get()
@@ -856,45 +856,11 @@ def INDEX():
         CON5 = conc5.get()
         CON6 = conc6.get()
         CON7 = conc7.get()
-        CONCEPTOF=CON1+CON2+CON3+CON4+CON5+CON6+CON7
-        #impotes datos
-        IMP1 = impo1.get()
-        IMP2 = impo2.get()
-        IMP3 = impo3.get()
-        IMP4 = impo4.get()
-        IMP5 = impo5.get()
-        IMP6 = impo6.get()
-        IMP7 = impo7.get()
-        #% datos
-        POR1 = combo1.get()
-        POR2 = combo2.get()
-        POR3 = combo3.get()
-        POR4 = combo4.get()
-        POR5 = combo5.get()
-        POR6 = combo6.get()
-        POR7 = combo7.get()
-        #Recargos
-        RE1 = rec1.get()
-        RE2 = rec2.get()
-        RE3 = rec3.get()
-        RE4 = rec4.get()
-        RE5 = rec5.get()
-        RE6 = rec6.get()
-        RE7 = rec7.get()
-        #Subtotal
-        SUB1 = int(subt1.get())
-        SUB2 = int(subt2.get())
-        SUB3 = int(subt3.get())
-        SUB4 = int(subt4.get())
-        SUB5 = int(subt5.get())
-        SUB6 = int(subt6.get())
-        SUB7 = int(subt7.get())
-        TOTAL= SUB1 + SUB2 + SUB3 + SUB4 + SUB5 + SUB6 + SUB7
+        CONCEPTOF= CON1 + "," + CON2 + "," + CON3 + "," + CON4 + "," + CON5 + "," + CON6 + "," + CON7
+
+        TOTAL= float(total1.get("1.0", tk.END))
         #Cantidad que recibe
-        CANTR = cant_res.get()
-        #Cambio
-        CAMBIO = int(CANTR) - int(TOTAL)
-        CAM =  cambio.get()
+        CANTR = float(cant_res.get("1.0", tk.END))
         #forma de pago
         FP = formP.get()
         #Aprovacion
@@ -910,64 +876,14 @@ def INDEX():
             # Crear un cursor para ejecutar consultas SQL
             cursor = conexion.cursor()
             # Ejecutar la consulta de inserción (adaptar según tu tabla)
-            consulta = "INSERT INTO ventas (folio, plantel, matri, nombre, grupo, licenciatura, fecha, cant_recibe, forma_p, aprov, cuenta_rec, concep, observaciones, subtotal) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            consulta = "INSERT INTO ventas (folio, plantel, matri, nombre, grupo, licenciatura, cant_recibe, forma_p, aprov, cuenta_rec, observaciones, subtotal, fecha, concep) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             # Imprimir la consulta y los valores antes de ejecutarla
             print("Consulta:", consulta)
-            print("Valores:", (FOL, PLA, MATRI, NOMA, GRUP, LIC, FE, CANTR, FP, APRO, CUR,CONCEPTOF, OBSERVA, TOTAL ))
-            cursor.execute(consulta, (FOL, PLA, MATRI,NOMA, GRUP, LIC, FE, CANTR, FP, APRO, CUR, CONCEPTOF, OBSERVA, TOTAL))
+            print("Valores:", (FOL, PLA, MATRI, NOMA, GRUP, LIC, CANTR, FP, APRO, CUR, OBSERVA, TOTAL, FE, CONCEPTOF))
+            cursor.execute(consulta, (FOL, PLA, MATRI, NOMA, GRUP, LIC, CANTR, FP, APRO, CUR, OBSERVA, TOTAL, FE, CONCEPTOF))
 
             # Confirmar la transacción
             conexion.commit()
-
-            # Limpiar campos de entrada después de la inserción
-            folio.delete(0, tk.END)
-            plan.delete(0, tk.END)
-            mat.delete(0, tk.END)
-            nom.delete(0, tk.END)
-            grup.delete(0, tk.END)
-            lice.delete(0, tk.END)
-            conc1.delete(0, tk.END)
-            conc2.delete(0, tk.END)
-            conc3.delete(0, tk.END)
-            conc4.delete(0, tk.END)
-            conc5.delete(0, tk.END)
-            conc6.delete(0, tk.END)
-            conc7.delete(0, tk.END)
-            impo1.delete(0, tk.END)
-            impo1.delete(0, tk.END)
-            impo2.delete(0, tk.END)
-            impo3.delete(0, tk.END)
-            impo4.delete(0, tk.END)
-            impo5.delete(0, tk.END)
-            impo6.delete(0, tk.END)
-            impo7.delete(0, tk.END)
-            combo1.delete(0,tk.END)
-            combo2.delete(0,tk.END)
-            combo3.delete(0,tk.END)
-            combo4.delete(0,tk.END)
-            combo5.delete(0,tk.END)
-            combo6.delete(0,tk.END)
-            combo7.delete(0,tk.END)
-            rec1.delete(0,tk.END)
-            rec2.delete(0,tk.END)
-            rec3.delete(0,tk.END)
-            rec4.delete(0,tk.END)
-            rec5.delete(0,tk.END)
-            rec6.delete(0,tk.END)
-            rec7.delete(0,tk.END)
-            subt1.delete(0,tk.END)
-            subt2.delete(0,tk.END)
-            subt3.delete(0,tk.END)
-            subt4.delete(0,tk.END)
-            subt5.delete(0,tk.END)
-            subt6.delete(0,tk.END)
-            subt7.delete(0,tk.END)
-            cant_res.delete(0,tk.END)
-            cambio.delete(0,tk.END)
-            formP.delete(0,tk.END)
-            aprov.delete(0,tk.END)
-            cuenta_res.delete(0,tk.END)
-            observ.delete(0,tk.END)
             print("Datos ingresados correctamente.")
         except Exception as e:
             # Manejar cualquier error que pueda ocurrir durante la inserción
@@ -977,6 +893,80 @@ def INDEX():
         # Cerrar la conexión y el cursor
         cursor.close()
         conexion.close()
+
+    def LIMPIAR_DATOS():
+            numeral =0
+        # Limpiar campos de entrada después de la inserción
+            folio.delete(1.0, tk.END)
+            #folio.insert(tk.END, "")
+            plan.set("")
+            mat.delete(0, tk.END)
+            nom.set("")
+            grup.set("")
+            lice.set("")
+            conc1.delete(0, tk.END)
+            conc2.delete(0, tk.END)
+            conc3.delete(0, tk.END)
+            conc4.delete(0, tk.END)
+            conc5.delete(0, tk.END)
+            conc6.delete(0, tk.END)
+            conc7.delete(0, tk.END)
+            impo1.delete(1.0, tk.END)
+            impo2.delete(1.0, tk.END)
+            impo3.delete(1.0, tk.END)
+            impo4.delete(1.0, tk.END)
+            impo5.delete(1.0, tk.END)
+            impo6.delete(1.0, tk.END)
+            impo7.delete(1.0, tk.END)
+
+            impo1.insert(tk.END, f"{numeral:.2f}")
+            impo2.insert(tk.END, f"{numeral:.2f}")
+            impo3.insert(tk.END, f"{numeral:.2f}")
+            impo4.insert(tk.END, f"{numeral:.2f}")
+            impo5.insert(tk.END, f"{numeral:.2f}")
+            impo6.insert(tk.END, f"{numeral:.2f}")
+            impo7.insert(tk.END, f"{numeral:.2f}")
+
+            combo1.delete(1.0, tk.END)
+            combo2.delete(1.0, tk.END)
+            combo3.delete(1.0, tk.END)
+            combo4.delete(1.0, tk.END)
+            combo5.delete(1.0, tk.END)
+            combo6.delete(1.0, tk.END)
+            combo7.delete(1.0, tk.END)
+
+            combo1.insert(tk.END, f"{numeral:.2f}")
+            combo2.insert(tk.END, f"{numeral:.2f}")
+            combo3.insert(tk.END, f"{numeral:.2f}")
+            combo4.insert(tk.END, f"{numeral:.2f}")
+            combo5.insert(tk.END, f"{numeral:.2f}")
+            combo6.insert(tk.END, f"{numeral:.2f}")
+            combo7.insert(tk.END, f"{numeral:.2f}")
+
+            rec1.delete(0, tk.END)
+            rec2.delete(0, tk.END)
+            rec3.delete(0, tk.END)
+            rec4.delete(0, tk.END)
+            rec5.delete(0, tk.END)
+            rec6.delete(0, tk.END)
+            rec7.delete(0, tk.END)
+
+            subt1.delete(1.0, tk.END)
+            subt2.delete(1.0, tk.END)
+            subt3.delete(1.0, tk.END)
+            subt4.delete(1.0, tk.END)
+            subt5.delete(1.0, tk.END)
+            subt6.delete(1.0, tk.END)
+            subt7.delete(1.0, tk.END)
+            cant_res.delete(1.0, tk.END)
+            cant_res.insert(tk.END, f"{numeral:.2f}")
+            cambio.delete(1.0, tk.END)
+            cambio.insert(tk.END, f"{numeral:.2f}")
+            total1.delete(1.0, tk.END)
+            formP.delete(0,tk.END)
+            aprov.delete(0,tk.END)
+            cuenta_res.delete(0,tk.END)
+            observ.delete(0,tk.END)
 
     def obtener_opciones_bd_combo():
         user3 = e1.get()
@@ -1105,11 +1095,10 @@ def INDEX():
                 # Formatea la cadena antes de imprimir
                 registro_formateado = ', '.join(map(str, registro_completo))
                 #segun la matricula imprimimos la informacion del alumno
-                a=nombres
-                plan.config(text=str(registro_completo[2]))
-                nom.config(text= str(registro_completo[1]))
-                grup.config(text=str(registro_completo[5]))
-                lice.config(text=str(registro_completo[3]))
+                plan.set(str(registro_completo[2]))
+                nom.set(str(registro_completo[1]))
+                grup.set(str(registro_completo[5]))
+                lice.set(str(registro_completo[3]))
             else:
                 print("Registro no encontrado.")
 
@@ -1138,10 +1127,200 @@ def INDEX():
                 # Formatea la cadena antes de imprimir
                 registro_formateado = ', '.join(map(str, registro_completo))
                 #segun la matricula imprimimos la informacion del alumno
-                impo1.config(text=str(registro_completo[3]))
+                #impo1.config(text=str(registro_completo[3]))
+                impo1.config(state=tk.NORMAL)
+                impo1.delete(1.0, tk.END)
+                impo1.insert(tk.END, float(registro_completo[3]))
             else:
                 print("Registro no encontrado.")
-
+    def opc_con2(event):
+    
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc2.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                #impo1.config(text=str(registro_completo[3]))
+                impo2.config(state=tk.NORMAL)
+                impo2.delete(1.0, tk.END)
+                impo2.insert(tk.END, float(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")
+    def opc_con3(event):
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc3.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                #impo1.config(text=str(registro_completo[3]))
+                impo3.config(state=tk.NORMAL)
+                impo3.delete(1.0, tk.END)
+                impo3.insert(tk.END, float(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")
+    def opc_con4(event):
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc4.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                #impo1.config(text=str(registro_completo[3]))
+                impo4.config(state=tk.NORMAL)
+                impo4.delete(1.0, tk.END)
+                impo4.insert(tk.END, float(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")
+    def opc_con5(event):
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc5.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                #impo1.config(text=str(registro_completo[3]))
+                impo5.config(state=tk.NORMAL)
+                impo5.delete(1.0, tk.END)
+                impo5.insert(tk.END, float(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")    
+    def opc_con6(event):
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc6.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                #impo1.config(text=str(registro_completo[3]))
+                impo6.config(state=tk.NORMAL)
+                impo6.delete(1.0, tk.END)
+                impo6.insert(tk.END, float(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")
+    def opc_con7(event):
+         # Vectores para almacenar los valores
+        cod = []
+        conce = []
+        cuen_con = []
+        pressc =[]
+        clasi =[]
+    # Añade más vectores según sea necesario para las demás columnas
+        opcion_seleccionada = str(conc7.get())
+        # Actualizar el contenido del Label con la opción seleccionada
+        #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+        if opcion_seleccionada:
+            registro_completo = obtener_registro_completo_concep(opcion_seleccionada)
+            registro_formateado = ', '.join(map(str, registro_completo))
+            if registro_completo:
+                # Almacena cada valor del registro en vectores
+                Codigo, concepto, cuenta_con,precio, clasificac = registro_completo
+                cod.append(Codigo)
+                conce.append(concepto)
+                cuen_con.append(cuenta_con)
+                pressc.append(precio) 
+                clasi.append(clasificac)
+                # Formatea la cadena antes de imprimir
+                registro_formateado = ', '.join(map(str, registro_completo))
+                #segun la matricula imprimimos la informacion del alumno
+                #impo1.config(text=str(registro_completo[3]))
+                impo7.config(state=tk.NORMAL)
+                impo7.delete(1.0, tk.END)
+                impo7.insert(tk.END, float(registro_completo[3]))
+            else:
+                print("Registro no encontrado.")
+    
     def obtener_mat_bd():
         user3 = e1.get()
         passw3 = e2.get()
@@ -1185,10 +1364,187 @@ def INDEX():
         clock.config(text=current_time, bg='#1D1212' ,fg="white",font="Candara 40 bold")
         clock.after(200,times)
 
+    #ESTAN TODAS LAS FUNCIONES PARA LOS PRECIOS/PAGOS/CAMBIO Y OBTENER EL FOLIO
+    def OPERACIONES_CONTABLES():  
+        def OBT_FOLIO():
+            #conexion a la BD
+            user3 = e1.get()
+            passw3 = e2.get()
+            bd="sistema"
+            try:
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                # Crear un cursor para ejecutar consultas SQL
+                cursor = conexion.cursor()
+                # Ejecutar la consulta para obtener la última llave primaria
+                tabla = "ventas"  # Reemplaza con el nombre de tu tabla
+                consulta = f"SELECT folio FROM {tabla} ORDER BY folio DESC LIMIT 1;"
+                cursor.execute(consulta)
+
+                # Obtener el resultado
+                ultima_llave_primaria = cursor.fetchone()
+                PRIMARYK= ultima_llave_primaria[0] + 1
+                folio.config(state=tk.NORMAL)
+                folio.delete(1.0, tk.END)
+                folio.insert(tk.END, f"{PRIMARYK}")
+                folio.after(1000, OBT_FOLIO)
+            except:
+                messagebox.askretrycancel("ERROR", "CONEXION A LA BD FALLIDA.")
+            # Cerrar la conexión y el cursor
+            cursor.close()
+            conexion.close()
+
+        def C_O_1():
+            try:
+                importe1 = float(impo1.get("1.0", tk.END))
+                porcentaje1 = float(combo1.get("1.0", tk.END))
+                
+                resultado1 = importe1 - (importe1 * porcentaje1 / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt1.config(state=tk.NORMAL)
+                subt1.delete(1.0, tk.END)
+                subt1.insert(tk.END, f"{resultado1:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt1.after(1000, C_O_1)
+        def C_O_2():
+            try:
+                importe2 = float(impo2.get("1.0", tk.END))
+                porcentaje2 = float(combo2.get("1.0", tk.END))
+                
+                resultado2 = importe2 - (importe2 * porcentaje2 / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt2.config(state=tk.NORMAL)
+                subt2.delete(1.0, tk.END)
+                subt2.insert(tk.END, f"{resultado2:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt2.after(1000, C_O_2)
+        def C_O_3():
+            try:
+                importe3 = float(impo3.get("1.0", tk.END))
+                porcentaje3 = float(combo3.get("1.0", tk.END))
+                
+                resultado3 = importe3 - (importe3 * porcentaje3 / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt3.config(state=tk.NORMAL)
+                subt3.delete(1.0, tk.END)
+                subt3.insert(tk.END, f"{resultado3:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt3.after(1000, C_O_3)
+        def C_O_4():
+            try:
+                importe4 = float(impo4.get("1.0", tk.END))
+                porcentaje4 = float(combo4.get("1.0", tk.END))
+                
+                resultado4 = importe4 - (importe4 * porcentaje4 / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt4.config(state=tk.NORMAL)
+                subt4.delete(1.0, tk.END)
+                subt4.insert(tk.END, f"{resultado4:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt4.after(1000, C_O_4)
+        def C_O_5():
+            try:
+                importe = float(impo5.get("1.0", tk.END))
+                porcentaje = float(combo5.get("1.0", tk.END))
+                
+                resultado5 = importe - (importe * porcentaje / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt5.config(state=tk.NORMAL)
+                subt5.delete(1.0, tk.END)
+                subt5.insert(tk.END, f"{resultado5:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt5.after(1000, C_O_5)
+        def C_O_6():
+            try:
+                importe = float(impo6.get("1.0", tk.END))
+                porcentaje = float(combo6.get("1.0", tk.END))
+                
+                resultado6 = importe - (importe * porcentaje / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt6.config(state=tk.NORMAL)
+                subt6.delete(1.0, tk.END)
+                subt6.insert(tk.END, f"{resultado6:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt6.after(1000, C_O_6)
+        def C_O_7():
+            try:
+                importe = float(impo7.get("1.0", tk.END))
+                porcentaje = float(combo7.get("1.0", tk.END))
+                
+                resultado7 = importe - (importe * porcentaje / 100)
+
+                #subt1.config(text=f"{resultado:.2f}")
+                subt7.config(state=tk.NORMAL)
+                subt7.delete(1.0, tk.END)
+                subt7.insert(tk.END, f"{resultado7:.2f}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt7.after(1000, C_O_7)
+        def TOTAL_A_APAGAR():
+            try:
+                importe1 = float(subt1.get("1.0", tk.END))
+                importe2 = float(subt2.get("1.0", tk.END))
+                importe3 = float(subt3.get("1.0", tk.END))
+                importe4 = float(subt4.get("1.0", tk.END))
+                importe5 = float(subt5.get("1.0", tk.END))
+                importe6 = float(subt6.get("1.0", tk.END))
+                importe7 = float(subt7.get("1.0", tk.END))
+                
+                T = importe1 + importe2 + importe3 + importe4 + importe5 + importe6 + importe7
+
+                #subt1.config(text=f"{resultado:.2f}")
+                total1.config(state=tk.NORMAL)
+                total1.delete(1.0, tk.END)
+                total1.insert(tk.END, f"{T}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            subt1.after(1000, TOTAL_A_APAGAR)
+        def CAMBIO1():
+            try:
+                varia1 = float(total1.get("1.0", tk.END))
+                varia2 = float(cant_res.get("1.0", tk.END))
+                Tol = varia2 - varia1
+                cambio.config(state=tk.NORMAL)
+                cambio.delete(1.0, tk.END)
+                cambio.insert(tk.END, f"{Tol}")
+            except ValueError:
+                print("ERROR AL INGRESAR PRECIO")
+            cambio.after(1000, CAMBIO1)
+
+        OBT_FOLIO()
+        C_O_1()
+        C_O_2()
+        C_O_3()
+        C_O_4()
+        C_O_5()
+        C_O_6()
+        C_O_7()     
+        TOTAL_A_APAGAR()
+        CAMBIO1()
+    
     #VENTANA PRINCIPAL
     WIND = tk.Toplevel(ventana)
     #tamaño de la ventana
-    WIND.geometry("1300x768")
+    WIND.geometry("1300x768+650+150")
+    #ABRIR EN PANTALLA EN GRANDE
+    WIND.state("zoomed")
     #color de fondo BG
     WIND.config(bg="#1D1212")
     #se le añade un titulo a la app
@@ -1216,8 +1572,9 @@ def INDEX():
         
     #FOLIO
     tk.Label(WIND, text="FOLIO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 16 bold").place(x=500, y=60, width=70, height=30)
-    folio = tk.Entry(WIND, relief=tk.SUNKEN, bd=3, font="Candara 14 bold")
+    folio = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 14 bold")
     folio.place(x=600, y=60, width=100, height=30)
+    folio.insert(tk.END, "")
 
     #MATRICULA
     opciones_bd_mat = obtener_mat_bd()
@@ -1232,23 +1589,27 @@ def INDEX():
     
     #NOMBRE DEL ALUMNO
     tk.Label(WIND,text="NOMBRE DEL ALUMNO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=280, y=150, width=185, height=25)
-    nom = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30, bg="white", font="Candara 11 bold")
-    nom.place(x=475, y=150, width=350, height=25)
+    nom = tk.StringVar()
+    nom1 = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=30, bg="white", font="Candara 11 bold", textvariable=nom)
+    nom1.place(x=475, y=150, width=350, height=25)
 
     #LICENCIATURA
     tk.Label(WIND, text="LICENCIATURA:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=50, y=185, width=125, height=25)
-    lice = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=42, bg="white", font="Candara 11 bold")
-    lice.place(x=185, y=185, width=395, height=25)
+    lice = tk.StringVar()
+    lice1 = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=42, bg="white", font="Candara 11 bold", textvariable=lice)
+    lice1.place(x=185, y=185, width=395, height=25)
 
     #GRUPO
     tk.Label(WIND, text="GRUPO:", bg="#565151", fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=590, y=185, width=70, height=25)
-    grup = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=18, bg="white", font="Candara 11 bold")
-    grup.place(x=675, y=185, width=150, height=25)
+    grup = tk.StringVar()
+    grup1 = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=18, bg="white", font="Candara 11 bold", textvariable=grup)
+    grup1.place(x=675, y=185, width=150, height=25)
 
     #PLANTEL
     tk.Label(WIND, text="PLANTEL:", bg="#565151",fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold" ).place(x=50, y=225, width=80, height=25)
-    plan = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=19, bg="white", font="Candara 11 bold")
-    plan.place(x=140, y=225, width=160, height=25)
+    plan = tk.StringVar()
+    plan1 = tk.Label(WIND,relief=tk.SUNKEN, bd=3, width=19, bg="white", font="Candara 11 bold", textvariable=plan)
+    plan1.place(x=140, y=225, width=160, height=25)
 
     #FECHA
     tk.Label(WIND, text="FECHA:", bg="#565151",fg="white", relief=tk.GROOVE, bd=3, font="Candara 12 bold").place(x=320, y=225, width=70, height=25)
@@ -1264,54 +1625,92 @@ def INDEX():
     conc1.bind("<<ComboboxSelected>>", opc_con1)
     conc2 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc2.place(x=50, y=335, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc2.bind("<<ComboboxSelected>>", opc_con2)
+
     conc3 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc3.place(x=50, y=365, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc3.bind("<<ComboboxSelected>>", opc_con3)
+
     conc4 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc4.place(x=50, y=395, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc4.bind("<<ComboboxSelected>>", opc_con4)
+
     conc5 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc5.place(x=50, y=425, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc5.bind("<<ComboboxSelected>>", opc_con5)
+
     conc6 = ttk.Combobox(WIND, width=27, font="Candara 11 bold")
     conc6.place(x=50, y=455, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc6.bind("<<ComboboxSelected>>", opc_con6)
+
     conc7 = ttk.Combobox(WIND, width=27,font="Candara 11 bold")
     conc7.place(x=50, y=485, width=200, height=25)
+    # Vincular la función al evento <<ComboboxSelected>>
+    conc7.bind("<<ComboboxSelected>>", opc_con7)
     #IMPORTE
     tk.Label(WIND, text="IMPORTE", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=270, y=265, width=79, height=25)
-    impo1 = tk.Label(WIND, text="", relief=tk.SUNKEN, width=10,bg="white", bd=3)
+    impo1 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo1.place(x=270, y=305, width=79, height=25)
-    impo2 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white", font="Candara 11 bold")
+    impo1.insert(tk.END, "0")
+    
+    impo2 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo2.place(x=270, y=335, width=79, height=25)
-    impo3 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    impo2.insert(tk.END, "0")
+
+    impo3 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo3.place(x=270, y=365, width=79, height=25)
-    impo4 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white", font="Candara 11 bold")
+    impo3.insert(tk.END, "0")
+
+    impo4 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo4.place(x=270, y=395, width=79, height=25)
-    impo5 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3,bg="white", font="Candara 11 bold")
+    impo4.insert(tk.END, "0")
+
+    impo5 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo5.place(x=270, y=425, width=79, height=25)
-    impo6 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white",font="Candara 11 bold")
+    impo5.insert(tk.END, "0")
+
+    impo6 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo6.place(x=270, y=455, width=79, height=25)
-    impo7 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    impo6.insert(tk.END, "0")
+
+    impo7 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     impo7.place(x=270, y=485, width=79, height=25)
+    impo7.insert(tk.END, "0")
+
     #%
     tk.Label(WIND, text="%",  bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=380, y=265, width=30, height=25)
-    combo1 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo1 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo1.place(x=370, y=305, width=50, height=23)
+    combo1.insert(tk.END, "0")
 
-    combo2 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo2 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo2.place(x=370, y=335, width=50, height=23)
+    combo2.insert(tk.END, "0")
 
-    combo3 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo3 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo3.place(x=370, y=365, width=50, height=23)
+    combo3.insert(tk.END, "0")
 
-    combo4 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo4 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo4.place(x=370, y=395, width=50, height=23)
+    combo4.insert(tk.END, "0")
 
-    combo5 = ttk.Combobox(WIND,state="normal",font="Candara 11 bold",values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo5 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo5.place(x=370, y=425, width=50, height=20)
+    combo5.insert(tk.END, "0")
 
-    combo6 = ttk.Combobox(WIND, state="normal", font="Candara 11 bold", values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo6 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo6.place(x=370, y=455, width=50, height=23)
+    combo6.insert(tk.END, "0")
 
-    combo7 = ttk.Combobox(WIND, state="normal", font="Candara 11 bold", values=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    combo7 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     combo7.place(x=370, y=485, width=50, height=23)
+    combo7.insert(tk.END, "0")
     #RECARGOS
     tk.Label(WIND, text="RECARGOS:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=445, y=265, width=85, height=25)
 
@@ -1338,40 +1737,52 @@ def INDEX():
 
     #SUBTOTAL
     tk.Label(WIND, text="SUBTOTAL:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=560, y=265, width=90, height=25)
-    subt1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    #subt1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt1 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt1.place(x=575, y=305,width=60, height=25)
+    subt1.insert(tk.END, "0")
 
-    subt2 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt2 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt2.place(x=575, y=335, width=60, height=25)
+    subt2.insert(tk.END, "0")
 
-    subt3 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt3 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt3.place(x=575, y=365, width=60, height=25)
+    subt3.insert(tk.END, "0")
 
-    subt4 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt4 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt4.place(x=575, y=395, width=60, height=25)
+    subt4.insert(tk.END, "0")
 
-    subt5 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white",font="Candara 11 bold")
+    subt5 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt5.place(x=575, y=425, width=60, height=25)
+    subt5.insert(tk.END, "0")
 
-    subt6 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt6 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt6.place(x=575, y=455, width=60, height=25)
+    subt6.insert(tk.END, "0")
 
-    subt7 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold")
+    subt7 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     subt7.place(x=575, y=485, width=60, height=25)
+    subt7.insert(tk.END, "0")
 
     #TOTAL A PAGAR
     tk.Label(WIND, text="TOTAL:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=720, y=265, width=70, height=25)
-    total1 = tk.Label(WIND, width=10,relief=tk.SUNKEN, bd=3, bg="white", font="Candara 11 bold").place(x=715, y=295, width=79, height=25)
+    total1 =  tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
+    total1.place(x=715, y=295, width=79, height=25)
+    total1.insert(tk.END, "0")
 
     #CANTIDAD QUE RECIBE
     cant_res = tk.Label(WIND, text="CANTIDAD QUE RECIBE", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=675, y=340, width=165, height=25)
-    cant_res = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3,font="Candara 11 bold" )
+    cant_res = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     cant_res.place(x=705, y=370, width=105, height=25)
+    cant_res.insert(tk.END, "0")
 
     #CAMBIO
     cambio = tk.Label(WIND, text="CAMBIO", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=720, y=410, width=70, height=25)
-    cambio = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    cambio = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     cambio.place(x=700, y=440, width=105, height=25)
+    cambio.insert(tk.END, "0")
 
     #FORMA DE PAGO
     tk.Label(WIND, text="FORMA DE PAGO", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=865, y=265, width=140, height=25)
@@ -1397,6 +1808,9 @@ def INDEX():
     boton_enviar = tk.Button(WIND, text="REGISTRAR", bg="#00D903", fg="white", relief=tk.RAISED, bd=5, command=enviar_datos)
     boton_enviar.place(x=875, y=525, width=100, height=30)
 
+    BTN_LIMPIAR = tk.Button(WIND, text="LIMPIAR", bg="#00D903", fg="white", relief=tk.RAISED, bd=5, command=LIMPIAR_DATOS)
+    BTN_LIMPIAR.place(x=900, y=525, width=100, height=30)
+
     btn_Consultar = tk.Button(WIND, text="CONSULTAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consultar)
     btn_Consultar.place(x=210, y=600, width=100, height=30)
 
@@ -1410,6 +1824,7 @@ def INDEX():
     btn_eliminar.place(x=580, y=600, width=100, height=30)
 
     # Llamar a las funciones al inicio
+    OPERACIONES_CONTABLES()
     mostrar_opciones_combo()
     mostrar_mat()
     # Cierra la ventana principal
