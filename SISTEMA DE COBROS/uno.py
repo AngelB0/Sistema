@@ -587,17 +587,20 @@ def INDEX():
         ventana_consul.config(bg="#1D1212")
         #se le añade un titulo a la app
         ventana_consul.title("CONSULTA DE REGISTROS")
-        ventana_consul.geometry("1200x600")
+        ventana_consul.geometry("1200x600+80+50")
 
         def Consu_Alum():
             # Mostrar información de archivos
             treeview_frame.mostrar_info_archivos()
-            # Mostrar información de alumnos
-            treeview_frame.mostrar_info_alumnos()
 
         def Consu_Concep():
             # Mostrar información de conceptos
             treeview_frame.mostrar_info_conceptos()
+        
+        def Consu_vent():
+            treeview_frame.mostrar_info_ventass()
+            #Mostrar infromacion de ventas
+
         class TreeviewFrame(ttk.Frame):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
@@ -698,6 +701,50 @@ def INDEX():
                 datos = obtener_datos_conceptos()
                 for dato in datos:
                     self.treeview.insert("", "end", values=dato)
+            
+            def mostrar_info_ventass(self):
+                def obtener_datosBD():
+                    #conexion a la BD
+                    user3 = e1.get()
+                    passw3 = e2.get()
+                    bd="sistema"
+                    conexion = psycopg2.connect(
+                                user=user3,
+                                password=passw3,
+                                host='localhost',
+                                port='5432',
+                                database= bd
+                            )
+                    cursor = conexion.cursor()
+                    cursor.execute("SELECT * FROM ventas")
+                    datos = cursor.fetchall()
+                    cursor.close()
+                    conexion.close()
+                    return datos
+
+                for fila in self.treeview.get_children():
+                    self.treeview.delete(fila)
+
+                self.treeview.config(columns=("folio","plantel", "matri", "nombre", "grupo", "licenciatura", "cant_recibe", "forma_p", "aprov", "cuenta_rec", "observasiones", "subtotal", "fecha", "concep"), show="headings")
+                self.treeview.heading("folio", text="Folio")
+                self.treeview.heading("plantel", text="Plantel")
+                self.treeview.heading("matri", text="Matricula")
+                self.treeview.heading("nombre", text="Nombre Alumno")
+                self.treeview.heading("grupo", text="Grupo")
+                self.treeview.heading("licenciatura", text="Oferta Educativa")
+                self.treeview.heading("cant_recibe", text="Cantidad que Recibio")
+                self.treeview.heading("forma_p", text="Forma de Pago")
+                self.treeview.heading("aprov", text="Aprobación")
+                self.treeview.heading("cuenta_rec", text="Cuenta Reseptora")
+                self.treeview.heading("observasiones", text="Observasiones")
+                self.treeview.heading("subtotal", text="Precio Total")
+                self.treeview.heading("fecha", text="Fecha de Venta")
+                self.treeview.heading("concep", text="Conceptos")
+
+                datos = obtener_datosBD()
+                for dato in datos:
+                    self.treeview.insert("", "end", values=dato)
+
 
             def toggle_minimizar(self):
                 # Cambiar el estado de minimizado y mostrar u ocultar el Treeview en consecuencia
@@ -714,7 +761,8 @@ def INDEX():
         treeview_frame.pack()
 
         # Crear un botón dentro de la ventana secundaria
-        # para cerrar la misma.            
+        # para cerrar la misma.        
+        btn_ventass = tk.Button(ventana_consul, text="Consultar Ventas", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consu_vent)    
         btn_Alumnos = tk.Button(ventana_consul, text="Consultar Alumnos", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consu_Alum)
         btn_Conceptos = tk.Button(ventana_consul,text="Consultar Conceptos",bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=Consu_Concep)
         boton_regresar = tk.Button(ventana_consul,text="REGRESAR", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=lambda:close_window(ventana_consul))
@@ -722,10 +770,11 @@ def INDEX():
         boton_regresar.place(x=50, y=400, width=90, height=40)
         btn_Alumnos.place(x=150, y=400, width=120, height=40)
         btn_Conceptos.place(x=280, y=400, width=125, height=40)
+        btn_ventass.place(x=410, y=400, width=120, height=40)
 
     def close_window(window):
         # Cierra la ventana principal
-        WIND.withdraw()
+        #WIND.withdraw()
         window.destroy()
         WIND.deiconify()
         
