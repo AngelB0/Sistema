@@ -1,4 +1,4 @@
-# @autor: JORGE ANGEL BECERRIL GONZALEZ, NOE REDZ MONDRAGON
+# @autor: JORGE ANGEL BECERRIL GONZALEZ, NOE REDZ MONDRAGRON
 from tkinter import *
 from customtkinter import CTk, CTkComboBox
 import customtkinter as ctk
@@ -20,6 +20,256 @@ from PIL import Image, ImageTk
 def INDEX():
     #VENTANA PARA ELIMINAR 
     def eliminar():
+        def delete_Alum_Uno():
+            def dele_Alum():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                cursor = conexion.cursor()
+
+                pk_valor = int(matri3.get())
+
+                # Ejecutar la sentencia DELETE
+                tabla = "alumnos"  # Reemplaza con el nombre de tu tabla
+                consulta = f"DELETE FROM {tabla} WHERE matricula = %s;"  # Reemplaza 'id' con el nombre de tu columna de clave primaria
+                cursor.execute(consulta, (pk_valor,))
+
+                matri3.delete(0, tk.END)
+                alumno_a.delete(1.0, tk.END)
+                plantel_a.delete(1.0, tk.END)
+                ofedu_a.delete(1.0, tk.END)
+                grad_a.delete(1.0, tk.END)
+                grup_a.delete(1.0, tk.END)
+                perido_a.delete(1.0, tk.END)
+                turno_al.delete(1.0, tk.END)
+                inscripcion_a.delete(1.0, tk.END)
+                estatus_a.delete(1.0, tk.END)
+                festatus_a.delete(1.0, tk.END)
+
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+
+            def obtener_registro_completo_del(llave_primaria):
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+
+                cursor = conexion.cursor()
+
+                cursor.execute("SELECT * FROM alumnos WHERE Matricula = %s", (llave_primaria,))
+                registro_completo = cursor.fetchone()
+
+                cursor.close()
+                conexion.close()
+
+                return registro_completo
+
+            def accion_al_seleccionar_del(event):
+            # Añade más vectores según sea necesario para las demás columnas
+                opcion_seleccionada = matri3.get()
+                # Actualizar el contenido del Label con la opción seleccionada
+                #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+                if opcion_seleccionada:
+                    registro_completo = obtener_registro_completo_del(opcion_seleccionada)
+                    if registro_completo:
+                        #segun la matricula imprimimos la informacion del alumno
+                        entered_text_1 = str(registro_completo[1])#ALUMNO
+                        alumno_a.config(state=tk.NORMAL)
+                        alumno_a.delete(1.0, tk.END)
+                        alumno_a.insert(tk.END, f"{entered_text_1}")
+
+                        entered_text_2 = str(registro_completo[2])#PLANTEL
+                        plantel_a.config(state=tk.NORMAL)
+                        plantel_a.delete(1.0, tk.END)
+                        plantel_a.insert(tk.END, f"{entered_text_2}")
+
+                        entered_text_3 = str(registro_completo[3])#OFERTA EDUCATIVA
+                        ofedu_a.config(state=tk.NORMAL)
+                        ofedu_a.delete(1.0, tk.END)
+                        ofedu_a.insert(tk.END, f"{entered_text_3}")
+
+                        entered_text_4 = str(registro_completo[4])#GRADO
+                        grad_a.config(state=tk.NORMAL)
+                        grad_a.delete(1.0, tk.END)
+                        grad_a.insert(tk.END, f"{entered_text_4}")
+
+                        entered_text_5 = str(registro_completo[5])#GRUPO
+                        grup_a.config(state=tk.NORMAL)
+                        grup_a.delete(1.0, tk.END)
+                        grup_a.insert(tk.END, f"{entered_text_5}")
+                        entered_text_6 = str(registro_completo[6])#PERIODO
+                        perido_a.config(state=tk.NORMAL)
+                        perido_a.delete(1.0, tk.END)
+                        perido_a.insert(tk.END, f"{entered_text_6}")
+                        entered_text_7 = str(registro_completo[7])#TURNO
+                        turno_al.config(state=tk.NORMAL)
+                        turno_al.delete(1.0, tk.END)
+                        turno_al.insert(tk.END, f"{entered_text_7}")
+                        entered_text_8 = str(registro_completo[8])#INSCRIPCION
+                        inscripcion_a.config(state=tk.NORMAL)
+                        inscripcion_a.delete(1.0, tk.END)
+                        inscripcion_a.insert(tk.END, f"{entered_text_8}")
+                        entered_text_9 = str(registro_completo[9])#ESTATUS
+                        estatus_a.config(state=tk.NORMAL)
+                        estatus_a.delete(1.0, tk.END)
+                        estatus_a.insert(tk.END, f"{entered_text_9}")
+                        entered_text_10 = str(registro_completo[10])#TURNO
+                        festatus_a.config(state=tk.NORMAL)
+                        festatus_a.delete(1.0, tk.END)
+                        festatus_a.insert(tk.END, f"{entered_text_10}")
+                    else:
+                        print("Registro no encontrado.")
+
+            def obtener_mat_bd_del():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                # Crear un cursor para ejecutar consultas SQL
+                cursor = conexion.cursor()
+
+                # Ejecutar una consulta para obtener opciones (reemplaza con tu propia consulta)
+                cursor.execute("SELECT * FROM alumnos")
+                matris = cursor.fetchall()
+
+                # Cerrar la conexión y el cursor
+                cursor.close()
+                conexion.close()
+
+                return matris
+
+            def on_key_release_del(event):
+                    number = mostrar_mat_del()
+                    try:
+                        value = int(combobox_var.get())
+                        filtered_values = [item for item in number if str(value) in str(item)]
+
+                    except ValueError:
+                        filtered_values = []
+
+                    matri3['values'] = filtered_values
+
+            def mostrar_mat_del():
+                # Obtener las opciones de la base de datos
+                opciones_bd_mat = obtener_mat_bd_del()
+                # Limpiar el ComboBox
+                matri3['values'] = ()
+                # Configurar las nuevas opciones en el ComboBox
+                matri3['values'] = [opcion[0] for opcion in opciones_bd_mat]
+                number_list = matri3['values'] = [opcion[0] for opcion in opciones_bd_mat]
+
+                return number_list
+            
+            # Crear una ventana secundaria.
+            window_alu_del = tk.Toplevel()
+            #color de fondo BG
+            window_alu_del.config(bg="#1D1212")
+            #se le añade un titulo a la app
+            window_alu_del.title("ELIMINAR REGISTRO ALUMNOS")
+            window_alu_del.geometry("1080x600+150+60")
+
+            #MATRICULA
+            tk.Label(window_alu_del, text="MATRICULA:", bg="#1D1212", fg="white").place(x=44, y=70, width=80, height=20)
+            combobox_var = tk.StringVar()
+            matri3 = ttk.Combobox(window_alu_del, width=20, textvariable=combobox_var)
+            matri3.place(x=126, y=70, width=92, height=20)
+            # Vincular la función al evento <<ComboboxSelected>>
+            matri3.bind("<<ComboboxSelected>>", accion_al_seleccionar_del)
+            matri3.bind('<KeyRelease>', on_key_release_del)
+
+            #ALUMNO
+            tk.Label(window_alu_del, text="ALUMNO:",bg="#1D1212", fg="white").place(x=36, y=100, width=80, height=20)
+            alumno_a = tk.Text(window_alu_del, height=1, width=35, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            alumno_a.place(x=125, y=100)
+            alumno_a.insert(tk.END, "")
+
+            #OFERTA EDUCATIVA 
+            tk.Label(window_alu_del, text="OFERTA EDUCATIVA:", bg="#1D1212", fg="white").place(x=420, y=100, width=120, height=20)
+            ofedu_a = tk.Text(window_alu_del, height=1, width=50, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            ofedu_a.place(x=545, y=100)
+            ofedu_a.insert(tk.END, "")
+
+            #PLANTEL
+            tk.Label(window_alu_del, text="PLANTEL:", bg="#1D1212", fg="white").place(x=690, y=130, width=75, height=20)
+            plantel_a = tk.Text(window_alu_del, height=1, width=22, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            plantel_a.insert(tk.END, "")
+            plantel_a.place(x=770, y=130)
+
+            #GRADO
+            tk.Label(window_alu_del, text="GRADO:",bg="#1D1212", fg="white").place(x=50, y=130, width=40, height=20)
+            grad_a = tk.Text(window_alu_del, height=1, width=2, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            grad_a.insert(tk.END, "")
+            grad_a.place(x=100, y=130)
+
+            #GRUPO
+            tk.Label(window_alu_del, text="GRUPO:", bg="#1D1212", fg="white").place(x=135, y=130, width=40, height=20)
+            grup_a = tk.Text(window_alu_del, height=1, width=16, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            grup_a.insert(tk.END, "")
+            grup_a.place(x=185, y=130)
+
+            #PERIODO
+            tk.Label(window_alu_del, text="PERIODO:",bg="#1D1212", fg="white").place(x=335, y=130, width=50, height=20)
+            perido_a = tk.Text(window_alu_del, height=1, width=15, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            perido_a.insert(tk.END, "")
+            perido_a.place(x=395, y=130)
+
+            #TURNO
+            tk.Label(window_alu_del, text="TURNO:",bg="#1D1212", fg="white").place(x=530, y=130, width=50, height=20)
+            turno_al = tk.Text(window_alu_del, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            turno_al.insert(tk.END, "")
+            turno_al.place(x=590, y=130)
+
+            #FECHA DE INSCRIPCION
+            tk.Label(window_alu_del, text="FECHA DE INSCRIPCION:", bg="#1D1212", fg="white").place(x=50, y=160, width=133, height=20)
+            inscripcion_a = tk.Text(window_alu_del, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            inscripcion_a.insert(tk.END, "")
+            inscripcion_a.place(x=190, y=160)
+
+            #ESTATUS
+            tk.Label(window_alu_del, text="ESTATUS:", bg="#1D1212", fg="white").place(x=285, y=160, width=80, height=20)
+            estatus_a = tk.Text(window_alu_del, height=1, width=11, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            estatus_a.insert(tk.END, "")
+            estatus_a.place(x=362, y=160)
+
+            #FECHA ESTATUS
+            tk.Label(window_alu_del, text="FECHA ESTATUS:", bg="#1D1212", fg="white").place(x=475, y=160, width=90, height=20)
+            festatus_a = tk.Text(window_alu_del, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            festatus_a.insert(tk.END, "")
+            festatus_a.place(x=570, y=160)
+
+            #Boton cerrar
+            boton_cerrar = tk.Button(window_alu_del, text="Cerrar ventana",bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=window_alu_del.destroy)
+            boton_cerrar.place(x=50, y=300, width=90, height=40)
+
+            #Boton guardar
+            boton_guardar = tk.Button(window_alu_del, text="ELIMINAR", bg="red", fg="white", relief=tk.RAISED, bd=5, command= dele_Alum)
+            boton_guardar.place(x=150, y=300, width=90, height=40)
+
+            # Cierra la ventana principal
+            mostrar_mat_del()
+            ventana.withdraw()
+            
         def delete_Alum_com():
             try:
                 # Establecer la conexión a la base de datos
@@ -48,14 +298,229 @@ def INDEX():
                 conn.close()
 
                 # Mostrar una alerta de éxito
-                messagebox.showinfo("Éxito", "Registros eliminados correctamente.")
+                messagebox.showinfo("Éxito (Alumnos)", "Tabla eliminada correctamente.")
 
             except Exception as e:
                 # Mostrar una alerta de error
                 messagebox.showerror("Error", f"Error al eliminar registros:\n{str(e)}")
 
+        #VENTANA ACTUALIZAR REGISTRO CONCEPTO
+        def delete_Concep_Uno():
+            def del_Concep():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                cursor = conexion.cursor()
+        
+                pk_valor = int(codigo_a.get())
+
+                # Ejecutar la sentencia DELETE
+                tabla = "conceptos"  # Reemplaza con el nombre de tu tabla
+                consulta1 = f"DELETE FROM {tabla} WHERE codigo = %s;"  # Reemplaza 'id' con el nombre de tu columna de clave primaria
+                cursor.execute(consulta1, (pk_valor,))
+
+                messagebox.showinfo("VALIDACION", "DATOS ELIMINADOS")
+                
+                codigo_a.delete(0, tk.END)
+                concepto_a.delete(1.0, tk.END)
+                contable_a.delete(1.0, tk.END)
+                costo_a.delete(1.0, tk.END)
+                clasificacion_a.delete(1.0, tk.END)
+                conexion.commit()
+                cursor.close()
+                conexion.close()
+
+            def obtener_registro_completo_con(llave_primaria):
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+
+                cursor = conexion.cursor()
+
+                cursor.execute("SELECT * FROM conceptos WHERE codigo = %s", (llave_primaria,))
+                registro_completo = cursor.fetchone()
+
+                cursor.close()
+                conexion.close()
+
+                return registro_completo
+
+            def accion_al_seleccionar_con_del(event):
+            # Añade más vectores según sea necesario para las demás columnas
+                opcion_seleccionada = codigo_a.get()
+                # Actualizar el contenido del Label con la opción seleccionada
+                #label_resultado.config(text=f"Opción seleccionada: {opcion_seleccionada}")
+                if opcion_seleccionada:
+                    registro_completo = obtener_registro_completo_con(opcion_seleccionada)
+                    if registro_completo:
+                        #segun la matricula imprimimos la informacion del alumno
+                        entered_text_1 = str(registro_completo[1])#CONCEPTO
+                        concepto_a.config(state=tk.NORMAL)
+                        concepto_a.delete(1.0, tk.END)
+                        concepto_a.insert(tk.END, f"{entered_text_1}")
+
+                        entered_text_2 = str(registro_completo[2])#CUENTA CONTABLE
+                        contable_a.config(state=tk.NORMAL)
+                        contable_a.delete(1.0, tk.END)
+                        contable_a.insert(tk.END, f"{entered_text_2}")
+
+                        entered_text_3 = str(registro_completo[3])#COSTO
+                        costo_a.config(state=tk.NORMAL)
+                        costo_a.delete(1.0, tk.END)
+                        costo_a.insert(tk.END, f"{entered_text_3}")
+
+                        entered_text_4 = str(registro_completo[4])#CLASIFICACION
+                        clasificacion_a.config(state=tk.NORMAL)
+                        clasificacion_a.delete(1.0, tk.END)
+                        clasificacion_a.insert(tk.END, f"{entered_text_4}")
+                    else:
+                        print("Registro no encontrado.")
+
+            def obtener_mat_bd_con_del():
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conexion = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+                # Crear un cursor para ejecutar consultas SQL
+                cursor = conexion.cursor()
+
+                # Ejecutar una consulta para obtener opciones (reemplaza con tu propia consulta)
+                cursor.execute("SELECT * FROM conceptos")
+                matris = cursor.fetchall()
+
+                # Cerrar la conexión y el cursor
+                cursor.close()
+                conexion.close()
+
+                return matris
+
+            def on_key_release_con_del(event):
+                    number = mostrar_mat_con_del()
+                    try:
+                        value = int(combobox_con.get())
+                        filtered_values = [item for item in number if str(value) in str(item)]
+
+                    except ValueError:
+                        filtered_values = []
+
+                    codigo_a['values'] = filtered_values
+
+            def mostrar_mat_con_del():
+                # Obtener las opciones de la base de datos
+                opciones_bd_mat1 = obtener_mat_bd_con_del()
+                # Limpiar el ComboBox
+                codigo_a['values'] = ()
+                # Configurar las nuevas opciones en el ComboBox
+                codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat1]
+                number_list = codigo_a['values'] = [opcion[0] for opcion in opciones_bd_mat1]
+
+                return number_list
+
+            # Crear una ventana secundaria.
+            window_con_Del = tk.Toplevel()
+            #color de fondo BG
+            window_con_Del.config(bg="#1D1212")
+            #se le añade un titulo a la app
+            window_con_Del.title("ELIMINAR REGISTRO CONCEPTOS")
+            window_con_Del.geometry("1080x600+150+60")
+
+            #CODIGO
+            combobox_con = tk.StringVar()
+            tk.Label(window_con_Del, text="CODIGO:", bg="#1D1212", fg="white").place(x=40, y=70, width=80, height=20)
+            codigo_a = ttk.Combobox(window_con_Del, width=20, textvariable=combobox_con)
+            #codigo_a = ctk.ComboBox(window_con, width=50)
+            codigo_a.place(x=135, y=70)
+            # Vincular la función al evento <<ComboboxSelected>>
+            codigo_a.bind("<<ComboboxSelected>>", accion_al_seleccionar_con_del)
+            codigo_a.bind('<KeyRelease>', on_key_release_con_del)
+
+            #CONCEPTO
+            tk.Label(window_con_Del, text="CONCEPTO:", bg="#1D1212", fg="white").place(x=50, y=100, width=80, height=20)
+            concepto_a = tk.Text(window_con_Del, height=1, width=25, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            concepto_a.place(x=135, y=100)
+            concepto_a.insert(tk.END, "")
+
+            #CUENTA CONTABLE 
+            tk.Label(window_con_Del, text="CUENTA CONTABLE:", bg="#1D1212", fg="white").place(x=350, y=100, width=120, height=20)
+            contable_a = tk.Text(window_con_Del, height=1, width=3, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            contable_a.place(x=475, y=100)
+            contable_a.insert(tk.END,"")
+
+            #COSTO
+            tk.Label(window_con_Del, text="COSTO:", bg="#1D1212", fg="white").place(x=520, y=100, width=75, height=20)
+            costo_a = tk.Text(window_con_Del, height=1, width=8, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            costo_a.place(x=585, y=100)
+            costo_a.insert(tk.END, "")
+
+            #CLASIFICACION
+            tk.Label(window_con_Del, text="CLASIFICACION:", bg="#1D1212", fg="white").place(x=50, y=130, width=100, height=20)
+            clasificacion_a = tk.Text(window_con_Del, height=1, width=15, wrap=tk.NONE, bd=0, padx=2, pady=2)
+            clasificacion_a.place(x=160, y=130)
+            clasificacion_a.insert(tk.END, "")
+
+            #Boton cerrar
+            boton_cerrar = tk.Button( window_con_Del, text="Cerrar ventana",bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, command=window_con_Del.destroy)
+            boton_cerrar.place(x=50, y=200, width=90, height=40)
+            #Boton Guardar
+            boton_guardar = tk.Button(window_con_Del, text="ELIMINAR", bg="RED", fg="white", relief=tk.RAISED, bd=5, command=del_Concep)
+            boton_guardar.place(x=150, y=200, width=90, height=40)
+            # Cierra la ventana principal
+            mostrar_mat_con_del()
+            ventana.withdraw()
+
         def delete_Concep_com():
-            print("hola")
+             try:
+                # Establecer la conexión a la base de datos
+                user3 = e1.get()
+                passw3 = e2.get()
+                bd="sistema"
+                conn = psycopg2.connect(
+                                    user=user3,
+                                    password=passw3,
+                                    host='localhost',
+                                    port='5432',
+                                    database= bd
+                                )
+
+                # Crear un objeto cursor
+                cursor = conn.cursor()
+
+                # Ejecutar la consulta para eliminar todos los registros de la tabla
+                cursor.execute("DELETE FROM conceptos;")
+
+                # Confirmar la transacción
+                conn.commit()
+
+                # Cerrar el cursor y la conexión
+                cursor.close()
+                conn.close()
+
+                # Mostrar una alerta de éxito
+                messagebox.showinfo("Éxito (Conceptos)", "Tabla eliminada correctamente.")
+
+             except Exception as e:
+                # Mostrar una alerta de error
+                messagebox.showerror("Error", f"Error al eliminar registros:\n{str(e)}")
 
         # Crear una ventana secundaria.
         window_delete = tk.Toplevel()
@@ -74,18 +539,18 @@ def INDEX():
         tk.Label(window_delete, text="ALUMNOS", bg="#1D1212", fg="WHITE").place(x=190, y=90)
 
         btn_Alumnos_del = tk.Button(window_delete,text="Eliminar tabla conmpleta", 
-            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command=delete_Alum_com
+            bg="red", fg="white", relief=tk.RAISED, bd=5,command=delete_Alum_com
         )
         btn_Alumnos_del_1 = tk.Button(window_delete,text="Eliminar 1 Registro", 
-            bg="#0020BE", fg="white", relief=tk.RAISED, bd=5,command="delete_Alum_Uno"
+            bg="red", fg="white", relief=tk.RAISED, bd=5,command=delete_Alum_Uno
         )
         #FUNCION ELIMINAR CONCEPTOS
         tk.Label(window_delete, text="CONCEPTOS", bg="#1D1212", fg="WHITE").place(x=350, y=90)
-        btn_Conceptos_del = tk.Button(window_delete,text="Eliminar tabla completa", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
+        btn_Conceptos_del = tk.Button(window_delete,text="Eliminar tabla completa", bg="orange", fg="white", relief=tk.RAISED, bd=5, 
             command=delete_Concep_com
         )
-        btn_Conceptos_del_1 = tk.Button(window_delete,text="Eliminar 1 registro", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
-            command="delete_Concep_Uno"
+        btn_Conceptos_del_1 = tk.Button(window_delete,text="Eliminar 1 registro", bg="orange", fg="white", relief=tk.RAISED, bd=5, 
+            command=delete_Concep_Uno
         )
 
         btn_cerrar_del = tk.Button(window_delete,text="Cerrar ventana", bg="#0020BE", fg="white", relief=tk.RAISED, bd=5, 
@@ -1468,7 +1933,7 @@ def INDEX():
                 folio.insert(tk.END, f"{PRIMARYK}")
                 folio.after(1000, OBT_FOLIO)
             except:
-                messagebox.askretrycancel("ERROR", "CONEXION A LA BD FALLIDA.")
+                print("ERROR CONEXION A LA BD FALLIDA_Folio.")
             # Cerrar la conexión y el cursor
             cursor.close()
             conexion.close()
@@ -1863,7 +2328,7 @@ def INDEX():
     formP.place(x=880, y=295, width=105, height=25)
 
     #APROVACION
-    aprov = tk.Label(WIND, text="APROVACIÓN", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=875, y=340, width=120, height=25)
+    aprov = tk.Label(WIND, text="APROBACIÓN", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=875, y=340, width=120, height=25)
     aprov = tk.Entry(WIND, width=25,relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
     aprov.place(x=885, y=370, width=105, height=25)
 
