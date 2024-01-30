@@ -547,11 +547,11 @@ def INDEX():
             bg="red", fg="white", relief=tk.RAISED, bd=5,command=delete_Alum_com
         )
         btn_Alumnos_del_1 = tk.Button(window_delete,text="Eliminar 1 Registro", 
-            bg="red", fg="white", relief=tk.RAISED, bd=5,command=delete_Alum_Uno
+            bg="orange", fg="white", relief=tk.RAISED, bd=5,command=delete_Alum_Uno
         )
         #FUNCION ELIMINAR CONCEPTOS
         tk.Label(window_delete, text="CONCEPTOS", bg="#1D1212", fg="WHITE").place(x=350, y=90)
-        btn_Conceptos_del = tk.Button(window_delete,text="Eliminar tabla completa", bg="orange", fg="white", relief=tk.RAISED, bd=5, 
+        btn_Conceptos_del = tk.Button(window_delete,text="Eliminar tabla completa", bg="red", fg="white", relief=tk.RAISED, bd=5, 
             command=delete_Concep_com
         )
         btn_Conceptos_del_1 = tk.Button(window_delete,text="Eliminar 1 registro", bg="orange", fg="white", relief=tk.RAISED, bd=5, 
@@ -1512,13 +1512,21 @@ def INDEX():
             combo6.insert(tk.END, f"{numeral:.2f}")
             combo7.insert(tk.END, f"{numeral:.2f}")
 
-            rec1.delete(0, tk.END)
-            rec2.delete(0, tk.END)
-            rec3.delete(0, tk.END)
-            rec4.delete(0, tk.END)
-            rec5.delete(0, tk.END)
-            rec6.delete(0, tk.END)
-            rec7.delete(0, tk.END)
+            rec1.delete(1.0, tk.END)
+            rec2.delete(1.0, tk.END)
+            rec3.delete(1.0, tk.END)
+            rec4.delete(1.0, tk.END)
+            rec5.delete(1.0, tk.END)
+            rec6.delete(1.0, tk.END)
+            rec7.delete(1.0, tk.END)
+
+            rec1.insert(tk.END, f"{numeral:.2f}")
+            rec2.insert(tk.END, f"{numeral:.2f}")
+            rec3.insert(tk.END, f"{numeral:.2f}")
+            rec4.insert(tk.END, f"{numeral:.2f}")
+            rec5.insert(tk.END, f"{numeral:.2f}")
+            rec6.insert(tk.END, f"{numeral:.2f}")
+            rec7.insert(tk.END, f"{numeral:.2f}")
 
             subt1.delete(1.0, tk.END)
             subt2.delete(1.0, tk.END)
@@ -1983,9 +1991,10 @@ def INDEX():
             try:
                 importe1 = float(impo1.get("1.0", tk.END))
                 porcentaje1 = float(combo1.get("1.0", tk.END))
+                recarg = float(rec1.get("1.0", tk.END))
                 
                 resultado1 = importe1 - (importe1 * porcentaje1 / 100)
-
+                resultado1 = resultado1 + recarg
                 #subt1.config(text=f"{resultado:.2f}")
                 subt1.config(state=tk.NORMAL)
                 subt1.delete(1.0, tk.END)
@@ -1997,8 +2006,10 @@ def INDEX():
             try:
                 importe2 = float(impo2.get("1.0", tk.END))
                 porcentaje2 = float(combo2.get("1.0", tk.END))
+                recarg2 = float(rec2.get("1.0", tk.END))
                 
                 resultado2 = importe2 - (importe2 * porcentaje2 / 100)
+                resultado2 = resultado2 + recarg2
 
                 #subt1.config(text=f"{resultado:.2f}")
                 subt2.config(state=tk.NORMAL)
@@ -2011,9 +2022,10 @@ def INDEX():
             try:
                 importe3 = float(impo3.get("1.0", tk.END))
                 porcentaje3 = float(combo3.get("1.0", tk.END))
+                recarg3 = float(rec3.get("1.0", tk.END))
                 
                 resultado3 = importe3 - (importe3 * porcentaje3 / 100)
-
+                resultado3 = resultado3 + recarg3
                 #subt1.config(text=f"{resultado:.2f}")
                 subt3.config(state=tk.NORMAL)
                 subt3.delete(1.0, tk.END)
@@ -2025,8 +2037,10 @@ def INDEX():
             try:
                 importe4 = float(impo4.get("1.0", tk.END))
                 porcentaje4 = float(combo4.get("1.0", tk.END))
+                recarg4 = float(rec4.get("1.0", tk.END))
                 
                 resultado4 = importe4 - (importe4 * porcentaje4 / 100)
+                resultado4 = resultado4 + recarg4
 
                 #subt1.config(text=f"{resultado:.2f}")
                 subt4.config(state=tk.NORMAL)
@@ -2039,9 +2053,9 @@ def INDEX():
             try:
                 importe = float(impo5.get("1.0", tk.END))
                 porcentaje = float(combo5.get("1.0", tk.END))
-                
+                recarg5 = float(rec5.get("1.0", tk.END))
                 resultado5 = importe - (importe * porcentaje / 100)
-
+                resultado5 = resultado5 + recarg5
                 #subt1.config(text=f"{resultado:.2f}")
                 subt5.config(state=tk.NORMAL)
                 subt5.delete(1.0, tk.END)
@@ -2053,9 +2067,10 @@ def INDEX():
             try:
                 importe = float(impo6.get("1.0", tk.END))
                 porcentaje = float(combo6.get("1.0", tk.END))
-                
-                resultado6 = importe - (importe * porcentaje / 100)
+                recarg6 = float(rec6.get("1.0", tk.END))
 
+                resultado6 = importe - (importe * porcentaje / 100)
+                resultado6 = resultado6 + recarg6
                 #subt1.config(text=f"{resultado:.2f}")
                 subt6.config(state=tk.NORMAL)
                 subt6.delete(1.0, tk.END)
@@ -2066,9 +2081,11 @@ def INDEX():
         def C_O_7():
             try:
                 importe = float(impo7.get("1.0", tk.END))
+                recarg7 = float(rec1.get("1.0", tk.END))
                 porcentaje = float(combo7.get("1.0", tk.END))
                 
                 resultado7 = importe - (importe * porcentaje / 100)
+                resultado7 = resultado7 + recarg7
 
                 #subt1.config(text=f"{resultado:.2f}")
                 subt7.config(state=tk.NORMAL)
@@ -2290,23 +2307,22 @@ def INDEX():
         pagina.insert_text((480, 335), f"{datos['Total']}")
 
         pagina.insert_text((480, 718), f"{datos['Total']}")
-
-
         
         # Guardar y cerrar el PDF
         pdf_document.save(nombre_pdf)
         pdf_document.close()
 
         messagebox.showinfo("Éxito", f"El documento ha sido creado y guardado en:\n{nombre_pdf}")
-
-
+    
     
     #VENTANA PRINCIPAL
     WIND = tk.Toplevel(ventana)
-    #tamaño de la ventana
-    WIND.geometry("1300x768+650+150")
     #ABRIR EN PANTALLA EN GRANDE
     WIND.state("zoomed")
+    # Configurar el tamaño de la ventana
+    width1, height1 = 1300, 768
+    WIND.geometry(f"{width1}x{height1}+650+150")
+
     #color de fondo BG
     WIND.config(bg="#1D1212")
     #se le añade un titulo a la app
@@ -2320,7 +2336,8 @@ def INDEX():
     eti.place(x=20, y=10)
 
     #Formulario Crear los widgets del formulario
-    tk.Label(WIND, text="PAQUETES DE GRADUACION", font="Candara 24 bold", bg='#1D1212', fg="#4169e1", width=0, height=3).place(x=800, y=0)
+    paqtg1= tk.Label(WIND, text="PAQUETES DE GRADUACION", font="Candara 24 bold", bg='#1D1212', fg="#4169e1", width=0, height=3)
+    paqtg1.place(x=950, y=-40)
 
     #HORA EN TIEMPO REAL
     clock=Label(WIND,font=("Candara",50,"bold"))
@@ -2475,26 +2492,33 @@ def INDEX():
     #RECARGOS
     tk.Label(WIND, text="RECARGOS:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=445, y=265, width=85, height=25)
 
-    rec1 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec1 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec1.place(x=465, y=305, width=50, height=24)
+    rec1.insert(tk.END, "0")
 
-    rec2 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec2 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec2.place(x=465, y=335, width=50, height=24)
+    rec2.insert(tk.END, "0")
 
-    rec3 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec3 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec3.place(x=465, y=365, width=50, height=24)
+    rec3.insert(tk.END, "0")
 
-    rec4 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec4 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec4.place(x=465, y=395, width=50, height=24)
+    rec4.insert(tk.END, "0")
 
-    rec5 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec5 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec5.place(x=465, y=425, width=50, height=24)
+    rec5.insert(tk.END, "0")
 
-    rec6 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec6 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec6.place(x=465, y=455, width=50, height=24)
+    rec6.insert(tk.END, "0")
 
-    rec7 = tk.Entry(WIND, width=10, relief=tk.SUNKEN, bd=3, font="Candara 11 bold")
+    rec7 = tk.Text(WIND, height=1, width=10, wrap=tk.NONE, bd=0, padx=2, pady=2, font="Candara 11 bold")
     rec7.place(x=465, y=485, width=50, height=24)
+    rec7.insert(tk.END, "0")
 
     #SUBTOTAL
     tk.Label(WIND, text="SUBTOTAL:", bg="#565151", relief=tk.GROOVE, bd=3, fg="white", font="Candara 12 bold").place(x=560, y=265, width=90, height=25)
@@ -2594,6 +2618,7 @@ def INDEX():
     mostrar_mat()
     # Cierra la ventana principal
     ventana.withdraw()
+
 #LOGIN
 def Evalue():
     user3 = e1.get()
@@ -2626,8 +2651,10 @@ def toggle_visibility():
         e2.config(show="*")
 
 ventana = tk.Tk()
-#tamaño de la ventana
-ventana.geometry("700x400")
+
+# Configurar el tamaño de la ventana
+width, height = 700, 400
+ventana.geometry(f"{width}x{height}")
 #color de fondo BG
 ventana.config(bg="#1D1212")
 #se le añade un titulo a la app
@@ -2648,14 +2675,15 @@ for i in range(6):
     ventana.grid_columnconfigure(i, weight=1)
     ventana.grid_rowconfigure(i, weight=1)
 
+
 # USUARIO ENTRADA 
-l1=Label(ventana, text="USER",font=("Candara", 20, "bold"), bg="#1D1212", fg="white").grid(row=2, column=1, pady=5,columnspan=4)
+l1=Label(ventana, text="USER",font=("Candara", 20, "bold"), bg="white", fg="black",  relief=tk.GROOVE, bd=5).grid(row=2, column=1, pady=5,columnspan=4)
 e1 = Entry(ventana, font=30, relief=SOLID)
 e1.grid(row=3, column=1, pady=5, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
 
 #CONTRASEÑA ENTRADA 
-l2 = Label(ventana, text="PASSWORD", font=("Candara", 20, "bold"), bg="#1D1212", fg="white").grid(row=4, column=1, pady=5, columnspan=4)
+l2 = Label(ventana, text="PASSWORD", font=("Candara", 20, "bold"), bg="white", fg="black",  relief=tk.GROOVE, bd=5).grid(row=4, column=1, pady=5, columnspan=4)
 e2 = Entry(ventana, font=30, show='*', relief=SOLID)
 e2.grid(row=5, column=1, pady=5, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
@@ -2665,7 +2693,7 @@ e2.bind("<Return>", lambda event: Evalue())
 # IMAGEN adding image (remember image should be PNG and not JPG)
 img = PhotoImage(file='img/LOGO_TRANSPARENTE.png')
 img1 = img.subsample(2, 2)
-Label(ventana,image=img1, bg="#1D1212").grid(row=1, column=1, pady=10, columnspan=4)
+Label(ventana,image=img1, bg="white", fg="black",  relief=tk.GROOVE, bd=10).grid(row=1, column=1, pady=10, columnspan=4)
 ventana.grid_columnconfigure(1, weight=2)  # Ajusta el peso de la columna para centrar
 
 
