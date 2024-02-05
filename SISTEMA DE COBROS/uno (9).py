@@ -2717,7 +2717,7 @@ def INDEX():
     WIND.title("SISTEMA DE COBROS")
     
     #LOGO
-    WIND.iconbitmap("img/LG.ico")
+    WIND.iconbitmap("img/univer_lg.ico")
     #la metemos dentro de un label para poder mostrarla
     eti= Label(WIND, image = img1, bg=color_defondo)
     #eti = tk.Label(WIND, image=imagen_sub)
